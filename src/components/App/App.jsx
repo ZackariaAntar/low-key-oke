@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
 import RolePage from '../RolePage/RolePage';
+import HostDash from '../HostDash/HostDash';
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,14 @@ function App() {
             path='/role'
           >
             <RolePage />
+
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path='/host-dash'
+          >
+            <HostDash />
 
           </ProtectedRoute>
 
