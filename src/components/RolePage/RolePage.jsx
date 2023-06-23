@@ -1,10 +1,11 @@
+import { Button } from "@mui/material";
 function RolePage(){
     return(
         <>
         <h1>Participate</h1>
         <div>
-            <button>HOST</button>
-            <button>GUEST</button>
+            <Button variant="contained">HOST</Button>
+            <Button variant="contained">GUEST</Button>
         </div>
         </>
     )
