@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+
 const app = express();
 
 const sessionMiddleware = require('./modules/session-middleware');
@@ -20,6 +21,7 @@ app.use(sessionMiddleware);
 // start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 /* Routes */
 app.use('/api/user', userRouter);
