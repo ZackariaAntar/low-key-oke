@@ -1,40 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+	HashRouter as Router,
+	Redirect,
+	Route,
+	Switch,
+  Link
+} from "react-router-dom";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+import AboutPage from "../AboutPage/AboutPage";
+import UserPage from "../UserPage/UserPage";
+import InfoPage from "../InfoPage/InfoPage";
+import LandingPage from "../LandingPage/LandingPage";
+import LoginPage from "../LoginPage/LoginPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
 
-import './App.css';
-import RolePage from '../RolePage/RolePage';
-import HostDash from '../HostDash/HostDash';
-import MainDisplay from '../MainDisplay/MainDisplay';
+import "./App.css";
+import RolePage from "../RolePage/RolePage";
+import HostDash from "../HostDash/HostDash";
+import MainDisplay from "../MainDisplay/MainDisplay";
+import SignupForm from "../SignupForm/SignupForm";
+
+import { Button } from "@mui/material";
+
+
+
+
+
 
 function App() {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user);
+	const user = useSelector((store) => store.user);
 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch({ type: "FETCH_USER" });
+	}, [dispatch]);
 
-  return (
+	return (
 		<Router>
 			<div>
 				<Nav />
@@ -78,11 +87,48 @@ function App() {
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/host-dash">
-						<HostDash />
+						{user.auth_level === 1 ? (
+							<HostDash />
+						) : (
+							<>
+								<h1>
+									Water your own grass, it's not greener over
+									here!
+								</h1>
+								<Button
+									variant={"contained"}
+									component={Link}
+									to={"/signup"}
+									aria={"back to signup sheet"}
+								>
+									Back
+								</Button>
+							</>
+						)}
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/main-display">
 						<MainDisplay />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path="/signup">
+						{user.auth_level === 2 ? (
+							<SignupForm />
+						) : (
+							<>
+								<h1>
+									You may think you have the most-est but you don't.
+								</h1>
+								<Button
+									variant={"contained"}
+									component={Link}
+									to={"/host-dash"}
+									aria={"back to host dashboard"}
+								>
+									Back
+								</Button>
+							</>
+						)}
 					</ProtectedRoute>
 
 					{/* ---------------------------   UP  ------------------------------------- */}
@@ -128,7 +174,7 @@ function App() {
 				<Footer />
 			</div>
 		</Router>
-  );
+	);
 }
 
 export default App;
