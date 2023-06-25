@@ -35,7 +35,7 @@ router.post('/register', (req, res, next) => {
 router.put('/host', (req, res) => {
   const sesh_code = req.body.code;
   const auth = req.body.auth;
-  const userId = req.body.id
+  const userId = req.body.user
 
   const queryText = `UPDATE TABLE "user" SET auth_level = $1, current_session = $2
     WHERE id = $3`;
@@ -52,7 +52,7 @@ router.put('/host', (req, res) => {
 router.put('/user', (req, res) => {
   const sesh_code = req.body.code;
   const auth = req.body.auth;
-  const userId = req.body.id
+  const userId = req.body.user
 
   const queryText = `UPDATE TABLE "user" SET auth_level = $1, current_session = $2
     WHERE id = $3`;
