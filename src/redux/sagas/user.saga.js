@@ -24,8 +24,31 @@ function* fetchUser() {
   }
 }
 
+function* updateUser(action){
+  if (action.payload.auth === 1){
+    try {
+      yield axios.put(`/api/user/host/`, action.payload)
+      yield put({type:'FETCH_USER'})
+
+  	} catch (error) {
+		  console.log("UPDATE HOST ERROR", error);
+	  }
+
+  }else
+    try{
+      yield axios.put(`/api/user/guest/`, action.paylaod)
+      yield put({type:'FETCH_USER'})
+
+    } catch(error){
+      console.log("UPDATE GUEST ERROR", error);
+    }
+
+
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('UPDATE_USER', updateUser);
 }
 
 export default userSaga;

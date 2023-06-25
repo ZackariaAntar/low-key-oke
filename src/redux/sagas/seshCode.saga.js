@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { put, takeLatest } from "redux-saga/effects";
 
 // worker Saga: will be fired on "MAKE_NEW_CODE" actions
-function* createSeshCode() {
+function* createSeshCode(action) {
+    // const user = useSelector((store)=>store.user)
 
     const validateCode = (prevArr) => {
 		const uniqueCodes = new Set(prevArr.map((obj) => obj.join_code));
@@ -27,8 +29,8 @@ function* createSeshCode() {
         const seshCode = yield axios.get("/api/sesh");
         const newCode = yield validateCode(seshCode.data)
         yield axios.post('/api/sesh', newCode)
+		yield put({ type: "UPDATE_USER", payload: {code: newCode, auth:1, user: action.payload}});
 
-		yield put({ type: "SET_QUEUE", payload: seshQueue.data });
 	} catch (error) {
 		console.log("Queue get request failed", error);
 	}
