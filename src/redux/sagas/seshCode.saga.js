@@ -29,7 +29,7 @@ function* createSeshCode(action) {
         const seshCode = yield axios.get("/api/sesh");
         const newCode = yield validateCode(seshCode.data)
         yield axios.post('/api/sesh', newCode)
-		yield put({ type: "UPDATE_USER", payload: {code: newCode, auth:1, user: action.payload}});
+		yield put({ type: "UPDATE_USER", payload: {code: newCode, auth: 1, user: action.payload}});
 
 	} catch (error) {
 		console.log("Queue get request failed", error);
