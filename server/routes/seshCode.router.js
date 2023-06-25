@@ -6,6 +6,7 @@ const router = express.Router();
  * GET route template
  */
 router.get('/', (req, res) => {
+  let seshCodeQuery = `SELECT * FROM `
   // GET route code here
 });
 
