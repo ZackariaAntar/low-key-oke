@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, {useState} from 'react';
+import getYouTubeID from "get-youtube-id";
+
 function SignupForm(){
+
     const user = useSelector((store)=>store.user)
     const sesh = useSelector((store)=>store.sesh)
     const dispatch = useDispatch();
@@ -9,10 +12,11 @@ function SignupForm(){
 	const [artist, setArtist] = useState("");
     const addSong = (event) =>{
         event.preventDefault()
+        const videoId = getYouTubeID(url);
         const queueItem = {
             title: title,
             artist: artist,
-            url: url,
+            url: videoId,
             sesh_code: sesh.code
         }
         dispatch({type:'POST_TO_QUEUE', payload: queueItem})
