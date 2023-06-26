@@ -50,14 +50,13 @@ router.put("/host", (req, res) => {
 
 router.put("/guest", (req, res) => {
 	console.log("IN GUEST PUT", req.body);
-	let code = req.body.code;
-	let authy = req.body.auth;
-	let idUser = req.body.user;
-	console.log([authy, code, idUser]);
+	const sesh_code = req.body.code;
+	const auth = req.body.auth;
+	const userId = req.body.user;
 
 	const queryText = `UPDATE "user" SET auth_level = $1, current_session = $2
     WHERE id = $3;`;
-	const queryValues = [authy, code, idUser];
+	const queryValues = [auth, sesh_code, userId];
 
   pool.query(queryText, queryValues)
 		.then(() => res.sendStatus(200))

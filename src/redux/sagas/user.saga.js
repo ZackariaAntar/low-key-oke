@@ -35,9 +35,9 @@ function* updateUserHost(action) {
 }
 
 function* updateUserGuest(action) {
-  console.log("IN UPDATE USER GUEST!", action.payload.auth);
+  console.log("IN UPDATE USER GUEST!", action.payload);
 	try {
-		yield axios.put(`/api/user/guest`, action.paylaod);
+		yield axios.put(`/api/user/guest`, action.payload);
 		yield put({ type: "FETCH_USER" });
 	} catch (error) {
 		console.log("UPDATE GUEST ERROR", error);

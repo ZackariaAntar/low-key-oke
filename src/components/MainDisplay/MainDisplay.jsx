@@ -4,14 +4,13 @@ import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // https://github.com/tjallingt/react-youtube
 
+function MainDisplay() {
+	const dispatch = useDispatch();
+	// const sessionQueue = useSelector((store)=>store.queue)
+	const [count, setCount] = useState(0);
+	const dummyCode = "xyz123";
+	const dummyUrls = [{ url: "p_ebEqfDby8" }, { url: "PKmUKpfJ-uc" }];
 
-
-function MainDisplay(){
-	const dispatch = useDispatch()
-	const sessionQueue = useSelector((store)=>store.queue)
-	const [count, setCount] = useState(0)
-    const dummyCode = 'xyz123'
-    const dummyUrls = [{ url: "p_ebEqfDby8" }, { url: "PKmUKpfJ-uc" }]
 	const queue = [
 		{
 			username: "Goober",
@@ -39,40 +38,32 @@ function MainDisplay(){
 		},
 	];
 
-	const onDeck = queue[1]
+	const onDeck = queue[1];
 
-
-	const handlePlay = (event) =>{
-		console.log('playing');
+	const handlePlay = (event) => {
+		console.log("playing");
 		// event.target.playVideo();
-
-	}
-	const handleReady = (event) =>{
-		console.log('ready');
+	};
+	const handleReady = (event) => {
+		console.log("ready");
 		// event.target.pauseVideo();
-
-	}
-	const handleEnd = (event) =>{
-		console.log('ended')
-		dispatch({type:'NEXT_SONG', payload: queue[0]})
+	};
+	const handleEnd = (event) => {
+		console.log("ended");
+		dispatch({ type: "NEXT_SONG", payload: queue[0] });
 		// event.target.pauseVideo()
+	};
 
-
-	}
-
-    const options = {
+	const options = {
 		height: "548",
 		width: "900",
 		playerVars: {
 			// https://developers.google.com/youtube/player_parameters
 			autoplay: 0,
-            controls: 1,
-
+			controls: 1,
 		},
 	};
-
-
-    return (
+	return (
 		<Container maxWidth="md">
 			<h1>Join code: {onDeck.sesh_code}</h1>
 			<div>
@@ -85,7 +76,7 @@ function MainDisplay(){
 						onEnd={handleEnd}
 					/>
 				) : (
-					<h1>Waiting for Players to join</h1>
+					<h1> Waiting for Players to join </h1>
 				)}
 			</div>
 			<div>
@@ -98,5 +89,4 @@ function MainDisplay(){
 	);
 }
 
-export default MainDisplay
-
+export default MainDisplay;

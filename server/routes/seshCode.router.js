@@ -21,10 +21,13 @@ router.get('/', (req, res) => {
  * POST route template
  */
 router.post('/', (req, res) => {
-  const newCode = req.body.newCode
-  const user_id = req.body.user
+  const {
+          newCode,
+          user,
+        } = req.body;
   let queryText = `INSERT INTO "sesh" (join_code, user_id) VALUES ($1, $2);`
-  pool.query(queryText, [newCode, user_id]).then((response)=>{
+  
+  pool.query(queryText, [newCode, user]).then((response)=>{
     console.log('SESSION CODE POST SUCCESS',response);
     res.sendStatus(201)
 
