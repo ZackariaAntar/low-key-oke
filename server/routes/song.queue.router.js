@@ -6,7 +6,13 @@ const router = express.Router();
  * GET route template
  */
 router.get("/", (req, res) => {
-	// GET route code here
+	let queryText = `
+	SELECT * FROM "session_queue"
+	JOIN
+	WHERE sesh_code = $1
+    	AND in_queue = true
+	ORDER BY queue_order ASC;
+	`;
 });
 
 /**

@@ -15,7 +15,7 @@ function* fetchQueue() {
 function* postToQueue(action){
     console.log(action.payload);
     try {
-		yield axios.post("/api/songs",action.payload);
+		yield axios.post("/api/songs", action.payload);
 		yield put({ type: "FETCH_QUEUE"});
 	} catch (error) {
 		console.log("Queue POST request failed", error);
