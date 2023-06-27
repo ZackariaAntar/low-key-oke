@@ -10,16 +10,18 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch} from "react-redux";
+import {Link} from 'react-router-dom'
 
 
 function RolePage(){
 	const dispatch = useDispatch();
+    const user = useSelector((store) => store.user);
+	const seshInfo = useSelector((store) => store.seshInfo);
 
 	useEffect(() => {
-		// dispatch({ type: "FETCH_CURRENT_SESSION" });
+		dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
 	}, []);
-	const user = useSelector((store) => store.user);
-    const seshInfo = useSelector((store) => store.seshInfo)
+
 
     const [joinCode, setJoinCode] = useState('')
     const [toggle, setToggle] = useState(false)
@@ -41,12 +43,18 @@ function RolePage(){
 	return (
 		<Container maxWidth={"xs"}>
 			<h1>Participate</h1>
+
             <h1>{seshInfo.sesh_code}</h1>
+
 			<div>
-				<Button variant="contained" onClick={makeHost}>
+
+				<Button component={Link} to='/host-dash' variant="contained" onClick={makeHost}>
 					HOST
 				</Button>
+
 				<Button variant="contained" onClick={()=>setToggle(!toggle)} >GUEST</Button>
+
+
 				<Dialog open={toggle} onClose={()=>setToggle(!toggle)}>
 					<DialogTitle>Please enter the join code for your session</DialogTitle>
 					<DialogContent>
@@ -66,9 +74,11 @@ function RolePage(){
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={()=>setToggle(!toggle)}>Cancel</Button>
-						<Button onClick={makeGuest}>JOIN YOUR PARTY</Button>
+						<Button component={Link} to='/signup' onClick={makeGuest}>JOIN YOUR PARTY</Button>
 					</DialogActions>
 				</Dialog>
+
+
 			</div>
 		</Container>
 	);
