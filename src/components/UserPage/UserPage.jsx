@@ -9,6 +9,8 @@ function UserPage() {
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
+      <p>Your authorization is: {user.auth_level}</p>
+      <p>Your session code is: {user.current_session}</p>
       <LogOutButton className="btn" />
     </div>
   );
