@@ -28,8 +28,14 @@ function* createSeshCode(action) {
 	try {
         const seshCode = yield axios.get("/api/sesh");
         const newCode = yield validateCode(seshCode.data)
-        yield axios.post('/api/sesh', newCode)
-		yield put({ type: "UPDATE_USER", payload: {code: newCode, auth: 1, user: action.payload}});
+
+		console.log('ARRIVED AT seshCode SAGA FROM PART. SAGA RESPONSE FROM DB', seshCode.data,'NEW CODE:', newCode);
+		yield axios.post('/api/sesh', {newCode: newCode, host_id: action.payload})
+
+
+		yield put({ type: "FETCH_CURRENT_SESSION", payload: action.payload});
+
+
 
 	} catch (error) {
 		console.log("Queue get request failed", error);

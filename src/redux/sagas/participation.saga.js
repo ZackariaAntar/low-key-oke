@@ -2,6 +2,10 @@ import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 // worker Saga: will be fired on "MAKE_NEW_CODE" actions
 function* makeHost(action) {
+		console.log(
+			"ARRIVED AT makeHost ON PARTICIPATION SAGA FROM RolePage",
+			action.payload
+		);
 	try {
 		yield put({ type: "MAKE_NEW_CODE", payload: action.payload});
 
@@ -11,8 +15,13 @@ function* makeHost(action) {
 }
 
 function* makeGuest(action) {
+	console.log(
+		"ARRIVED AT makeGuest ON PARTICIPATION SAGA FROM RolePage",
+		action.payload
+	);
 	try {
-		yield put({ type: "UPDATE_USER", payload: {code: newCode, auth: 2, user: action.payload}});
+		yield axios.post('/api/sesh/guest', {sesh_code: action.payload.sesh_code, user_id: action.payload.user_id})
+		yield put({type: "FETCH_CURRENT_SESSION", payload: action.payload.user_id})
 
 	} catch (error) {
 		console.log("MAKE_GUEST UPDATE request failed", error);

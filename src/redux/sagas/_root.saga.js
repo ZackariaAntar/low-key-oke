@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import queueSaga from './queue.saga';
 import seshCodeSaga from './seshCode.saga';
 import participationSaga from './participation.saga';
+import currentSessionSaga from './currentSession.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     queueSaga(),
     seshCodeSaga(),
     participationSaga(),
-    
+    currentSessionSaga(),
+
   ]);
 }
