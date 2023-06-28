@@ -67,6 +67,10 @@ function SignupForm(){
 							fullWidth
 							id="password"
 							label="Direct URL of song from Stingray Karaoke on YouTube"
+							value={url}
+							onChange={(e) => {
+								setUrl(e.target.value);
+							}}
 						/>
 					</form>
 				</CardContent>
@@ -76,8 +80,8 @@ function SignupForm(){
 						sx={{ m: 2 }}
 						variant="contained"
 						size="large"
-                        component={Link}
-                        to='/my-queue'
+						component={Link}
+						to="/my-queue"
 					>
 						Submit
 					</Button>
