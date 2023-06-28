@@ -72,9 +72,29 @@ router.get("/guest/all/history/:id", (req, res) => {
 		});
 });
 
+router.get("/guest/requesting/host/user/:id", (req, res) => {
+	let queueRowId = req.params.id;
+
+	let queryText = `SELECT "sesh"."host_user_id" FROM "sesh"
+		JOIN "queue"  ON "sesh"."join_code" = "queue"."current_sesh_id"
+		WHERE "queue"."id" = $1;`;
+	pool.query(queryText, [queueRowId])
+		.then((result) => {
+			console.log(
+				"SUCCESS IN GETTING SESSION HOST USER ID DATA:",
+				result.rows
+			);
+			res.send(result.rows);
+		})
+		.catch((err) => {
+			console.log("PROBLEM WITH GETTING SESSION HOST USER ID DATA", err);
+			res.sendStatus(500);
+		});
+});
+
+
 router.put("/remove/:id", (req, res) => {
 	let queueRowID = req.params.id;
-
 	let queryText = `
 		UPDATE queue SET in_queue = false
 		WHERE id = $1;`;
@@ -88,6 +108,22 @@ router.put("/remove/:id", (req, res) => {
 			res.sendStatus(500);
 		});
 });
+router.delete("/guest/remove/:id", (req, res) => {
+	let queueRowID = req.params.id;
+	let queryText = `
+		DELETE FROM queue
+		WHERE id = $1;`;
+	pool.query(queryText, [queueRowID])
+		.then((response) => {
+			console.log("SUCCESS IN REMOVING SONG FROM DB ", response);
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			console.log("PROBLEM WITH REMOVING SONG FROM DB ", err);
+			res.sendStatus(500);
+		});
+});
+
 
 /**
  * POST route template

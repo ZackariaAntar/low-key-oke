@@ -41,11 +41,31 @@ function* postToQueue(action){
 		console.log("Queue POST request failed", error);
 	}
 }
-function* removeFromQueue(action){
-    console.log("IN REMOVE FROM QUEUE SAGA", action.payload);
+
+function* deleteFromQueue(action){
+    console.log("IN DELETE FROM QUEUE SAGA", action.payload);
+    try{
+         const getHostId = yield axios.get(
+					`/api/songs//guest/requesting/host/user/${action.payload.id}`
+				);
+                yield axios.delete(`/api/songs/guest/remove/${action.payload.id}`);
+                yield put({ type: "FETCH_QUEUE", payload: getHostId.data[0].host_user_id})
+                yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id});
+    }catch(error){
+
+
+    }
+
+
+}
+
+function* markSongAsCompleted(action){
+    console.log("IN MARK SONG AS COMPLETED SAGA", action.payload);
     try {
 		yield axios.put(`/api/songs/remove/${action.payload.id}`);
-		// yield put({ type: "FETCH_QUEUE", payload: action.payload});
+        yield put({ type: "FETCH_QUEUE", payload: action.payload});
+
+
 	} catch (error) {
 		console.log("REMOVE FROM QUEUE REQUEST FAILED", error);
 	}
@@ -56,7 +76,8 @@ function* queueSaga() {
     yield takeLatest("POST_TO_QUEUE", postToQueue)
     yield takeLatest("FETCH_MY_CURRENT_SESSION_SONGS", fetchMyCurrentSongs)
     yield takeLatest("FETCH_MY_SONG_HISTORY", fetchMySongHistory)
-    yield takeLatest("REMOVE_FROM_QUEUE", removeFromQueue)
+    yield takeLatest("MARK_SONG_AS_COMPLETED", markSongAsCompleted)
+    yield takeLatest("DELETE_FROM_MY_QUEUE", deleteFromQueue)
 }
 
 export default queueSaga;

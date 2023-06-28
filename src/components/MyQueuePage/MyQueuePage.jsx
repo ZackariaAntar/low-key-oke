@@ -30,7 +30,7 @@ function MyQueuePage(){
     },[])
 
     const deleteMySongFromQueue = (obj) =>{
-        // dispatch({ type: "REMOVE_FROM_QUEUE", payload: obj });
+        dispatch({ type: "DELETE_FROM_MY_QUEUE", payload: obj });
         console.log('obj', obj);
         setToggle(!toggle);
         setPropId(null)
