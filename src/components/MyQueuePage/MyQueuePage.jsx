@@ -1,27 +1,164 @@
 import { Container } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+    Button,
+	IconButton,
+	Divider,
+	Grid,
+    Box,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+	Paper,
+	Typography,
+} from "@mui/material";
+
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 function MyQueuePage(){
     const dispatch = useDispatch()
     const user = useSelector((store)=> store.user)
     const mySongs = useSelector((store)=> store.mySongs)
+    const [toggle, setToggle] = useState(false)
+    let [propId, setPropId] = useState(null)
     useEffect(()=>{
-        dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload:user.id});
+        dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id});
 
     },[])
+
+    const deleteMySongFromQueue = (id) =>{
+        console.log(id)
+        setToggle(!toggle);
+
+    }
+    const activateDialog = (id) =>{
+        setPropId(propId = id)
+        console.log('song id',id)
+        console.log('prop id', propId)
+        console.log('new prop id', propId);
+        // setToggle(!toggle);
+
+    }
+    console.log(propId);
+
+
     return (
-		<Container maxWidth={"sm"}>
-			<div>
-				{mySongs &&
-					mySongs.map((song) => (
-						<div key={song.id}>
-							<p>
-								{song.title} by {song.artist} {song.url}
-							</p>
-						</div>
-					))}
-			</div>
+		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
+			{mySongs &&
+				mySongs.map((song, i) => (
+					<>
+						<Paper
+							sx={{
+								my: 1,
+								mx: "auto",
+								p: 2,
+							}}
+							key={song.id}
+							elevation={4}
+							value={song.id}
+						>
+							<Box
+								sx={{
+									width: "100%",
+									maxWidth: 360,
+									bgcolor: "background.paper",
+								}}
+								elevation={5}
+							>
+								<Box sx={{ my: 0, mx: 1 }}>
+									<Grid container alignItems="center">
+										<Grid item xs sx={{ my: 2, mx: 0 }}>
+											<Typography
+												gutterBottom
+												variant="body"
+											>
+												id: {song.id} {song.title} by{" "}
+												{song.artist}
+											</Typography>
+										</Grid>
+									</Grid>
+									<Typography
+										gutterBottom
+										color="text.secondary"
+										variant="body"
+									></Typography>
+									<Typography
+										noWrap
+										color="text.secondary"
+										variant="caption"
+										sx={{ fontSize: ".75rem" }}
+									>
+										https://www.youtube.com/watch?v=$
+										{song.url}
+									</Typography>
+								</Box>
+								<Divider variant="middle" />
+								<Box
+									sx={{
+										mt: 2,
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "center",
+										textAlign: "center",
+									}}
+								>
+									<IconButton
+										size="small"
+                                        type="input"
+										onClick={(e) => {
+											setPropId(e.target.value);
+										}}
+										value={song.id}
+									>
+										<DeleteForeverRoundedIcon
+											sx={{ color: "#b00000" }}
+											value={song.id}
+										/>
+									</IconButton>
+									<Typography variant="subtitle2">
+										Opt out
+									</Typography>
+								</Box>
+							</Box>
+							<Dialog
+								open={toggle}
+								onClose={() => setToggle(!toggle)}
+								aria-labelledby="alert-dialog-title"
+								aria-describedby="alert-dialog-description"
+								key={i}
+							>
+								<DialogTitle id="alert-dialog-title">
+									{"Use Google's location service?"}
+								</DialogTitle>
+								<DialogContent>
+									<DialogContentText id="alert-dialog-description">
+										Let Google help apps determine location.
+										This means sending anonymous location
+										data to Google, even when no apps are
+										running.
+									</DialogContentText>
+								</DialogContent>
+								<DialogActions>
+									<Button onClick={() => setToggle(!toggle)}>
+										Disagree
+									</Button>
+									<Button
+										onClick={() => {
+											deleteMySongFromQueue();
+										}}
+										autoFocus
+                                        value={propId}
+									>
+										Agree
+									</Button>
+								</DialogActions>
+							</Dialog>
+						</Paper>
+					</>
+				))}
 		</Container>
 	);
 }
