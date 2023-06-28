@@ -14,7 +14,9 @@ function MyQueuePage(){
         <Container maxWidth={'sm'}>
             <div>
                 {mySongs && mySongs.map(song=>(
-                    <p>{song.title} by {song.artist}</p>
+                    <div>
+                    <p>{song.title} by {song.artist} {song.url}</p>
+                    </div>
                 ))}
             </div>
 

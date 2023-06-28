@@ -13,7 +13,7 @@ function* fetchQueue(action) {
 }
 function* fetchMyCurrentSongs(action) {
 	try {
-		const seshQueue = yield axios.get(`/guest/current/${action.payload}`)
+		const seshQueue = yield axios.get(`/api/songs/guest/current/${action.payload}`)
 
 		yield put({ type: "SET_MY_CURRENT_SESSION_SONGS", payload: seshQueue.data });
 	} catch (error) {
@@ -22,7 +22,7 @@ function* fetchMyCurrentSongs(action) {
 }
 function* fetchMySongHistory(action) {
 	try {
-		const seshQueue = yield axios.get(`/guest/all/history/${action.payload}`)
+		const seshQueue = yield axios.get(`/api/songs/guest/all/history/${action.payload}`)
 
 
 		yield put({ type: "SET_MY_SONG_HISTORY", payload: seshQueue.data });
@@ -33,10 +33,10 @@ function* fetchMySongHistory(action) {
 
 
 function* postToQueue(action){
-    console.log(action.payload);
+    console.log('IN POST TO QUEUE', action.payload);
     try {
 		yield axios.post("/api/songs",action.payload);
-		yield put({ type: "FETCH_QUEUE"});
+        yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id});
 	} catch (error) {
 		console.log("Queue POST request failed", error);
 	}
