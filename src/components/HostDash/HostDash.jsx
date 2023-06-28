@@ -12,7 +12,6 @@ function HostDash(){
     useEffect(()=>{
         dispatch({type: "FETCH_CURRENT_SESSION", payload: user.id});
         dispatch({ type: 'FETCH_QUEUE', payload: user.id });
-
     }, [])
 
     return (
@@ -43,7 +42,7 @@ function HostDash(){
 								<td>{song.queue_order}</td>
 								<td>{song.user_id}</td>
 								<td>
-									{song.title} by {song.artist}
+									{song.title} by { song.artist}
 								</td>
 								<td>{song.url}</td>
 							</tr>

@@ -43,12 +43,8 @@ function RolePage(){
 	return (
 		<Container maxWidth={"xs"}>
 			<h1>Participate</h1>
-
-            <h1>{seshInfo.sesh_code}</h1>
-
 			<div>
-
-				<Button component={Link} to='/host-dash' variant="contained" onClick={makeHost}>
+				<Button sx={{mr:5}} component={Link} to='/host-dash' variant="contained" onClick={makeHost}>
 					HOST
 				</Button>
 
