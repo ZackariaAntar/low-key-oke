@@ -42,7 +42,7 @@ function* postToQueue(action){
 	}
 }
 function* removeFromQueue(action){
-    console.log("IN REMOVE FROM QUEUE SAGA",action.payload);
+    console.log("IN REMOVE FROM QUEUE SAGA", action.payload);
     try {
 		yield axios.put(`/api/songs/remove/${action.payload.id}`);
 		yield put({ type: "FETCH_QUEUE", payload: action.payload.host_id});

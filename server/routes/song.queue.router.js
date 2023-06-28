@@ -93,11 +93,11 @@ router.put("/remove/:id", (req, res) => {
  * POST route template
  */
 router.post("/", (req, res) => {
-	const { sesh_code, user_id, title, artist, url } = req.body;
+	const { sesh_code, user_id, name, title, artist, url } = req.body;
 	let addToQueueQuery = `
-		INSERT INTO queue ("current_sesh_id","user_id","title","artist","url")
-		VALUES($1,$2,$3,$4,$5);`;
-	pool.query(addToQueueQuery, [sesh_code, user_id, title, artist, url])
+		INSERT INTO queue ("current_sesh_id","user_id", "name", "title","artist","url")
+		VALUES($1,$2,$3,$4,$5,$6);`
+	pool.query(addToQueueQuery, [sesh_code, user_id, name, title, artist, url])
 		.then((response) => {
 			console.log("SUCCESSFUL POST TO QUEUE TABLE", response);
 			res.sendStatus(201);
