@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, {useEffect, useState} from 'react';
 import getYouTubeID from "get-youtube-id";
+import {Link} from 'react-router-dom'
 
 import {Card, CardHeader, CardContent, CardActions, Button, Container, Grid, TextField, Typography} from '@mui/material'
 
@@ -14,15 +15,16 @@ function SignupForm(){
 			// dispatch({ type: "FETCH_QUEUE", payload: user.id });
 	}, []);
 
+
     const [url, setUrl] = useState("");
 	const [title, setTitle] = useState("");
 	const [artist, setArtist] = useState("");
 
-    const addSong = (event) =>{
-        event.preventDefault()
+    const addSong = () =>{
+        // event.preventDefault()
+
         const videoId = getYouTubeID(url);
         const queueItem = {
-
             sesh_code: seshInfo.sesh_code,
             user_id: user.id,
             name: user.username,
@@ -33,16 +35,21 @@ function SignupForm(){
         dispatch({type:'POST_TO_QUEUE', payload: queueItem})
 
     }
+      console.log(title, artist, url);
+
+
     return (
 		<Container maxWidth={"sm"}>
+			<h2>{seshInfo.sesh_code}</h2>
 			<Card elevation={5}>
 				<CardContent>
 					<CardHeader title={"Sign-up to sing!"} align={"center"} />
 					<Typography sx={{ ml: 1 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
-					<form noValidate onSubmit={addSong}>
+					<form noValidate>
 						<TextField
+							type="text"
 							margin="normal"
 							fullWidth
 							id="username"
@@ -53,6 +60,7 @@ function SignupForm(){
 							}}
 						/>
 						<TextField
+							type="text"
 							margin="normal"
 							fullWidth
 							id="password"
@@ -63,6 +71,7 @@ function SignupForm(){
 							}}
 						/>
 						<TextField
+							type="url"
 							margin="normal"
 							fullWidth
 							id="password"
@@ -72,20 +81,20 @@ function SignupForm(){
 								setUrl(e.target.value);
 							}}
 						/>
+						<CardActions onClick={addSong}>
+							<Button
+								type="submit"
+								sx={{ m: 2 }}
+								variant="contained"
+								size="large"
+								component={Link}
+								to="/my-queue"
+							>
+								Submit
+							</Button>
+						</CardActions>
 					</form>
 				</CardContent>
-				<CardActions>
-					<Button
-						type="submit"
-						sx={{ m: 2 }}
-						variant="contained"
-						size="large"
-						component={Link}
-						to="/my-queue"
-					>
-						Submit
-					</Button>
-				</CardActions>
 			</Card>
 			{/* <form onSubmit={addSong}>
 				<label htmlFor="title">
