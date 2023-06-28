@@ -26,6 +26,7 @@ import RolePage from "../RolePage/RolePage";
 import HostDash from "../HostDash/HostDash";
 import MainDisplay from "../MainDisplay/MainDisplay";
 import SignupForm from "../SignupForm/SignupForm";
+import MyQueuePage from "../MyQueuePage/MyQueuePage";
 
 import { Button } from "@mui/material";
 
@@ -96,6 +97,14 @@ function App() {
 
 					<ProtectedRoute exact path="/signup">
 							<SignupForm />
+					</ProtectedRoute>
+
+          <ProtectedRoute exact path="/my-queue">
+							<MyQueuePage />
+					</ProtectedRoute>
+
+          <ProtectedRoute exact path="/my-history">
+
 					</ProtectedRoute>
 
 					{/* ---------------------------   UP  ------------------------------------- */}
