@@ -20,8 +20,9 @@ function SignupForm(){
 	const [title, setTitle] = useState("");
 	const [artist, setArtist] = useState("");
 
-    const addSong = (event) =>{
-        event.preventDefault()
+    const addSong = () =>{
+        // event.preventDefault()
+
         const videoId = getYouTubeID(url);
         const queueItem = {
             sesh_code: seshInfo.sesh_code,
@@ -39,6 +40,7 @@ function SignupForm(){
 
     return (
 		<Container maxWidth={"sm"}>
+			<h2>{seshInfo.sesh_code}</h2>
 			<Card elevation={5}>
 				<CardContent>
 					<CardHeader title={"Sign-up to sing!"} align={"center"} />
@@ -79,20 +81,20 @@ function SignupForm(){
 								setUrl(e.target.value);
 							}}
 						/>
+						<CardActions onClick={addSong}>
+							<Button
+								type="submit"
+								sx={{ m: 2 }}
+								variant="contained"
+								size="large"
+								component={Link}
+								to="/my-queue"
+							>
+								Submit
+							</Button>
+						</CardActions>
 					</form>
 				</CardContent>
-				<CardActions onClick={addSong}>
-					<Button
-						type="submit"
-						sx={{ m: 2 }}
-						variant="contained"
-						size="large"
-						component={Link}
-						to="/my-queue"
-					>
-						Submit
-					</Button>
-				</CardActions>
 			</Card>
 			{/* <form onSubmit={addSong}>
 				<label htmlFor="title">

@@ -91,7 +91,7 @@ function App() {
 							<HostDash />
 					</ProtectedRoute>
 
-					<ProtectedRoute exact path="/main-display">
+          <ProtectedRoute exact path="/main-display">
 						<MainDisplay />
 					</ProtectedRoute>
 

@@ -46,7 +46,7 @@ function MyQueuePage(){
 
     return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
-			{mySongs &&
+			{
 				mySongs.map((song, i) => (
 					<>
 						<Paper
@@ -57,7 +57,6 @@ function MyQueuePage(){
 							}}
 							key={song.id}
 							elevation={4}
-							value={song.id}
 						>
 							<Box
 								sx={{
@@ -118,59 +117,58 @@ function MyQueuePage(){
 									</Typography>
 								</Box>
 							</Box>
-							<Dialog
-								open={toggle}
-								onClose={() => setToggle(!toggle)}
-								aria-labelledby="alert-dialog-title"
-								aria-describedby="alert-dialog-description"
-								key={i}
-							>
-								<DialogTitle
-									id="alert-dialog-title"
-									sx={{ color: "red", textAlign: "center" }}
-								>
-									{
-										" Removing a song from the queue cannot be undone!"
-									}
-								</DialogTitle>
-								<DialogContent>
-									<DialogContentText
-										sx={{
-											textAlign: "center",
-										}}
-										id="alert-dialog-description"
-									>
-										Are you sure that you want to delete
-										this song?
-									</DialogContentText>
-								</DialogContent>
-								<DialogActions
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-									}}
-								>
-									<Button
-										variant="contained"
-
-										autoFocus
-										onClick={() => setToggle(!toggle)}
-										sx={{ mb: 5 }}
-									>
-										Nevermind
-									</Button>
-									<Button
-                                    variant="outlined"
-                                    color="error"
-										onClick={() =>
-											deleteMySongFromQueue(propId)
-										}
-									>
-										Remove Song from my queue
-									</Button>
-								</DialogActions>
-							</Dialog>
 						</Paper>
+						<Dialog
+							open={toggle}
+							onClose={() => setToggle(!toggle)}
+							aria-labelledby="alert-dialog-title"
+							aria-describedby="alert-dialog-description"
+							key={i}
+						>
+							<DialogTitle
+								id="alert-dialog-title"
+								sx={{ color: "red", textAlign: "center" }}
+							>
+								{
+									" Removing a song from the queue cannot be undone!"
+								}
+							</DialogTitle>
+							<DialogContent>
+								<DialogContentText
+									sx={{
+										textAlign: "center",
+									}}
+									id="alert-dialog-description"
+								>
+									Are you sure that you want to delete this
+									song?
+								</DialogContentText>
+							</DialogContent>
+							<DialogActions
+								sx={{
+									display: "flex",
+									flexDirection: "column",
+								}}
+							>
+								<Button
+									variant="contained"
+									autoFocus
+									onClick={() => setToggle(!toggle)}
+									sx={{ mb: 5 }}
+								>
+									Nevermind
+								</Button>
+								<Button
+									variant="outlined"
+									color="error"
+									onClick={() =>
+										deleteMySongFromQueue(propId)
+									}
+								>
+									Remove Song from my queue
+								</Button>
+							</DialogActions>
+						</Dialog>
 					</>
 				))}
 		</Container>

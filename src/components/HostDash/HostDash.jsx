@@ -1,7 +1,10 @@
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Link} from 'react-router-dom'
+import {HashRouter as Router, Route, Link} from 'react-router-dom'
+import MainDisplay from "../MainDisplay/MainDisplay";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+
 
 function HostDash(){
     const dispatch = useDispatch()
@@ -15,7 +18,7 @@ function HostDash(){
     }, [])
 
     return (
-		<>
+		<Router>
 			<div>
                 <h1>CURRENT SESSION CODE IS {seshInfo.sesh_code}</h1>
 				<h1>Setup instructions</h1>
@@ -50,7 +53,7 @@ function HostDash(){
 					</tbody>
 				</table>
 			</div>
-		</>
+		</Router>
 	);
 }
 
