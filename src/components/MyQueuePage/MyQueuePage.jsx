@@ -23,23 +23,22 @@ function MyQueuePage(){
     const user = useSelector((store)=> store.user)
     const mySongs = useSelector((store)=> store.mySongs)
     const [toggle, setToggle] = useState(false)
-    let [propId, setPropId] = useState(null)
+    let [propId, setPropId] = useState({})
     useEffect(()=>{
         dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id});
 
     },[])
 
-    const deleteMySongFromQueue = (id) =>{
-        console.log(id)
+    const deleteMySongFromQueue = (obj) =>{
+        // dispatch({ type: "REMOVE_FROM_QUEUE", payload: obj });
+        console.log('obj', obj);
         setToggle(!toggle);
+        setPropId(null)
 
     }
-    const activateDialog = (id) =>{
-        setPropId(propId = id)
-        console.log('song id',id)
-        console.log('prop id', propId)
-        console.log('new prop id', propId);
-        // setToggle(!toggle);
+    const activateDialog = value => () =>{
+        setPropId(value)
+        setToggle(!toggle);
 
     }
     console.log(propId);
@@ -107,15 +106,11 @@ function MyQueuePage(){
 								>
 									<IconButton
 										size="small"
-                                        type="input"
-										onClick={(e) => {
-											setPropId(e.target.value);
-										}}
-										value={song.id}
+										value={song}
+										onClick={activateDialog(song)}
 									>
 										<DeleteForeverRoundedIcon
 											sx={{ color: "#b00000" }}
-											value={song.id}
 										/>
 									</IconButton>
 									<Typography variant="subtitle2">
@@ -130,29 +125,48 @@ function MyQueuePage(){
 								aria-describedby="alert-dialog-description"
 								key={i}
 							>
-								<DialogTitle id="alert-dialog-title">
-									{"Use Google's location service?"}
+								<DialogTitle
+									id="alert-dialog-title"
+									sx={{ color: "red", textAlign: "center" }}
+								>
+									{
+										" Removing a song from the queue cannot be undone!"
+									}
 								</DialogTitle>
 								<DialogContent>
-									<DialogContentText id="alert-dialog-description">
-										Let Google help apps determine location.
-										This means sending anonymous location
-										data to Google, even when no apps are
-										running.
+									<DialogContentText
+										sx={{
+											textAlign: "center",
+										}}
+										id="alert-dialog-description"
+									>
+										Are you sure that you want to delete
+										this song?
 									</DialogContentText>
 								</DialogContent>
-								<DialogActions>
-									<Button onClick={() => setToggle(!toggle)}>
-										Disagree
+								<DialogActions
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+									}}
+								>
+									<Button
+										variant="contained"
+
+										autoFocus
+										onClick={() => setToggle(!toggle)}
+										sx={{ mb: 5 }}
+									>
+										Nevermind
 									</Button>
 									<Button
-										onClick={() => {
-											deleteMySongFromQueue();
-										}}
-										autoFocus
-                                        value={propId}
+                                    variant="outlined"
+                                    color="error"
+										onClick={() =>
+											deleteMySongFromQueue(propId)
+										}
 									>
-										Agree
+										Remove Song from my queue
 									</Button>
 								</DialogActions>
 							</Dialog>
