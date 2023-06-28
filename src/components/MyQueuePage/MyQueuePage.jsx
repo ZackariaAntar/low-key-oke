@@ -10,18 +10,20 @@ function MyQueuePage(){
         dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload:user.id});
 
     },[])
-    return(
-        <Container maxWidth={'sm'}>
-            <div>
-                {mySongs && mySongs.map(song=>(
-                    <div>
-                    <p>{song.title} by {song.artist} {song.url}</p>
-                    </div>
-                ))}
-            </div>
-
-        </Container>
-    )
+    return (
+		<Container maxWidth={"sm"}>
+			<div>
+				{mySongs &&
+					mySongs.map((song) => (
+						<div key={song.id}>
+							<p>
+								{song.title} by {song.artist} {song.url}
+							</p>
+						</div>
+					))}
+			</div>
+		</Container>
+	);
 }
 
 export default MyQueuePage

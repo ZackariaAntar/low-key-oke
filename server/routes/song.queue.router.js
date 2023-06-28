@@ -32,7 +32,7 @@ router.get("/guest/current/:id", (req, res) => {
 	let user_id = req.params.id;
 
 	let queryText = `
-		SELECT * FROM queue
+		SELECT queue.* FROM queue
 JOIN "sesh_junction" ON "sesh_junction"."sesh_code" = "queue"."current_sesh_id" AND "sesh_junction"."user_id" = "queue"."user_id"
 WHERE "queue"."user_id" = $1
 ORDER BY "queue"."queue_order" ASC;`;
