@@ -32,40 +32,6 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-router.put('/host', (req, res) => {
-  const sesh_code = req.body.code;
-  const auth = req.body.auth;
-  const userId = req.body.user
-
-  const queryText = `UPDATE TABLE "user" SET auth_level = $1, current_session = $2
-    WHERE id = $3`;
-    const queryValues = [auth, sesh_code, userId]
-  pool
-    .query(queryText, queryValues)
-    .then(() => res.sendStatus(200))
-    .catch((err) => {
-      console.log('Host UPDATE failed: ', err);
-      res.sendStatus(500);
-    });
-})
-
-router.put('/user', (req, res) => {
-  const sesh_code = req.body.code;
-  const auth = req.body.auth;
-  const userId = req.body.user
-
-  const queryText = `UPDATE TABLE "user" SET auth_level = $1, current_session = $2
-    WHERE id = $3`;
-    const queryValues = [auth, sesh_code, userId]
-  pool
-    .query(queryText, queryValues)
-    .then(() => res.sendStatus(200))
-    .catch((err) => {
-      console.log('Guest UPDATE failed: ', err);
-      res.sendStatus(500);
-    });
-})
-
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful

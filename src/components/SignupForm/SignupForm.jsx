@@ -1,23 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import getYouTubeID from "get-youtube-id";
 
 function SignupForm(){
+    const dispatch = useDispatch();
 
     const user = useSelector((store)=>store.user)
-    const sesh = useSelector((store)=>store.sesh)
-    const dispatch = useDispatch();
+    const seshInfo = useSelector((store)=>store.seshInfo)
+     useEffect(() => {
+			dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
+			dispatch({ type: "FETCH_QUEUE", payload: user.id });
+	}, []);
+
     const [url, setUrl] = useState("");
 	const [title, setTitle] = useState("");
 	const [artist, setArtist] = useState("");
+
     const addSong = (event) =>{
         event.preventDefault()
         const videoId = getYouTubeID(url);
         const queueItem = {
+
+            sesh_code: seshInfo.sesh_code,
+            user_id: user.id,
             title: title,
             artist: artist,
             url: videoId,
-            sesh_code: sesh.code
         }
         dispatch({type:'POST_TO_QUEUE', payload: queueItem})
 

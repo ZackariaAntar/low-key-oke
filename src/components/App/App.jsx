@@ -87,24 +87,7 @@ function App() {
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/host-dash">
-						{user.auth_level === 1 ? (
 							<HostDash />
-						) : (
-							<>
-								<h1>
-									Water your own grass, it's not greener over
-									here!
-								</h1>
-								<Button
-									variant={"contained"}
-									component={Link}
-									to={"/signup"}
-									aria={"back to signup sheet"}
-								>
-									Back
-								</Button>
-							</>
-						)}
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/main-display">
@@ -112,23 +95,7 @@ function App() {
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/signup">
-						{user.auth_level === 2 ? (
 							<SignupForm />
-						) : (
-							<>
-								<h1>
-									You may think you have the most-est but you don't.
-								</h1>
-								<Button
-									variant={"contained"}
-									component={Link}
-									to={"/host-dash"}
-									aria={"back to host dashboard"}
-								>
-									Back
-								</Button>
-							</>
-						)}
 					</ProtectedRoute>
 
 					{/* ---------------------------   UP  ------------------------------------- */}
