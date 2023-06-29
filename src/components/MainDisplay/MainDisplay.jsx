@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Button } from "@mui/material";
+import { Container, Button, Skeleton, Box } from "@mui/material";
 // https://github.com/tjallingt/react-youtube
 
 function MainDisplay() {
@@ -16,7 +16,7 @@ function MainDisplay() {
 	const queue = useSelector((store) => store.queue);
 	const user = useSelector((store) => store.user);
 
-	const [next, setNext] = useState(false);
+	const [nextSong, setNextSong] = useState(false);
 
 	const fetchQueue = () => {
 		console.log('fetch queue');
@@ -25,7 +25,7 @@ function MainDisplay() {
 		};
 
 		useEffect(() => {
-			const timer = setInterval(fetchUserQueue, 9000);
+			const timer = setInterval(fetchUserQueue, 5000);
 
 			return () => clearInterval(timer);
 		}, [dispatch, user]);
@@ -36,7 +36,7 @@ function MainDisplay() {
 	const handlePlay = (event) => {
 		console.log("playing");
 		dispatch({ type: "FETCH_QUEUE", payload: user.id });
-		setNext(!next);
+
 
 		// event.target.playVideo();
 	};
@@ -44,11 +44,12 @@ function MainDisplay() {
 		console.log("ready");
 		// dispatch({ type: "FETCH_QUEUE", payload: user.id });
 		// event.target.pauseVideo();
+		setNextSong(!nextSong);
 	};
 	const handleEnd = () => {
 		console.log("ended");
-		dispatch({ type: "MARK_SONG_AS_COMPLETED", payload: queue[0] });
-		setNext(!next);
+		dispatch({ type: "MARK_SONG_AS_COMPLETED", payload: queue[0]});
+		setNextSong(!nextSong);
 		// event.target.pauseVideo()
 	};
 
@@ -65,49 +66,54 @@ function MainDisplay() {
 
 	if (!queue[0]) {
 		return (
-			<Container maxWidth={"xs"} sx={{ pt: 3 }}>
+			<Container maxWidth={"md"} sx={{ pt: 3 }}>
 				<h1>Join code: {seshInfo.sesh_code}</h1>
-				<Button variant="contained" >
-					{" "}
-					START HOSTING{" "}
-				</Button>
+				<Box
+					sx={{ height: 550, width: "900", boxShadow: 19 }}
+				>
+					<Skeleton
+						sx={{
+							height: 550,
+							width: "900",
+
+						}}
+						animation="wave"
+						variant="rectangular"
+					/>
+				</Box>
+				<h1>WAITING FOR PLAYERS TO JOIN</h1>
 			</Container>
 		);
 	} else {
 		return (
 			<Container maxWidth={"md"} sx={{ pt: 3 }}>
 				<h1>Join code: {seshInfo.sesh_code}</h1>
-				<div>
-					<YouTube
-						videoId={queue[0]?.url}
-						opts={options}
-						onReady={handleReady}
-						onPlay={handlePlay}
-						onEnd={handleEnd}
-					/>
-					{next ? (
-						<Button variant="contained">
-							{" "}
-							NEXT SONG{" "}
-						</Button>
-					) : (
-						<></>
-					)}
-				</div>
+				{nextSong ? (
+					<div>
+						<YouTube
+							videoId={queue[0]?.url}
+							opts={options}
+							onReady={handleReady}
+							onPlay={handlePlay}
+							onEnd={handleEnd}
+						/>
+					</div>
+				) : (
+					<div>
+						<YouTube
+							videoId={queue[0]?.url}
+							opts={options}
+							onReady={handleReady}
+							onPlay={handlePlay}
+							onEnd={handleEnd}
+						/>
+					</div>
+				)}
+
 				{queue[1] ? (
 					<div>
 						<h2>
-							<Button
-								onClick={() =>
-									dispatch({
-										type: "FETCH_QUEUE",
-										payload: user.id,
-									})
-								}
-							>
-								ON DECK:
-							</Button>
-							{queue[1].user_id} with {queue[1].title} by
+							{queue[1].name} with {queue[1].title} by
 							{queue[1].artist}
 						</h2>
 					</div>
@@ -121,20 +127,3 @@ function MainDisplay() {
 
 export default MainDisplay;
 
-//
-{
-	/* <div>
-					<YouTube
-						videoId={'DykZEOV5wD4'}
-						opts={options}
-						onReady={handleReady}
-						onPlay={handlePlay}
-						onEnd={handleEnd}
-					/>
-				</div>
-				<div>
-					<h2>
-						WAITING FOR PLAYERS TO JOIN
-					</h2>
-				</div> */
-}
