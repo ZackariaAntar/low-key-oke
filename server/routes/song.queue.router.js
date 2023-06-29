@@ -62,7 +62,8 @@ router.get("/guest/all/history/:id", (req, res) => {
 
 	let queryText = `
 		SELECT * FROM queue
-		WHERE user_id = $1`;
+		WHERE user_id = $1
+		ORDER BY id ASC;`;
 	pool.query(queryText, [user_id])
 		.then((result) => {
 			console.log(

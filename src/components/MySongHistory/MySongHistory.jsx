@@ -12,6 +12,7 @@ import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import BottomNav from "../BottomNav/BottomNav";
 
 function MySongHistory(){
     const dispatch = useDispatch()
@@ -74,9 +75,7 @@ function MySongHistory(){
 										color="text.secondary"
 										variant="caption"
 										sx={{ fontSize: ".75rem" }}
-									>
-
-									</Typography>
+									></Typography>
 								</Box>
 								<Divider variant="middle" />
 								<Box
@@ -111,12 +110,14 @@ function MySongHistory(){
 							</Box>
 						</Paper>
 					))}
+				<BottomNav />
 			</Container>
 		);
     }else{
         return(
             <Container maxWidth={"xs"} sx={{ pt: 3 }}>
                 <h1>Nothing to see here!</h1>
+                <BottomNav />
             </Container>
         )
     }
