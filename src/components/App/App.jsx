@@ -29,6 +29,7 @@ import SignupForm from "../SignupForm/SignupForm";
 import MyQueuePage from "../MyQueuePage/MyQueuePage";
 
 import { Button } from "@mui/material";
+import MySongHistory from "../MySongHistory/MySongHistory";
 
 
 
@@ -104,6 +105,7 @@ function App() {
 					</ProtectedRoute>
 
           <ProtectedRoute exact path="/my-history">
+            <MySongHistory />
 
 					</ProtectedRoute>
 

@@ -2,9 +2,7 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-/**
- * GET route template
- */
+
 router.get("/host/view/:id", (req, res) => {
 	let host_id = req.params.id;
 	let queryText = `
@@ -28,14 +26,16 @@ router.get("/host/view/:id", (req, res) => {
 		});
 });
 
+
+
 router.get("/guest/current/:id", (req, res) => {
 	let user_id = req.params.id;
 
 	let queryText = `
 		SELECT queue.* FROM queue
-JOIN "sesh_junction" ON "sesh_junction"."sesh_code" = "queue"."current_sesh_id" AND "sesh_junction"."user_id" = "queue"."user_id"
-WHERE "queue"."user_id" = $1
-ORDER BY "queue"."queue_order" ASC;`;
+		JOIN "sesh_junction" ON "sesh_junction"."sesh_code" = "queue"."current_sesh_id" AND "sesh_junction"."user_id" = "queue"."user_id"
+		WHERE "queue"."user_id" = $1
+		ORDER BY "queue"."queue_order" ASC;`;
 	pool.query(queryText, [user_id])
 		.then((result) => {
 			console.log(
@@ -52,6 +52,9 @@ ORDER BY "queue"."queue_order" ASC;`;
 			res.sendStatus(500);
 		});
 });
+
+
+
 router.get("/guest/all/history/:id", (req, res) => {
 	let user_id = req.params.id;
 
@@ -71,6 +74,8 @@ router.get("/guest/all/history/:id", (req, res) => {
 			res.sendStatus(500);
 		});
 });
+
+
 
 router.get("/guest/requesting/host/user/:id", (req, res) => {
 	let queueRowId = req.params.id;
@@ -110,6 +115,9 @@ router.put("/remove/:id", (req, res) => {
 			res.sendStatus(500);
 		});
 });
+
+
+
 router.delete("/guest/remove/:id", (req, res) => {
 	let queueRowID = req.params.id;
 	let queryText = `
@@ -127,9 +135,7 @@ router.delete("/guest/remove/:id", (req, res) => {
 });
 
 
-/**
- * POST route template
- */
+
 router.post("/", (req, res) => {
 	const { sesh_code, user_id, name, title, artist, url } = req.body;
 	let addToQueueQuery = `
@@ -144,7 +150,44 @@ router.post("/", (req, res) => {
 			console.log("PROBLEM POSTING TO THE QUEUE TABLE", err);
 			res.sendStatus(500);
 		});
-	// POST route code here
+});
+
+
+router.put("/guest/set/song/favorite/:id", (req, res) => {
+	let queueRowID = req.params.id;
+	console.log(queueRowID);
+
+	let queryText = `
+		UPDATE queue SET favorited = true
+		WHERE id = $1;`;
+	pool.query(queryText, [queueRowID])
+		.then((response) => {
+			console.log("SUCCESS IN FAVORITING SONG ", response);
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			console.log("PROBLEM WITH FAVORITING SONG ", err);
+			res.sendStatus(500);
+		});
+});
+
+
+router.put("/guest/set/song/unfavorite/:id", (req, res) => {
+	let queueRowID = req.params.id;
+	console.log(queueRowID);
+
+	let queryText = `
+		UPDATE queue SET favorited = false
+		WHERE id = $1;`;
+	pool.query(queryText, [queueRowID])
+		.then((response) => {
+			console.log("SUCCESS IN UNFAVORITING ", response);
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			console.log("PROBLEM WITH UNFAVORITING SONG ", err);
+			res.sendStatus(500);
+		});
 });
 
 module.exports = router;
