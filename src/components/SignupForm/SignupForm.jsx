@@ -3,7 +3,9 @@ import React, {useEffect, useState} from 'react';
 import getYouTubeID from "get-youtube-id";
 import {Link} from 'react-router-dom'
 
-import {Card, CardHeader, CardContent, CardActions, Button, Container, Grid, TextField, Typography} from '@mui/material'
+import {Box, Card, CardHeader, CardContent, CardActions, Button, Container, Grid, TextField, Typography} from '@mui/material'
+
+import BottomNav from "../BottomNav/BottomNav";
 
 function SignupForm(){
     const dispatch = useDispatch();
@@ -39,7 +41,15 @@ function SignupForm(){
 
 
     return (
-		<Container maxWidth={"sm"}>
+		<Container
+			maxWidth={"sm"}
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+			}}
+		>
+			<h1>SIGN UP</h1>
 			<h2>{seshInfo.sesh_code}</h2>
 			<Card elevation={5}>
 				<CardContent>
@@ -134,6 +144,11 @@ function SignupForm(){
 					<input type="submit" value={"SUBMIT"} />
 				</label>
 			</form> */}
+
+
+
+			<BottomNav />
+     
 		</Container>
 	);
 }

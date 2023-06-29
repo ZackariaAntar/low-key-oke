@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/host/view/:id", (req, res) => {
 	let host_id = req.params.id;
 	let queryText = `
-		SELECT q."id", q.current_sesh_id, q."name", q.title, q.artist, q.url, q.in_queue, q.queue_order, q.favorited, sesh.host_user_id FROM "queue" as q
+		SELECT q."id", q.current_sesh_id, q."user_id", q."name", q.title, q.artist, q.url, q.in_queue, q.queue_order, q.favorited, sesh.host_user_id FROM "queue" as q
 		JOIN "sesh_junction" ON "sesh_junction"."sesh_code" = q."current_sesh_id" AND "sesh_junction"."user_id" = q."user_id"
 		JOIN "sesh" ON "sesh"."join_code" = "sesh_junction"."sesh_code" AND "sesh"."host_user_id" = $1
 		WHERE q."in_queue" = true
@@ -35,6 +35,8 @@ router.get("/guest/current/:id", (req, res) => {
 		SELECT queue.* FROM queue
 		JOIN "sesh_junction" ON "sesh_junction"."sesh_code" = "queue"."current_sesh_id" AND "sesh_junction"."user_id" = "queue"."user_id"
 		WHERE "queue"."user_id" = $1
+		AND
+		"queue"."in_queue" = true
 		ORDER BY "queue"."queue_order" ASC;`;
 	pool.query(queryText, [user_id])
 		.then((result) => {
@@ -60,7 +62,8 @@ router.get("/guest/all/history/:id", (req, res) => {
 
 	let queryText = `
 		SELECT * FROM queue
-		WHERE user_id = $1`;
+		WHERE user_id = $1
+		ORDER BY id ASC;`;
 	pool.query(queryText, [user_id])
 		.then((result) => {
 			console.log(
