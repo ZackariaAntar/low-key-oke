@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {HashRouter as Router, Route, Link} from 'react-router-dom'
 import MainDisplay from "../MainDisplay/MainDisplay";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-
+import{Container} from '@mui/material'
 
 function HostDash(){
     const dispatch = useDispatch()
@@ -18,16 +18,23 @@ function HostDash(){
     }, [])
 
     return (
-		<Router>
-			<div>
-                <h1>CURRENT SESSION CODE IS {seshInfo.sesh_code}</h1>
-				<h1>Setup instructions</h1>
-				<p>Instructions go here!</p>
-			</div>
+		<Container
+        maxWidth={"sm"} sx={{ display:'flex', flexDirection:'column', pt: 3 }}>
+			<h1>CURRENT SESSION CODE IS {seshInfo.sesh_code}</h1>
+			<h1>Setup instructions</h1>
+			<p>Instructions go here!</p>
+
 			<div>
 				<h1>Open main display in a new tab</h1>
-				<Button variant={"contained"} component={Link} to='/main-display'>MAIN DISPLAY</Button>
+				<Button
+					variant={"contained"}
+					component={Link}
+					to="/main-display"
+				>
+					MAIN DISPLAY
+				</Button>
 			</div>
+
 			<div>
 				<h1>Song queue</h1>
 				<table>
@@ -40,20 +47,21 @@ function HostDash(){
 						</tr>
 					</thead>
 					<tbody>
-						{queue && queue.map((song) => (
-							<tr key={song.id}>
-								<td>{song.queue_order}</td>
-								<td>{song.user_id}</td>
-								<td>
-									{song.title} by { song.artist}
-								</td>
-								<td>{song.url}</td>
-							</tr>
-						))}
+						{queue &&
+							queue.map((song) => (
+								<tr key={song.id}>
+									<td>{song.queue_order}</td>
+									<td>{song.name}</td>
+									<td>
+										{song.title} by {song.artist}
+									</td>
+									<td>{song.url}</td>
+								</tr>
+							))}
 					</tbody>
 				</table>
 			</div>
-		</Router>
+		</Container>
 	);
 }
 

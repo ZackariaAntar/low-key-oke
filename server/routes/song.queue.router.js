@@ -35,6 +35,8 @@ router.get("/guest/current/:id", (req, res) => {
 		SELECT queue.* FROM queue
 		JOIN "sesh_junction" ON "sesh_junction"."sesh_code" = "queue"."current_sesh_id" AND "sesh_junction"."user_id" = "queue"."user_id"
 		WHERE "queue"."user_id" = $1
+		AND
+		"queue"."in_queue" = true
 		ORDER BY "queue"."queue_order" ASC;`;
 	pool.query(queryText, [user_id])
 		.then((result) => {

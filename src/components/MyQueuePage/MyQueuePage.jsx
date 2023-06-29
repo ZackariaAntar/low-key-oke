@@ -46,7 +46,9 @@ function MyQueuePage(){
 
     return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
-			{
+
+            {mySongs.length !== 0 ?
+            <div> {
 				mySongs.map((song, i) => (
 					<>
 						<Paper
@@ -170,7 +172,13 @@ function MyQueuePage(){
 							</DialogActions>
 						</Dialog>
 					</>
-				))}
+				))} </div>
+                : <><h1>Nothing to see here</h1></>
+
+        }
+
+
+
 		</Container>
 	);
 }

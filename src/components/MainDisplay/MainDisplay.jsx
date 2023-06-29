@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
-import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {Button} from '@mui/material'
+import { Container, Button } from "@mui/material";
 // https://github.com/tjallingt/react-youtube
 
 
@@ -13,14 +12,14 @@ function MainDisplay(){
 	    useEffect(() => {
 			dispatch({ type: "FETCH_QUEUE", payload: user.id });
 			dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
-		}, [dispatch]);
+		}, []);
 		const seshInfo = useSelector((store) => store.seshInfo);
 		const queue = useSelector((store) => store.queue);
 		const user = useSelector((store) => store.user);
 
 
 
-		const [fetch, setFetch] = useState(false)
+		const [next, setNext] = useState(false)
 
 		// console.log(queue);
 
@@ -29,6 +28,9 @@ function MainDisplay(){
 
 	const handlePlay = (event) =>{
 		console.log('playing');
+		dispatch({ type: "FETCH_QUEUE", payload: user.id });
+		setNext(!next)
+
 		// event.target.playVideo();
 
 	}
@@ -40,7 +42,8 @@ function MainDisplay(){
 	}
 	const handleEnd = () =>{
 		console.log('ended')
-		dispatch({ type: "MARK_SONG_AS_COMPLETED", payload: queue[0] });
+		dispatch({ type: "MARK_SONG_AS_COMPLETED", payload: queue[0]});
+		setNext(!next)
 		// event.target.pauseVideo()
 
 
@@ -98,15 +101,18 @@ function MainDisplay(){
 
 	if (!queue[0]) {
 		return (
-			<Container maxWidth="md">
+			<Container maxWidth={"xs"} sx={{ pt: 3 }}>
 				<h1>Join code: {seshInfo.sesh_code}</h1>
-				<Button variant="contained" onClick={getQueue}> START HOSTING </Button>
+				<Button variant="contained" onClick={getQueue}>
+					{" "}
+					START HOSTING{" "}
+				</Button>
 			</Container>
 		);
 
 	} else {
 		return (
-			<Container maxWidth="md">
+			<Container maxWidth={"md"} sx={{ pt: 3 }}>
 				<h1>Join code: {seshInfo.sesh_code}</h1>
 				<div>
 					<YouTube
@@ -116,27 +122,25 @@ function MainDisplay(){
 						onPlay={handlePlay}
 						onEnd={handleEnd}
 					/>
+					{next ? <Button variant="contained" onClick={getQueue}> NEXT SONG </Button> : <></> }
 				</div>
 				{queue[1] ? (
-
-						<div>
-							<h2>
-								<Button
-									onClick={() =>
-										dispatch({
-											type: "FETCH_QUEUE",
-											payload: user.id,
-										})
-									}
-								>
-
-									ON DECK:
-								</Button>
-								{queue[1].user_id} with {queue[1].title} by
-								{queue[1].artist}
-							</h2>
-						</div>
-
+					<div>
+						<h2>
+							<Button
+								onClick={() =>
+									dispatch({
+										type: "FETCH_QUEUE",
+										payload: user.id,
+									})
+								}
+							>
+								ON DECK:
+							</Button>
+							{queue[1].user_id} with {queue[1].title} by
+							{queue[1].artist}
+						</h2>
+					</div>
 				) : (
 					<h1>WAITING FOR MORE PLAYERS</h1>
 				)}
