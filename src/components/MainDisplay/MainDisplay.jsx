@@ -118,7 +118,7 @@ function MainDisplay() {
 						</h2>
 					</div>
 				) : (
-					<h1>WAITING FOR MORE PLAYERS</h1>
+					<h1>No one's on deck :/</h1>
 				)}
 			</Container>
 		);
