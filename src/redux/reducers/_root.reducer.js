@@ -4,6 +4,7 @@ import user from './user.reducer';
 import queue from './songQueue.reducer';
 import seshInfo from './currentSession.reducer'
 import mySongs from './myCurrentQueue.reducer'
+import myHistory from './mySongHistory.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	queue, // will have all of the queue data for all users from the queue table for users associated with a session and its host
 	seshInfo, // will have the user's current session code
 	mySongs, // will have the user's current session songs in the queue.
+	myHistory, // will have all of the songs that a user has sung in the past. 
 });
 
 export default rootReducer;
