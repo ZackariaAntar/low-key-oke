@@ -80,7 +80,7 @@ function* fetchMySongHistory(action) {
 
 function* setSongAsFavorite(action){
     try{
-        yield axios.put(`/api/song/guest/set/song/favorite/${action.payload.songId}`)
+        yield axios.put(`/api/songs/guest/set/song/favorite/${action.payload.songId}`)
         yield put({type:'FETCH_MY_SONG_HISTORY', payload: action.payload.userId})
 
     }catch(error){
@@ -91,7 +91,7 @@ function* setSongAsFavorite(action){
 
 function* unfavoriteSong(action) {
 	try {
-        yield axios.put(`/api/song/guest/set/song/unfavorite/${action.payload}`)
+        yield axios.put(`/api/songs/guest/set/song/unfavorite/${action.payload.songId}`)
         yield put({type:'FETCH_MY_SONG_HISTORY', payload: action.payload.userId})
 	} catch (error) {
         console.log('ERROR UNFAVORITING', error);

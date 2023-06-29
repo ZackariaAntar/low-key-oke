@@ -30,7 +30,7 @@ function MySongHistory(){
         dispatch({type:'MAKE_UNFAVORITE', payload: {songId: id, userId: user.id}})
     }
 
-    if(myHistory.length > 1){
+    if(myHistory.length >= 1){
         return (
 			<Container maxWidth={"xs"} sx={{ pt: 3 }}>
 				{myHistory &&
@@ -75,7 +75,7 @@ function MySongHistory(){
 										variant="caption"
 										sx={{ fontSize: ".75rem" }}
 									>
-										https://www.youtube.com/watch?v=$
+
 									</Typography>
 								</Box>
 								<Divider variant="middle" />
@@ -116,7 +116,6 @@ function MySongHistory(){
     }else{
         return(
             <Container maxWidth={"xs"} sx={{ pt: 3 }}>
-
                 <h1>Nothing to see here!</h1>
             </Container>
         )
