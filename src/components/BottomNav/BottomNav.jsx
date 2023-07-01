@@ -28,9 +28,6 @@ function BottomNav() {
 			display: "flex",
 			flexDirection: "column",
 			mt: 0.1,
-			transitionDuration: '0.4s',
-			border: '5px solid tansparent',
-			borderRadius:'1px',
 
 		}
 
