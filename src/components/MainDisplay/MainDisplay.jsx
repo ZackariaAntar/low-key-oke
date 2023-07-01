@@ -77,7 +77,7 @@ function MainDisplay() {
 	if (!queue[0]) {
 		return (
 			<Container
-				maxWidth={"xl"}
+				maxWidth={"lg"}
 				ssx={{
 					display: "flex",
 					flexDirection: "column",
@@ -105,16 +105,15 @@ function MainDisplay() {
 						</Typography>
 					</CardContent>
 				</Card>
-				<Box sx={{ height: 550, width: "900", boxShadow:2 }}>
-					<Skeleton
-						sx={{
-							height: 550,
-							width: "900",
-						}}
-						animation="wave"
-						variant="rectangular"
-					/>
-				</Box>
+
+					<iframe
+						src="https://app.vectary.com/p/60KYJOcTemYivf16kgsiUw"
+						frameborder="0"
+						width="100%"
+						height="550"
+					></iframe>
+
+
 				<Card
 					elevation={10}
 					sx={{
@@ -141,7 +140,7 @@ function MainDisplay() {
 	} else {
 		return (
 			<Container
-				maxWidth={"xl"}
+				maxWidth={"lg"}
 				sx={{
 					display: "flex",
 					flexDirection: "column",
