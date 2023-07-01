@@ -16,7 +16,7 @@ function MainDisplay() {
 	const queue = useSelector((store) => store.queue);
 	const user = useSelector((store) => store.user);
 
-	const [nextSong, setNextSong] = useState(false);
+	const [nextSong, setNextSong] = useState(0);
 
 	const fetchQueue = () => {
 		console.log('fetch queue');
@@ -44,12 +44,12 @@ function MainDisplay() {
 		console.log("ready");
 		// dispatch({ type: "FETCH_QUEUE", payload: user.id });
 		// event.target.pauseVideo();
-		setNextSong(!nextSong);
+		// setNextSong(!nextSong);
 	};
 	const handleEnd = () => {
 		console.log("ended");
 		dispatch({ type: "MARK_SONG_AS_COMPLETED", payload: queue[0]});
-		setNextSong(!nextSong);
+		setNextSong(nextSong+1);
 		// event.target.pauseVideo()
 	};
 
@@ -88,9 +88,9 @@ function MainDisplay() {
 		return (
 			<Container maxWidth={"md"} sx={{ pt: 3 }}>
 				<h1>Join code: {seshInfo.sesh_code}</h1>
-				{nextSong ? (
 					<div>
 						<YouTube
+						key={nextSong}
 							videoId={queue[0]?.url}
 							opts={options}
 							onReady={handleReady}
@@ -98,27 +98,14 @@ function MainDisplay() {
 							onEnd={handleEnd}
 						/>
 					</div>
-				) : (
-					<div>
-						<YouTube
-							videoId={queue[0]?.url}
-							opts={options}
-							onReady={handleReady}
-							onPlay={handlePlay}
-							onEnd={handleEnd}
-						/>
-					</div>
-				)}
-
 				{queue[1] ? (
 					<div>
 						<h2>
-							{queue[1].name} with {queue[1].title} by
-							{queue[1].artist}
+							{`On deck: ${queue[1].name} with ${queue[1].title} by ${queue[1].artist}`}
 						</h2>
 					</div>
 				) : (
-					<h1>WAITING FOR MORE PLAYERS</h1>
+					<h1>Nobody's on deck :/</h1>
 				)}
 			</Container>
 		);
@@ -127,3 +114,27 @@ function MainDisplay() {
 
 export default MainDisplay;
 
+// {
+// 	nextSong ? (
+// 		<div>
+// 			<YouTube
+// 				key={nextSong}
+// 				videoId={queue[0]?.url}
+// 				opts={options}
+// 				onReady={handleReady}
+// 				onPlay={handlePlay}
+// 				onEnd={handleEnd}
+// 			/>
+// 		</div>
+// 	) : (
+// 		<div>
+// 			<YouTube
+// 				videoId={queue[0]?.url}
+// 				opts={options}
+// 				onReady={handleReady}
+// 				onPlay={handlePlay}
+// 				onEnd={handleEnd}
+// 			/>
+// 		</div>
+// 	);
+// }

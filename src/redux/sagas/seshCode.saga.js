@@ -27,6 +27,7 @@ function* createSeshCode(action) {
 
 	try {
         const seshCode = yield axios.get("/api/sesh");
+		
         const newCode = yield validateCode(seshCode.data)
 
 		console.log('ARRIVED AT seshCode SAGA FROM PART. SAGA RESPONSE FROM DB', seshCode.data,'NEW CODE:', newCode);
