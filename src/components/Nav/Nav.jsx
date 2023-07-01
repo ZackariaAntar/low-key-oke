@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import LeaveSessionButton from '../LeaveSessionButton/LeaveSessionButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
 
@@ -44,19 +45,19 @@ function Nav() {
 				)}
 				{user.in_session && user.is_hosting ? (
 					<>
-							<Link className="navLink" to="/host-dash">
-								Host Dashboard
-							</Link>
+						<Link className="navLink" to="/host-dash">
+							Host Dashboard
+						</Link>
 
-							<Link className="navLink" to="/main-display">
-								Main Display
-							</Link>
+						<Link className="navLink" to="/main-display">
+							Main Display
+						</Link>
 
-							<LogOutButton className="navLink" />
+						<LeaveSessionButton className="navLink" />
 					</>
 				) : (
 					<>
-						<LogOutButton className="navLink" />
+						<LeaveSessionButton className="navLink" />
 					</>
 				)}
 				<Link className="navLink" to="/about">

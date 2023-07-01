@@ -2,8 +2,6 @@ import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {HashRouter as Router, Route, Link} from 'react-router-dom'
-import MainDisplay from "../MainDisplay/MainDisplay";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import{Container} from '@mui/material'
 
 function HostDash(){
@@ -19,10 +17,19 @@ function HostDash(){
 
     return (
 		<Container
-        maxWidth={"sm"} sx={{ display:'flex', flexDirection:'column', pt: 3 }}>
-			<h1>CURRENT SESSION CODE IS {seshInfo.sesh_code}</h1>
-			<h1>Setup instructions</h1>
-			<p>Instructions go here!</p>
+			maxWidth={"sm"}
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				pt: 3,
+			}}
+		>
+			<h2>SESSION CODE: {seshInfo.sesh_code}</h2>
+			<div>
+				<h2>Setup instructions</h2>
+				<p>Instructions go here!</p>
+			</div>
 
 			<div>
 				<h1>Open main display in a new tab</h1>
@@ -61,6 +68,12 @@ function HostDash(){
 					</tbody>
 				</table>
 			</div>
+
+
+				<Button sx={{ my: 8 }} variant="contained" color="error">
+					LEAVE CURRENT SESION
+				</Button>
+
 		</Container>
 	);
 }
