@@ -13,7 +13,7 @@ function HostDash(){
     useEffect(()=>{
         dispatch({type: "FETCH_CURRENT_SESSION", payload: user.id});
         dispatch({ type: 'FETCH_QUEUE', payload: user.id });
-    }, [])
+    }, [queue])
 
     return (
 		<Container
@@ -69,11 +69,16 @@ function HostDash(){
 				</table>
 			</div>
 
-
-				<Button sx={{ my: 8 }} variant="contained" color="error">
-					LEAVE CURRENT SESION
-				</Button>
-
+			<Button
+				sx={{ my: 8 }}
+				variant="contained"
+				color="error"
+				onClick={() =>
+					dispatch({ type: "LEAVE_SESSION", payload: user.id })
+				}
+			>
+				LEAVE CURRENT SESSION
+			</Button>
 		</Container>
 	);
 }

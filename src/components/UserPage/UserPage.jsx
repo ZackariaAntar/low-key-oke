@@ -26,9 +26,9 @@ function UserPage() {
 				justifyContent: "center",
 			}}
 		>
+			<LogOutButton className="btn" />
 			<h1>Welcome, {user.username}! </h1>
 			<RolePage />
-
 		</Container>
   );
 }

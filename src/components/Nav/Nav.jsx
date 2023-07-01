@@ -53,11 +53,15 @@ function Nav() {
 							Main Display
 						</Link>
 
-						<LeaveSessionButton className="navLink" />
+						<Link to="/user">
+							<LeaveSessionButton className="navLink" />
+						</Link>
 					</>
 				) : (
 					<>
-						<LeaveSessionButton className="navLink" />
+						<Link to="/user">
+							<LeaveSessionButton className="navLink" />
+						</Link>
 					</>
 				)}
 				<Link className="navLink" to="/about">

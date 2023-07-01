@@ -131,4 +131,19 @@ router.post("/guest", (req, res) => {
 		});
 });
 
+router.put('/leave/session/:id', (req,res) => {
+	const {user_id} = req.params.id
+	let leaveSessionQuery = `
+	UPDATE "user" SET "in_session" = false, "is_hosting" = false
+	WHERE id = $1;
+	`;
+	pool.query(leaveSessionQuery, [user_id]).then((response)=>{
+		console.log('SUCCESS LEAVING CURRENT SESSION', response);
+		res.sendStatus(200);
+	}).catch((error)=>{
+		console.log('PROBLEM WITH LEAVING CURRENT SESSION',error);
+		res.sendStatus(500);
+	})
+})
+
 module.exports = router;
