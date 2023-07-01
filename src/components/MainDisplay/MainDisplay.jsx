@@ -52,7 +52,7 @@ function MainDisplay() {
 	};
 	const handleReady = (event) => {
 		console.log("ready");
-		// dispatch({ type: "FETCH_QUEUE", payload: user.id });
+		dispatch({ type: "FETCH_QUEUE", payload: user.id });
 		// event.target.pauseVideo();
 		// setNextSong(!nextSong);
 	};
@@ -77,7 +77,7 @@ function MainDisplay() {
 	if (!queue[0]) {
 		return (
 			<Container
-				maxWidth={"md"}
+				maxWidth={"xl"}
 				ssx={{
 					display: "flex",
 					flexDirection: "column",
@@ -88,23 +88,24 @@ function MainDisplay() {
 				<Card
 					elevation={10}
 					sx={{
-						alignSelf: "center",
 						bgcolor: "#4b00a1",
-						my: 3,
+						mb: 5,
+						borderRadius: 8,
 					}}
 				>
 					<CardContent
 						sx={{
 							textAlign: "center",
 							color: "#F2F2F2",
+							my: 5,
 						}}
 					>
-						<Typography variant="h3" fontWeight={"bolder"}>
+						<Typography variant="h2" fontWeight={"bolder"}>
 							Join Code: {seshInfo.sesh_code}
 						</Typography>
 					</CardContent>
 				</Card>
-				<Box sx={{ height: 550, width: "900", boxShadow: 19 }}>
+				<Box sx={{ height: 550, width: "900", boxShadow:2 }}>
 					<Skeleton
 						sx={{
 							height: 550,
@@ -117,41 +118,11 @@ function MainDisplay() {
 				<Card
 					elevation={10}
 					sx={{
-						alignSelf: "center",
 						bgcolor: "#4b00a1",
-						my: 3,
-					}}
-				>
-					<CardContent
-						sx={{
-							textAlign: "center",
-							color: "#F2F2F2",
-						}}
-					>
-						<Typography variant="h1" fontWeight={"bolder"}>
-							WAITING FOR PLAYERS TO JOIN
-						</Typography>
-					</CardContent>
-				</Card>
-			</Container>
-		);
-	} else {
-		return (
-			<Container
-				maxWidth={"md"}
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					pt: 1,
-				}}
-			>
-				<Card
-					elevation={10}
-					sx={{
-						alignSelf: "center",
-						bgcolor: "#4b00a1",
-						my: 3,
+						mt: 5,
+						px: 8,
+						py: 4,
+						borderRadius: 8,
 					}}
 				>
 					<CardContent
@@ -161,11 +132,46 @@ function MainDisplay() {
 						}}
 					>
 						<Typography variant="h3" fontWeight={"bolder"}>
+							No songs in the queue
+						</Typography>
+					</CardContent>
+				</Card>
+			</Container>
+		);
+	} else {
+		return (
+			<Container
+				maxWidth={"xl"}
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					alignItems: "center",
+					pt: 1,
+				}}
+			>
+				<Card
+					elevation={10}
+					sx={{
+						bgcolor: "#4b00a1",
+						mb: 5,
+						borderRadius: 8,
+					}}
+				>
+					<CardContent
+						sx={{
+							textAlign: "center",
+							color: "#F2F2F2",
+							px: 10,
+							my: 5,
+						}}
+					>
+						<Typography variant="h2" fontWeight={"bolder"}>
 							Join Code: {seshInfo.sesh_code}
 						</Typography>
 					</CardContent>
 				</Card>
-				<div>
+				<Box>
 					<YouTube
 						key={nextSong}
 						videoId={queue[0]?.url}
@@ -174,14 +180,17 @@ function MainDisplay() {
 						onPlay={handlePlay}
 						onEnd={handleEnd}
 					/>
-				</div>
+				</Box>
+
 				{queue[1] ? (
 					<Card
-						elevation={10}
+						elevation={20}
 						sx={{
-							alignSelf: "center",
 							bgcolor: "#4b00a1",
-							my: 3,
+							mt: 5,
+							px: 8,
+							py: 4,
+							borderRadius: 8,
 						}}
 					>
 						<CardContent
@@ -190,8 +199,8 @@ function MainDisplay() {
 								color: "#F2F2F2",
 							}}
 						>
-							<Typography variant="h4" fontWeight={"bolder"}>
-								{`${queue[1].name} is on deck with "${queue[1].title}" by ${queue[1].artist}`}
+							<Typography variant="h3" fontWeight={"bolder"}>
+								{`${queue[1].name}'s on deck with "${queue[1].title}" by ${queue[1].artist}`}
 							</Typography>
 						</CardContent>
 					</Card>
@@ -199,9 +208,11 @@ function MainDisplay() {
 					<Card
 						elevation={10}
 						sx={{
-							alignSelf: "center",
 							bgcolor: "#4b00a1",
-							my: 3,
+							mt: 5,
+							px: 8,
+							py: 4,
+							borderRadius: 8,
 						}}
 					>
 						<CardContent
@@ -223,27 +234,3 @@ function MainDisplay() {
 
 export default MainDisplay;
 
-// {
-// 	nextSong ? (
-// 		<div>
-// 			<YouTube
-// 				key={nextSong}
-// 				videoId={queue[0]?.url}
-// 				opts={options}
-// 				onReady={handleReady}
-// 				onPlay={handlePlay}
-// 				onEnd={handleEnd}
-// 			/>
-// 		</div>
-// 	) : (
-// 		<div>
-// 			<YouTube
-// 				videoId={queue[0]?.url}
-// 				opts={options}
-// 				onReady={handleReady}
-// 				onPlay={handlePlay}
-// 				onEnd={handleEnd}
-// 			/>
-// 		</div>
-// 	);
-// }
