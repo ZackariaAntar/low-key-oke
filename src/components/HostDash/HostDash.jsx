@@ -1,8 +1,18 @@
-import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {HashRouter as Router, Route, Link} from 'react-router-dom'
-import{Container} from '@mui/material'
+import {
+	Button,
+	Container,
+	TableContainer,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody,
+	Paper,
+	Typography,
+} from "@mui/material";
 
 function HostDash(){
     const dispatch = useDispatch()
@@ -30,7 +40,6 @@ function HostDash(){
 				<h2>Setup instructions</h2>
 				<p>Instructions go here!</p>
 			</div>
-
 			<div>
 				<h1>Open main display in a new tab</h1>
 				<Button
@@ -41,33 +50,45 @@ function HostDash(){
 					MAIN DISPLAY
 				</Button>
 			</div>
-
-			<div>
-				<h1>Song queue</h1>
-				<table>
-					<thead>
-						<tr>
-							<th>Order</th>
-							<th>Player Name</th>
-							<th>Song Title</th>
-							<th>Source</th>
-						</tr>
-					</thead>
-					<tbody>
+			<h2 style={{ marginTop: 40 }}>Session Queue</h2>
+			<TableContainer
+				component={Paper}
+				elevation={10}
+				sx={{ mb: 5, mt: 2 }}
+			>
+				<Table aria-label="simple table">
+					<TableHead>
+						<TableRow>
+							<TableCell align="center">Player Name</TableCell>
+							<TableCell align="center">Song</TableCell>
+							<TableCell align="center">Video Id</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
 						{queue &&
 							queue.map((song) => (
-								<tr key={song.id}>
-									<td>{song.queue_order}</td>
-									<td>{song.name}</td>
-									<td>
+								<TableRow
+									key={song.id}
+									sx={{
+										"&:last-child td, &:last-child th": {
+											border: 0,
+										},
+									}}
+								>
+									<TableCell align="center">
+										{song.name}
+									</TableCell>
+									<TableCell align="center">
 										{song.title} by {song.artist}
-									</td>
-									<td>{song.url}</td>
-								</tr>
+									</TableCell>
+									<TableCell align="center">
+										{song.url}
+									</TableCell>
+								</TableRow>
 							))}
-					</tbody>
-				</table>
-			</div>
+					</TableBody>
+				</Table>
+			</TableContainer>
 
 			<Button
 				sx={{ my: 8 }}
@@ -84,6 +105,13 @@ function HostDash(){
 }
 
 export default HostDash;
+
+
+
+
+
+
+
 
 // id"
 // "current_sesh_id
