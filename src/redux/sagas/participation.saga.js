@@ -7,6 +7,7 @@ function* makeHost(action) {
 			action.payload
 		);
 	try {
+		// yield axios.put(`/api/user/make/host/${action.payload}`)
 		yield put({ type: "MAKE_NEW_CODE", payload: action.payload});
 
 	} catch (error) {

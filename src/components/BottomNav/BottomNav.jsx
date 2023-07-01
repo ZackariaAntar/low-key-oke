@@ -3,6 +3,13 @@ BottomNavigationAction, IconButton, Container, Paper, Stack} from "@mui/material
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+import HistoryIcon from "@mui/icons-material/History";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -21,8 +28,7 @@ function BottomNav() {
 					left: 0,
 					right: 0,
 					bgcolor: "rgba(246, 232, 255, 1)",
-					padding: .25,
-
+					padding: 0.25,
 				}}
 				elevation={10}
 			>
@@ -32,14 +38,29 @@ function BottomNav() {
 					alignItems="center"
 					spacing={0}
 				>
-					<IconButton size="large" color="secondary" component={Link} to={'/signup'}>
-						<AssignmentIcon />
+					<IconButton
+						size="large"
+						color="secondary"
+						component={Link}
+						to={"/signup"}
+					>
+						<AddBoxOutlinedIcon />
 					</IconButton>
-					<IconButton size="large" color="secondary" component={Link} to={'/my-queue'}>
-						<QueueMusicIcon />
+					<IconButton
+						size="large"
+						color="secondary"
+						component={Link}
+						to={"/my-queue"}
+					>
+						<AssignmentOutlinedIcon />
 					</IconButton>
-					<IconButton size="large" color="secondary" component={Link} to={'/my-history'}>
-						<WatchLaterIcon />
+					<IconButton
+						size="large"
+						color="secondary"
+						component={Link}
+						to={"/my-history"}
+					>
+						<HistoryIcon />
 					</IconButton>
 				</Stack>
 			</Box>

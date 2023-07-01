@@ -21,8 +21,6 @@ function RolePage(){
 	useEffect(() => {
 		dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
 	}, []);
-
-
     const [joinCode, setJoinCode] = useState('')
     const [toggle, setToggle] = useState(false)
 
