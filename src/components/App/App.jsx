@@ -83,11 +83,6 @@ function App() {
 					</ProtectedRoute>
 
 					{/* ---------------------------   DOWN  ------------------------------------- */}
-
-					<ProtectedRoute exact path="/role">
-						<RolePage />
-					</ProtectedRoute>
-
 					<ProtectedRoute exact path="/host-dash">
 							<HostDash />
 					</ProtectedRoute>

@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Button, Skeleton, Box } from "@mui/material";
+import {
+	Container,
+	Button,
+	Skeleton,
+	Box,
+	Card,
+	CardHeader,
+	CardContent,
+	Typography,
+	CardActions,
+} from "@mui/material";
 // https://github.com/tjallingt/react-youtube
 
 function MainDisplay() {
@@ -66,46 +76,145 @@ function MainDisplay() {
 
 	if (!queue[0]) {
 		return (
-			<Container maxWidth={"md"} sx={{ pt: 3 }}>
-				<h1>Join code: {seshInfo.sesh_code}</h1>
-				<Box
-					sx={{ height: 550, width: "900", boxShadow: 19 }}
+			<Container
+				maxWidth={"md"}
+				ssx={{
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					pt: 1,
+				}}
+			>
+				<Card
+					elevation={10}
+					sx={{
+						alignSelf: "center",
+						bgcolor: "#4b00a1",
+						my: 3,
+					}}
 				>
+					<CardContent
+						sx={{
+							textAlign: "center",
+							color: "#F2F2F2",
+						}}
+					>
+						<Typography variant="h3" fontWeight={"bolder"}>
+							Join Code: {seshInfo.sesh_code}
+						</Typography>
+					</CardContent>
+				</Card>
+				<Box sx={{ height: 550, width: "900", boxShadow: 19 }}>
 					<Skeleton
 						sx={{
 							height: 550,
 							width: "900",
-
 						}}
 						animation="wave"
 						variant="rectangular"
 					/>
 				</Box>
-				<h1>WAITING FOR PLAYERS TO JOIN</h1>
+				<Card
+					elevation={10}
+					sx={{
+						alignSelf: "center",
+						bgcolor: "#4b00a1",
+						my: 3,
+					}}
+				>
+					<CardContent
+						sx={{
+							textAlign: "center",
+							color: "#F2F2F2",
+						}}
+					>
+						<Typography variant="h1" fontWeight={"bolder"}>
+							WAITING FOR PLAYERS TO JOIN
+						</Typography>
+					</CardContent>
+				</Card>
 			</Container>
 		);
 	} else {
 		return (
-			<Container maxWidth={"md"} sx={{ pt: 3 }}>
-				<h1>Join code: {seshInfo.sesh_code}</h1>
-					<div>
-						<YouTube
+			<Container
+				maxWidth={"md"}
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					pt: 1,
+				}}
+			>
+				<Card
+					elevation={10}
+					sx={{
+						alignSelf: "center",
+						bgcolor: "#4b00a1",
+						my: 3,
+					}}
+				>
+					<CardContent
+						sx={{
+							textAlign: "center",
+							color: "#F2F2F2",
+						}}
+					>
+						<Typography variant="h3" fontWeight={"bolder"}>
+							Join Code: {seshInfo.sesh_code}
+						</Typography>
+					</CardContent>
+				</Card>
+				<div>
+					<YouTube
 						key={nextSong}
-							videoId={queue[0]?.url}
-							opts={options}
-							onReady={handleReady}
-							onPlay={handlePlay}
-							onEnd={handleEnd}
-						/>
-					</div>
+						videoId={queue[0]?.url}
+						opts={options}
+						onReady={handleReady}
+						onPlay={handlePlay}
+						onEnd={handleEnd}
+					/>
+				</div>
 				{queue[1] ? (
-					<div>
-						<h2>
-							{`On deck: ${queue[1].name} with ${queue[1].title} by ${queue[1].artist}`}
-						</h2>
-					</div>
+					<Card
+						elevation={10}
+						sx={{
+							alignSelf: "center",
+							bgcolor: "#4b00a1",
+							my: 3,
+						}}
+					>
+						<CardContent
+							sx={{
+								textAlign: "center",
+								color: "#F2F2F2",
+							}}
+						>
+							<Typography variant="h4" fontWeight={"bolder"}>
+								{`${queue[1].name} is on deck with "${queue[1].title}" by ${queue[1].artist}`}
+							</Typography>
+						</CardContent>
+					</Card>
 				) : (
-					<h1>Nobody's on deck :/</h1>
+					<Card
+						elevation={10}
+						sx={{
+							alignSelf: "center",
+							bgcolor: "#4b00a1",
+							my: 3,
+						}}
+					>
+						<CardContent
+							sx={{
+								textAlign: "center",
+								color: "#F2F2F2",
+							}}
+						>
+							<Typography variant="h3" fontWeight={"bolder"}>
+								Nobody's on deck 😢
+							</Typography>
+						</CardContent>
+					</Card>
 				)}
 			</Container>
 		);
