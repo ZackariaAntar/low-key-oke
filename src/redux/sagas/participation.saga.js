@@ -21,7 +21,7 @@ function* makeGuest(action) {
 		action.payload
 	);
 	try {
-		yield axios.post('/api/sesh/guest', {sesh_code: action.payload.sesh_code, user_id: action.payload.user_id, is_host: false, in_session: true})
+		yield axios.post('/api/sesh/guest', {sesh_code: action.payload.sesh_code, user_id: action.payload.user_id})
 		yield put({type: "FETCH_CURRENT_SESSION", payload: action.payload.user_id})
 
 	} catch (error) {
