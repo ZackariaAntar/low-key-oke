@@ -5,7 +5,9 @@ import {
 	Box,
 	Paper,
 	Typography,
-    Container
+    Container,
+	Card,
+	CardContent
 } from "@mui/material";
 
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
@@ -30,6 +32,15 @@ function MySongHistory(){
     const setUnfavorite = (id) =>{
         dispatch({type:'MAKE_UNFAVORITE', payload: {songId: id, userId: user.id}})
     }
+	const icon = {
+		fontSize: ".8rem",
+		color: "#F2F2F2",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent:'center',
+	};
+	const text = { marginTop: 10 };
+
 
     if(myHistory.length >= 1){
         return (
@@ -38,9 +49,13 @@ function MySongHistory(){
 					myHistory.map((history, i) => (
 						<Paper
 							sx={{
-								my: 1,
+								my: 2,
 								mx: "auto",
 								p: 2,
+								color: "#F2F2F2",
+								bgcolor: "#4b00a1",
+								borderRadius: 6,
+
 							}}
 							key={history.id}
 							elevation={4}
@@ -49,7 +64,7 @@ function MySongHistory(){
 								sx={{
 									width: "100%",
 									maxWidth: 360,
-									bgcolor: "background.paper",
+									bgcolor: "#4b00a1",
 								}}
 								elevation={5}
 							>
@@ -77,10 +92,14 @@ function MySongHistory(){
 										sx={{ fontSize: ".75rem" }}
 									></Typography>
 								</Box>
-								<Divider variant="middle" />
+								<Divider
+									variant="middle"
+									color="#F2F2F2"
+									sx={{ my: 1}}
+								/>
 								<Box
 									sx={{
-										mt: 2,
+										
 										display: "flex",
 										flexDirection: "column",
 										justifyContent: "center",
@@ -90,20 +109,29 @@ function MySongHistory(){
 									{history.favorited ? (
 										<IconButton
 											size="small"
+											sx={icon}
 											onClick={() =>
 												setUnfavorite(history.id)
 											}
 										>
-											<StarRoundedIcon />
+											<StarRoundedIcon />{" "}
+											<div style={text}>
+												Remove from favorites
+											</div>
 										</IconButton>
 									) : (
 										<IconButton
 											size="small"
+											sx={icon}
 											onClick={() =>
 												setAsFavorite(history.id)
 											}
 										>
 											<StarBorderRoundedIcon />
+											<div style={text}>
+												{" "}
+												Add to favorites
+											</div>
 										</IconButton>
 									)}
 								</Box>
@@ -114,12 +142,31 @@ function MySongHistory(){
 			</Container>
 		);
     }else{
-        return(
-            <Container maxWidth={"xs"} sx={{ pt: 3 }}>
-                <h1>Nothing to see here!</h1>
-                <BottomNav />
-            </Container>
-        )
+        return (
+			<Container maxWidth={"xs"} sx={{ pt: 3 }}>
+				<Card
+					elevation={10}
+					sx={{
+						bgcolor: "#4b00a1",
+						mt: 5,
+
+						borderRadius: 4,
+					}}
+				>
+					<CardContent
+						sx={{
+							textAlign: "center",
+							color: "#F2F2F2",
+						}}
+					>
+						<Typography variant="h5" fontWeight={"bolder"}>
+							Nothing to see here
+						</Typography>
+					</CardContent>
+				</Card>
+				<BottomNav />
+			</Container>
+		);
     }
 
 }

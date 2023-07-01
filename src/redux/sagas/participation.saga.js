@@ -29,9 +29,24 @@ function* makeGuest(action) {
 	}
 }
 
+function* leaveSession(action){
+	console.log(
+		"ARRIVED AT leaveSession ON PARTICIPATION SAGA",
+		action.payload
+	);
+	try{
+		yield axios.put(`/api/sesh/leave/session/${action.payload}`)
+
+	}catch(error){
+		console.log('ERROR IN LEAVING SESSION', error);
+
+	}
+}
+
 function* participationSaga() {
 	yield takeLatest("MAKE_HOST", makeHost);
 	yield takeLatest("MAKE_GUEST", makeGuest);
+	yield takeLatest("LEAVE_SESSION", leaveSession);
 }
 
 export default participationSaga;

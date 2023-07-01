@@ -38,58 +38,61 @@ function RolePage(){
 	};
 
 	return (
-		<Container maxWidth={"xs"}>
-			<h1>Participate</h1>
-			<div>
-				<Button
-					sx={{ mr: 5 }}
-					component={Link}
-					to="/host-dash"
-					variant="contained"
-					onClick={makeHost}
-				>
-					HOST
-				</Button>
+		<Container
+			maxWidth={"xs"}
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				pt: 1,
+			}}
+		>
+			<h2>Let's get started</h2>
+			<Button
+				sx={{ p: 2, my: 3 }}
+				component={Link}
+				to="/host-dash"
+				variant="contained"
+				onClick={makeHost}
+			>
+				CREATE A NEW SESSION
+			</Button>
 
-				<Button variant="contained" onClick={() => setToggle(!toggle)}>
-					GUEST
-				</Button>
+			<Button
+				sx={{ p: 2,}}
+				variant="contained"
+				onClick={() => setToggle(!toggle)}
+			>
+				JOIN AN EXISTING SESSION
+			</Button>
 
-				<Dialog open={toggle} onClose={() => setToggle(!toggle)}>
-					<DialogTitle>
-						Please enter the join code for your session
-					</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							Look for the 5 digit alphanumeric code being
-							broadcast by your host and enter it in the field
-							below.
-						</DialogContentText>
-						<TextField
-							autoFocus
-							margin="dense"
-							id="name"
-							label="Join Code:"
-							type="text"
-							fullWidth
-							variant="standard"
-							onChange={(e) => setJoinCode(e.target.value)}
-						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={() => setToggle(!toggle)}>
-							Cancel
-						</Button>
-						<Button
-							component={Link}
-							to="/signup"
-							onClick={makeGuest}
-						>
-							JOIN YOUR PARTY
-						</Button>
-					</DialogActions>
-				</Dialog>
-			</div>
+			<Dialog open={toggle} onClose={() => setToggle(!toggle)}>
+				<DialogTitle>
+					Please enter the join code for your session
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Look for the 5 digit alphanumeric code being broadcast
+						by your host and enter it in the field below.
+					</DialogContentText>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Join Code:"
+						type="text"
+						fullWidth
+						variant="standard"
+						onChange={(e) => setJoinCode(e.target.value)}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => setToggle(!toggle)}>Cancel</Button>
+					<Button component={Link} to="/signup" onClick={makeGuest}>
+						JOIN YOUR PARTY
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Container>
 	);
 }

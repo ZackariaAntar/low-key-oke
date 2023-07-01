@@ -49,9 +49,31 @@ function SignupForm(){
 				justifyContent: "center",
 			}}
 		>
-			<h1>SIGN UP</h1>
-			<h2>{seshInfo.sesh_code}</h2>
-			<Card elevation={5}>
+			<Container maxWidth={"xs"} sx={{ my: 1 }}>
+				<Card
+					elevation={3}
+					sx={{
+						mb: 2,
+						color: "#F2F2F2",
+						bgcolor: "#4b00a1",
+						borderRadius: 4,
+					}}
+				>
+					<CardHeader
+						title={`Your session: ${seshInfo.sesh_code}`}
+						align={"center"}
+					/>
+				</Card>
+			</Container>
+			<Card
+				elevation={19}
+				sx={{
+					mb: 2,
+					bgcolor: "#F2F2F2",
+					color: "#4b00a1",
+					borderRadius: 4,
+				}}
+			>
 				<CardContent>
 					<CardHeader title={"Sign-up to sing!"} align={"center"} />
 					<Typography sx={{ ml: 1 }} align={"center"}>
@@ -59,6 +81,7 @@ function SignupForm(){
 					</Typography>
 					<form noValidate>
 						<TextField
+							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
@@ -70,6 +93,7 @@ function SignupForm(){
 							}}
 						/>
 						<TextField
+							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
@@ -81,6 +105,7 @@ function SignupForm(){
 							}}
 						/>
 						<TextField
+							sx={{ bgcolor: "white" }}
 							type="url"
 							margin="normal"
 							fullWidth
@@ -145,10 +170,7 @@ function SignupForm(){
 				</label>
 			</form> */}
 
-
-
 			<BottomNav />
-     
 		</Container>
 	);
 }

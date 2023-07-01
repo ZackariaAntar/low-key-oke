@@ -1,5 +1,5 @@
 import {Box, BottomNavigation,
-BottomNavigationAction, IconButton, Container, Paper, Stack} from "@mui/material";
+BottomNavigationAction, IconButton, Container, Paper, Stack, Button} from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
@@ -18,6 +18,24 @@ import { Link, useLocation } from "react-router-dom";
 
 function BottomNav() {
 
+	const [on, setOn] = useState(false)
+
+	const icon =
+
+		{
+			fontSize: ".8rem",
+			color: "#F2F2F2",
+			display: "flex",
+			flexDirection: "column",
+			mt: 0.1,
+
+		}
+
+	const text ={ marginTop: 3.75 }
+
+
+	// need to add hovering etc....
+
 
 	return (
 		<>
@@ -27,7 +45,7 @@ function BottomNav() {
 					bottom: 0,
 					left: 0,
 					right: 0,
-					bgcolor: "rgba(246, 232, 255, 1)",
+					bgcolor: "#4b00a1",
 					padding: 0.25,
 				}}
 				elevation={10}
@@ -37,66 +55,38 @@ function BottomNav() {
 					justifyContent="space-around"
 					alignItems="center"
 					spacing={0}
+					sx={{ my: 0.75 }}
+
 				>
 					<IconButton
-						size="large"
-						color="secondary"
+						size="small"
+						sx={icon}
 						component={Link}
 						to={"/signup"}
 					>
 						<AddBoxOutlinedIcon />
+						<div style={text}> Sign-up</div>
 					</IconButton>
 					<IconButton
-						size="large"
-						color="secondary"
+						size="small"
+						sx={icon}
 						component={Link}
 						to={"/my-queue"}
 					>
-						<AssignmentOutlinedIcon />
+						<AssignmentOutlinedIcon  />
+						<div style={text}> My Queue</div>
 					</IconButton>
 					<IconButton
-						size="large"
-						color="secondary"
+						size="small"
+						sx={icon}
 						component={Link}
 						to={"/my-history"}
 					>
-						<HistoryIcon />
+						<HistoryIcon  />
+						<div style={text}> History</div>
 					</IconButton>
 				</Stack>
 			</Box>
-
-			{/* <BottomNavigation
-				showLabels
-				value={value}
-				// onClick={() => goToView(value)}
-				onChange={(event, newValue) => {
-					setValue(newValue);
-				}}
-			>
-				<BottomNavigationAction
-					value="/signup"
-					to="/signup"
-					component={Link}
-					label="Sign-up"
-					icon={<AssignmentTwoToneIcon />}
-				></BottomNavigationAction>
-
-				<BottomNavigationAction
-					value="/my-queue"
-					to="/my-queue"
-					component={Link}
-					label="My Queue"
-					icon={<QueueMusicTwoToneIcon />}
-				/>
-
-				<BottomNavigationAction
-					value="/my-history"
-					to="/my-history"
-					component={Link}
-					label="My History"
-					icon={<WatchLaterTwoToneIcon />}
-				/>
-			</BottomNavigation> */}
 		</>
 	);
 

@@ -13,6 +13,8 @@ import {
     DialogContent,
     DialogContentText,
 	Paper,
+	Card,
+	CardContent,
 	Typography,
 } from "@mui/material";
 
@@ -25,10 +27,9 @@ function MyQueuePage(){
     const mySongs = useSelector((store)=> store.mySongs)
     const [toggle, setToggle] = useState(false)
     let [propId, setPropId] = useState({})
-    useEffect(()=>{
-        dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id});
-
-    },[])
+    useEffect(() => {
+		dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id });
+	}, []);
 
     const deleteMySongFromQueue = (obj) =>{
         dispatch({ type: "DELETE_FROM_MY_QUEUE", payload: obj });
@@ -176,9 +177,26 @@ function MyQueuePage(){
 					))}
 				</div>
 			) : (
-				<>
-					<h1>Nothing to see here</h1>
-				</>
+				<Card
+					elevation={10}
+					sx={{
+						bgcolor: "#4b00a1",
+						mt: 5,
+
+						borderRadius: 4,
+					}}
+				>
+					<CardContent
+						sx={{
+							textAlign: "center",
+							color: "#F2F2F2",
+						}}
+					>
+						<Typography variant="h5" fontWeight={"bolder"}>
+							Nothing to see here
+						</Typography>
+					</CardContent>
+				</Card>
 			)}
 			<BottomNav />
 		</Container>
