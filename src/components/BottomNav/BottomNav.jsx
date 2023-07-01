@@ -1,5 +1,5 @@
 import {Box, BottomNavigation,
-BottomNavigationAction, IconButton, Container, Paper, Stack} from "@mui/material";
+BottomNavigationAction, IconButton, Container, Paper, Stack, Button} from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
@@ -17,14 +17,27 @@ import { Link, useLocation } from "react-router-dom";
 
 
 function BottomNav() {
-	const icon = {
-		fontSize: ".8rem",
-		color: "#F2F2F2",
-		display: "flex",
-		flexDirection: "column",
-		mt: 0.1,
-	};
-	const text = { marginTop: 3.75 }
+
+	const [on, setOn] = useState(false)
+
+	const icon =
+
+		{
+			fontSize: ".8rem",
+			color: "#F2F2F2",
+			display: "flex",
+			flexDirection: "column",
+			mt: 0.1,
+			transitionDuration: '0.4s',
+			border: '5px solid tansparent',
+			borderRadius:'1px',
+
+		}
+
+	const text ={ marginTop: 3.75 }
+
+
+	// need to add hovering etc....
 
 
 	return (
@@ -45,7 +58,8 @@ function BottomNav() {
 					justifyContent="space-around"
 					alignItems="center"
 					spacing={0}
-					sx={{my:.75}}
+					sx={{ my: 0.75 }}
+
 				>
 					<IconButton
 						size="small"
@@ -62,7 +76,7 @@ function BottomNav() {
 						component={Link}
 						to={"/my-queue"}
 					>
-						<AssignmentOutlinedIcon />
+						<AssignmentOutlinedIcon  />
 						<div style={text}> My Queue</div>
 					</IconButton>
 					<IconButton
@@ -71,7 +85,7 @@ function BottomNav() {
 						component={Link}
 						to={"/my-history"}
 					>
-						<HistoryIcon />
+						<HistoryIcon  />
 						<div style={text}> History</div>
 					</IconButton>
 				</Stack>

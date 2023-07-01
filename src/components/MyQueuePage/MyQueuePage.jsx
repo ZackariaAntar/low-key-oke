@@ -27,7 +27,7 @@ function MyQueuePage(){
     let [propId, setPropId] = useState({})
     useEffect(() => {
 		dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id });
-	}, [mySongs]);
+	}, []);
 
     const deleteMySongFromQueue = (obj) =>{
         dispatch({ type: "DELETE_FROM_MY_QUEUE", payload: obj });
