@@ -27,7 +27,7 @@ function BottomNav() {
 					bottom: 0,
 					left: 0,
 					right: 0,
-					bgcolor: "rgba(246, 232, 255, 1)",
+					bgcolor: "#4b00a1",
 					padding: 0.25,
 				}}
 				elevation={10}
@@ -39,28 +39,52 @@ function BottomNav() {
 					spacing={0}
 				>
 					<IconButton
-						size="large"
-						color="secondary"
+						size="small"
+						sx={{
+							fontSize: ".8rem",
+							fontWeight: "bold",
+							color: "#F2F2F2",
+							display: "flex",
+							flexDirection: "column",
+							my: 0.1,
+						}}
 						component={Link}
 						to={"/signup"}
 					>
 						<AddBoxOutlinedIcon />
+						<div style={{ marginTop: 1.75 }}> Sign-up</div>
 					</IconButton>
 					<IconButton
-						size="large"
-						color="secondary"
+						size="small"
+						sx={{
+							fontSize: ".8rem",
+							fontWeight: "bold",
+							color: "#F2F2F2",
+							display: "flex",
+							flexDirection: "column",
+							my: 0.1,
+						}}
 						component={Link}
 						to={"/my-queue"}
 					>
 						<AssignmentOutlinedIcon />
+						<div style={{ marginTop: 1.75 }}> My Queue</div>
 					</IconButton>
 					<IconButton
-						size="large"
-						color="secondary"
+						size="small"
+						sx={{
+							fontSize: ".8rem",
+							fontWeight: "bold",
+							color: "#F2F2F2",
+							display: "flex",
+							flexDirection: "column",
+							my: 0.18,
+						}}
 						component={Link}
 						to={"/my-history"}
 					>
 						<HistoryIcon />
+						<div style={{ marginTop: 1.75 }}> History</div>
 					</IconButton>
 				</Stack>
 			</Box>
