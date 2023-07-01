@@ -2,9 +2,8 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-/**
- * GET route template
- */
+// GET ROUTE USED TO CHECK AGAINST TO VALIDATE NEWLY GENERATED CODE
+
 router.get("/", (req, res) => {
 	let queryText = `SELECT * FROM sesh;`;
 	pool.query(queryText)
@@ -23,6 +22,8 @@ router.get("/", (req, res) => {
 			res.sendStatus(500);
 		});
 });
+
+// ALL USERS GET ROUTE TO FIND THEIR CURRENT SESSION ID
 
 router.get("/current/:id", (req, res) => {
 	const user_id = req.params.id;
@@ -50,54 +51,82 @@ router.get("/current/:id", (req, res) => {
 		});
 });
 
-/**
- * POST route template
- */
+
+// HOST POST ROUTE ON CREATING A NEW GAME
+
 router.post("/", (req, res) => {
 	const { newCode, host_id } = req.body;
-	let queryText = `
-      INSERT INTO sesh ("join_code", "host_user_id")
-      VALUES ($1, $2);`;
-	pool.query(queryText, [newCode, host_id])
-	.then(() => {
-		console.log("SUCCESSFULLY ADDED TO THE sesh TABLE");
-
-		let junctionQuery = `
-    				INSERT INTO sesh_junction ("sesh_code", "user_id")
-   					VALUES ($1, $2);`;
-		pool.query(junctionQuery, [newCode, host_id])
+	let updateViews = `
+		UPDATE "user" SET "in_session" = true, "is_hosting" = true
+		WHERE id = $1;`;
+	pool.query(updateViews, [host_id])
 		.then(() => {
-			res.sendStatus(201);
-			})
-			.catch((error) => {
-				console.log("PROBLEM WITH ADDING SESH CODE AND HOST ID TO THE JUNCTION TABLE AFTER ADDING IT TO THE sesh TABLE", error);
-				res.sendStatus(500);
+			console.log("SUCCESSFULLY SET HOST VIEWS");
+			let queryText = `
+    	  INSERT INTO sesh ("join_code", "host_user_id")
+    	  VALUES ($1, $2);`;
+			pool.query(queryText, [newCode, host_id])
+				.then(() => {
+					console.log("SUCCESSFULLY ADDED TO THE sesh TABLE");
+					let junctionQuery = `
+    			INSERT INTO sesh_junction ("sesh_code", "user_id")
+   				VALUES ($1, $2);`;
+					pool.query(junctionQuery, [newCode, host_id])
+						.then(() => {
+							res.sendStatus(201);
+						})
+						.catch((error) => {
+							console.log(
+								"PROBLEM WITH ADDING SESH CODE AND HOST ID TO THE JUNCTION TABLE AFTER ADDING IT TO THE sesh TABLE",
+								error
+							);
+							res.sendStatus(500);
+						});
+				})
+				.catch((error) => {
+					console.log(
+						"PROBLEM WITH ADDING TO THE sesh TABLE",
+						error
+					);
+					res.sendStatus(500);
 				});
 		})
 		.catch((err) => {
-			console.log("problem CREATING HOST INSTANCE",err);
+			console.log("problem CREATING HOST INSTANCE", err);
 			res.sendStatus(500);
 		});
 
-	// POST route code here
 });
+
+// GUEST POST ROUTE ON JOINING AN EXISTING GAME
 
 router.post("/guest", (req, res) => {
 	const { sesh_code, user_id } = req.body;
-	let junctionQuery = `
-    INSERT INTO sesh_junction ("sesh_code", "user_id")
-    VALUES ($1, $2);`;
-	pool.query(junctionQuery, [sesh_code, user_id])
-	.then(() => {
 
-		console.log("SUCCESSFULLY ADDED guest TO THE sesh_junction TABLE")
-		res.sendStatus(201);
-	})
+	let updateViews = 'UPDATE "user" SET "in_session" = true WHERE id = $1;';
+	pool.query(updateViews, [user_id])
+		.then(() => {
+			console.log("SUCCESSFULLY CHANGED GUEST VIEW IN USER TABLE");
+			let junctionQuery = `
+    			INSERT INTO sesh_junction ("sesh_code", "user_id")
+    			VALUES ($1, $2);`;
+			pool.query(junctionQuery, [sesh_code, user_id])
+				.then(() => {
+					console.log(
+						"SUCCESSFULLY ADDED guest TO THE sesh_junction TABLE"
+					);
+					res.sendStatus(201);
+				})
+				.catch((error) => {
+					console.log(
+						"PROBLEM WITH ADDING guest TO THE JUNCTION TABLE",
+						error
+					);
+					res.sendStatus(500);
+				});
+		})
 		.catch((error) => {
-			console.log(
-				"PROBLEM WITH ADDING guest TO THE JUNCTION TABLE",
-				error
-			);
+			console.log("PROBLEM CHANGING GUEST VIEW IN USER TABLE", error);
 			res.sendStatus(500);
 		});
 });
