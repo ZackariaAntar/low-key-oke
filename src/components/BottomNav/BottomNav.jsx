@@ -17,6 +17,14 @@ import { Link, useLocation } from "react-router-dom";
 
 
 function BottomNav() {
+	const icon = {
+		fontSize: ".8rem",
+		color: "#F2F2F2",
+		display: "flex",
+		flexDirection: "column",
+		mt: 0.1,
+	};
+	const text = { marginTop: 3.75 }
 
 
 	return (
@@ -37,90 +45,37 @@ function BottomNav() {
 					justifyContent="space-around"
 					alignItems="center"
 					spacing={0}
+					sx={{my:.75}}
 				>
 					<IconButton
 						size="small"
-						sx={{
-							fontSize: ".8rem",
-							fontWeight: "bold",
-							color: "#F2F2F2",
-							display: "flex",
-							flexDirection: "column",
-							my: 0.1,
-						}}
+						sx={icon}
 						component={Link}
 						to={"/signup"}
 					>
 						<AddBoxOutlinedIcon />
-						<div style={{ marginTop: 1.75 }}> Sign-up</div>
+						<div style={text}> Sign-up</div>
 					</IconButton>
 					<IconButton
 						size="small"
-						sx={{
-							fontSize: ".8rem",
-							fontWeight: "bold",
-							color: "#F2F2F2",
-							display: "flex",
-							flexDirection: "column",
-							my: 0.1,
-						}}
+						sx={icon}
 						component={Link}
 						to={"/my-queue"}
 					>
 						<AssignmentOutlinedIcon />
-						<div style={{ marginTop: 1.75 }}> My Queue</div>
+						<div style={text}> My Queue</div>
 					</IconButton>
 					<IconButton
 						size="small"
-						sx={{
-							fontSize: ".8rem",
-							fontWeight: "bold",
-							color: "#F2F2F2",
-							display: "flex",
-							flexDirection: "column",
-							my: 0.18,
-						}}
+						sx={icon}
 						component={Link}
 						to={"/my-history"}
 					>
 						<HistoryIcon />
-						<div style={{ marginTop: 1.75 }}> History</div>
+						<div style={text}> History</div>
 					</IconButton>
 				</Stack>
 			</Box>
-
-			{/* <BottomNavigation
-				showLabels
-				value={value}
-				// onClick={() => goToView(value)}
-				onChange={(event, newValue) => {
-					setValue(newValue);
-				}}
-			>
-				<BottomNavigationAction
-					value="/signup"
-					to="/signup"
-					component={Link}
-					label="Sign-up"
-					icon={<AssignmentTwoToneIcon />}
-				></BottomNavigationAction>
-
-				<BottomNavigationAction
-					value="/my-queue"
-					to="/my-queue"
-					component={Link}
-					label="My Queue"
-					icon={<QueueMusicTwoToneIcon />}
-				/>
-
-				<BottomNavigationAction
-					value="/my-history"
-					to="/my-history"
-					component={Link}
-					label="My History"
-					icon={<WatchLaterTwoToneIcon />}
-				/>
-			</BottomNavigation> */}
 		</>
 	);
 
