@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import RolePage from '../RolePage/RolePage';
 import {useDispatch, useSelector} from 'react-redux';
 
-import { Container, Button } from '@mui/material';
+import { Container, Button, Box } from '@mui/material';
 import {Link} from 'react-router-dom'
 
 
@@ -17,14 +18,17 @@ function UserPage() {
   }, [])
   const seshInfo = useSelector((store)=>store.seshInfo)
   return (
-		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
-			<h2>Welcome, {user.username}!</h2>
-			{/* <h2>Current session: {seshInfo.sesh_code}</h2> */}
-			<Button variant="contained" component={Link} to="/role">
-				GET STARTED
-			</Button>
-			<p>Your ID is: {user.id}</p>
-			<LogOutButton className="btn" />
+		<Container
+			maxWidth={"xs"}
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+			}}
+		>
+			<h1>Welcome, {user.username}! </h1>
+			<RolePage />
+
 		</Container>
   );
 }
