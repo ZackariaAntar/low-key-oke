@@ -29,7 +29,7 @@ function* markSongAsCompleted(action) {
 function* postToQueue(action) {
 	console.log("IN POST TO QUEUE", action.payload);
 	try {
-		yield axios.post("/api/songs", action.payload);
+		yield axios.post("/api/yt", action.payload);
 		// yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id});
 	} catch (error) {
 		console.log("Queue POST request failed", error);

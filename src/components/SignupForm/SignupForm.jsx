@@ -17,27 +17,23 @@ function SignupForm(){
 			// dispatch({ type: "FETCH_QUEUE", payload: user.id });
 	}, []);
 
-
-    const [url, setUrl] = useState("");
 	const [title, setTitle] = useState("");
 	const [artist, setArtist] = useState("");
 
     const addSong = () =>{
-        // event.preventDefault()
 
-        const videoId = getYouTubeID(url);
         const queueItem = {
             sesh_code: seshInfo.sesh_code,
             user_id: user.id,
             name: user.username,
             title: title,
             artist: artist,
-            url: videoId,
+
         }
         dispatch({type:'POST_TO_QUEUE', payload: queueItem})
 
     }
-      console.log(title, artist, url);
+      console.log(title, artist);
 
 
     return (
@@ -85,7 +81,6 @@ function SignupForm(){
 							type="text"
 							margin="normal"
 							fullWidth
-							id="username"
 							label="Song Title"
 							value={title}
 							onChange={(e) => {
@@ -104,7 +99,7 @@ function SignupForm(){
 								setArtist(e.target.value);
 							}}
 						/>
-						<TextField
+						{/* <TextField
 							sx={{ bgcolor: "white" }}
 							type="url"
 							margin="normal"
@@ -115,7 +110,7 @@ function SignupForm(){
 							onChange={(e) => {
 								setUrl(e.target.value);
 							}}
-						/>
+						/> */}
 						<CardActions onClick={addSong}>
 							<Button
 								type="submit"
