@@ -7,19 +7,19 @@ const pool = require("../modules/pool");
 
 router.post(`/`, async (req, res) => {
 
-     console.log(req.body);
 	try{
         const { sesh_code, user_id, name, title, artist } = req.body;
         const ytResponse = await axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.YT_API_KEY}&channelId=UCYi9TC1HC_U2kaRAK6I4FSQ&part=snippet&maxResults=2&q=""&q=${title} ${artist}`)
 
-        console.log('just YTRESPONSE ',ytResponse);
+        console.log('REQ BODY', req.body);
         console.log('ytrespsonse dot data', ytResponse.data);
+
 
         const ytSearch = ytResponse.data.items[1].snippet.title
 
-        console.log('YT RESPONSE DATA ITEMS 0 SNIPPET TITLE',ytSearch);
+        console.log('YT RESPONSE DATA ITEMS 1 SNIPPET TITLE',ytSearch);
 
-        if(ytSearch.includes(title && artist)){
+        if(ytSearch.toLowerCase().includes(title.toLowerCase() && artist.toLowerCase())){
             const videoId = ytResponse.data.items[0].id.videoId
             let addToQueueQuery = `
 		        INSERT INTO queue ("current_sesh_id","user_id", "name", "title","artist","url")
@@ -34,14 +34,16 @@ router.post(`/`, async (req, res) => {
 			         res.sendStatus(500);
 		        })
         }else{
-            res.sendStatus(500);
+            const errMessage = {
+			blurb: "Well this is awkward, we couldn't find the song you were looking for. Try a different song."}
+                res.send(errMessage)
+            };
 
-        }
+
 
     }catch(error){
-        const errMessage = {blurb: "Well this is awkward, we couldn't find the song you were looking for. Try a different song."}
 			console.log("error getting on server", error);
-			res.sendStatus(500).send(errMessage)
+			res.sendStatus(500)
 		};
 });
 
