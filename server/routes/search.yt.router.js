@@ -15,34 +15,48 @@ router.post(`/`, async (req, res) => {
         console.log('ytrespsonse dot data', ytResponse.data);
 
 
-        const ytSearch = ytResponse.data.items[1].snippet.title
-
-        console.log('YT RESPONSE DATA ITEMS 1 SNIPPET TITLE',ytSearch);
-
-        if(ytSearch.toLowerCase().includes(title.toLowerCase() && artist.toLowerCase())){
-            const videoId = ytResponse.data.items[0].id.videoId
-            let addToQueueQuery = `
-		        INSERT INTO queue ("current_sesh_id","user_id", "name", "title","artist","url")
-		        VALUES($1,$2,$3,$4,$5,$6);`
-	            pool.query(addToQueueQuery, [sesh_code, user_id, name, title, artist, videoId])
-                .then((response) => {
-			        console.log("SUCCESSFUL POST TO QUEUE TABLE", response);
-			        res.sendStatus(201);
-		        })
-                .catch((err) => {
-			        console.log("PROBLEM POSTING TO THE QUEUE TABLE", err);
-			         res.sendStatus(500);
-		        })
+        if (ytResponse.data.pageInfo.totalResults == 0){
+            res.sendStatus(500)
         }else{
-            const errMessage = {
-			blurb: "Well this is awkward, we couldn't find the song you were looking for. Try a different song."}
-                res.send(errMessage)
-            };
-
-
-
-    }catch(error){
-			console.log("error getting on server", error);
+            let ytSearch = ytResponse.data.items[0].snippet.title;
+            console.log("YT RESPONSE DATA ITEMS 0 SNIPPET TITLE", ytSearch);
+                if (
+					ytSearch
+						.toLowerCase()
+						.includes(title.toLowerCase() && artist.toLowerCase())
+				) {
+					const videoId = ytResponse.data.items[0].id.videoId;
+					let addToQueueQuery = `
+		                INSERT INTO queue ("current_sesh_id","user_id", "name", "title","artist","url")
+		                VALUES($1,$2,$3,$4,$5,$6);`;
+					pool.query(addToQueueQuery, [
+						sesh_code,
+						user_id,
+						name,
+						title,
+						artist,
+						videoId,
+					])
+						.then((response) => {
+							console.log(
+								"SUCCESSFUL POST TO QUEUE TABLE",
+								response
+							);
+							res.sendStatus(201);
+						})
+						.catch((err) => {
+							console.log(
+								"PROBLEM POSTING TO THE QUEUE TABLE",
+								err
+							);
+							res.sendStatus(500);
+						});
+				} else {
+					res.sendStatus(500);
+				}
+            }
+        }catch(error){
+			console.log("ERROR WITH ORIGNAL API POST on server", error);
 			res.sendStatus(500)
 		};
 });
