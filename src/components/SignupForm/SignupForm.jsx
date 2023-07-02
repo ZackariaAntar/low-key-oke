@@ -30,7 +30,7 @@ function SignupForm() {
 	const user = useSelector((store) => store.user);
 	const seshInfo = useSelector((store) => store.seshInfo);
 	const errors = useSelector((store) => store.errors);
-	const loading = useSelector((store)=> store.loading)
+	const loading = useSelector((store) => store.loading);
 
 	useEffect(() => {
 		dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
@@ -42,8 +42,8 @@ function SignupForm() {
 	const [open, setOpen] = useState(false);
 
 	const waitForSuccess = (e) => {
-		e.preventDefault()
-		if(title && artist){
+		e.preventDefault();
+		if (title && artist) {
 			setOpen(!open);
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
@@ -53,15 +53,18 @@ function SignupForm() {
 				artist: artist,
 			};
 			dispatch({ type: "POST_TO_QUEUE", payload: queueItem });
-			if(loading.loading){
+			if (loading.loading) {
 				setTimeout(closeDialog, 5000);
 			}
-
 		}
-	}
+	};
 	console.log(title, artist);
 
-	const closeDialog = () =>{setOpen(false)};
+	const closeDialog = () => {
+		setOpen(false);
+	};
+
+	//TODO REFACTOR GUEST VIEWS
 
 	return (
 		<Container
@@ -131,7 +134,8 @@ function SignupForm() {
 							label="Artist"
 							value={artist}
 							helperText={
-								!artist && "An artist name is required to submit"
+								!artist &&
+								"An artist name is required to submit"
 							}
 							onChange={(e) => setArtist(e.target.value)}
 						/>
@@ -191,7 +195,7 @@ function SignupForm() {
 						/>
 					</DialogContent>
 				) : (
-					<DialogContent align='center'>
+					<DialogContent align="center">
 						<DialogContentText id="alert-dialog-description">
 							Great choice by the way
 						</DialogContentText>
