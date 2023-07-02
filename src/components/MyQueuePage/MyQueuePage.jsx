@@ -25,6 +25,8 @@ function MyQueuePage(){
     const dispatch = useDispatch()
     const user = useSelector((store)=> store.user)
     const mySongs = useSelector((store)=> store.mySongs)
+	const errors = useSelector((store) => store.errors);
+
     const [toggle, setToggle] = useState(false)
     let [propId, setPropId] = useState({})
     useEffect(() => {
@@ -48,6 +50,7 @@ function MyQueuePage(){
 
     return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
+			
 			{mySongs.length !== 0 ? (
 				<div>
 					{" "}
@@ -165,11 +168,12 @@ function MyQueuePage(){
 									<Button
 										variant="outlined"
 										color="error"
+										sx={{my:3}}
 										onClick={() =>
 											deleteMySongFromQueue(propId)
 										}
 									>
-										Remove Song from my queue
+										Remove song from my queue
 									</Button>
 								</DialogActions>
 							</Dialog>

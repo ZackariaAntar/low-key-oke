@@ -1,46 +1,69 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import getYouTubeID from "get-youtube-id";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
-import {Box, Card, CardHeader, CardContent, CardActions, Button, Container, Grid, TextField, Typography} from '@mui/material'
+import {
+	Box,
+	Card,
+	CardHeader,
+	CardContent,
+	CardActions,
+	Button,
+	Container,
+	Grid,
+	TextField,
+	Typography,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+} from "@mui/material";
 
 import BottomNav from "../BottomNav/BottomNav";
 
-function SignupForm(){
-    const dispatch = useDispatch();
+function SignupForm() {
+	const dispatch = useDispatch();
 
-    const user = useSelector((store)=>store.user)
-    const seshInfo = useSelector((store)=>store.seshInfo)
-     useEffect(() => {
-			dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
-			// dispatch({ type: "FETCH_QUEUE", payload: user.id });
-	}, []);
+	const user = useSelector((store) => store.user);
+	const seshInfo = useSelector((store) => store.seshInfo);
+	const errors = useSelector((store) => store.errors);
+	const loading = useSelector((store)=> store.loading)
 
+	useEffect(() => {
+		dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
+		dispatch({ type: "FETCH_QUEUE", payload: user.id });
+	}, [loading]);
 
-    const [url, setUrl] = useState("");
 	const [title, setTitle] = useState("");
 	const [artist, setArtist] = useState("");
+	const [open, setOpen] = useState(false);
 
-    const addSong = () =>{
-        // event.preventDefault()
+	const waitForSuccess = (e) => {
+		e.preventDefault()
+		if(title && artist){
+			setOpen(!open);
+			const queueItem = {
+				sesh_code: seshInfo.sesh_code,
+				user_id: user.id,
+				name: user.username,
+				title: title,
+				artist: artist,
+			};
+			dispatch({ type: "POST_TO_QUEUE", payload: queueItem });
+			if(loading.loading){
+				setTimeout(closeDialog, 5000);
+			}
 
-        const videoId = getYouTubeID(url);
-        const queueItem = {
-            sesh_code: seshInfo.sesh_code,
-            user_id: user.id,
-            name: user.username,
-            title: title,
-            artist: artist,
-            url: videoId,
-        }
-        dispatch({type:'POST_TO_QUEUE', payload: queueItem})
+		}
+	}
+	console.log(title, artist);
 
-    }
-      console.log(title, artist, url);
+	const closeDialog = () =>{setOpen(false)};
 
-
-    return (
+	return (
 		<Container
 			maxWidth={"sm"}
 			sx={{
@@ -79,32 +102,40 @@ function SignupForm(){
 					<Typography sx={{ ml: 1 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
-					<form noValidate>
+					<form>
 						<TextField
+							placeholder="Enter a song title"
+							required
+							name="title"
+							error={!title}
 							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
-							id="username"
 							label="Song Title"
 							value={title}
-							onChange={(e) => {
-								setTitle(e.target.value);
-							}}
+							helperText={
+								!title && "A song title is required to submit"
+							}
+							onChange={(e) => setTitle(e.target.value)}
 						/>
 						<TextField
+							placeholder="Enter the artist of that song"
+							required
+							name="artist"
+							error={!artist}
 							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
-							id="password"
 							label="Artist"
 							value={artist}
-							onChange={(e) => {
-								setArtist(e.target.value);
-							}}
+							helperText={
+								!artist && "An artist name is required to submit"
+							}
+							onChange={(e) => setArtist(e.target.value)}
 						/>
-						<TextField
+						{/* <TextField
 							sx={{ bgcolor: "white" }}
 							type="url"
 							margin="normal"
@@ -115,15 +146,15 @@ function SignupForm(){
 							onChange={(e) => {
 								setUrl(e.target.value);
 							}}
-						/>
-						<CardActions onClick={addSong}>
+						/> */}
+						<CardActions onClick={waitForSuccess}>
 							<Button
 								type="submit"
 								sx={{ m: 2 }}
 								variant="contained"
 								size="large"
-								component={Link}
-								to="/my-queue"
+								// component={Link}
+								// to="/my-queue"
 							>
 								Submit
 							</Button>
@@ -131,47 +162,65 @@ function SignupForm(){
 					</form>
 				</CardContent>
 			</Card>
-			{/* <form onSubmit={addSong}>
-				<label htmlFor="title">
-					<p>Song Title</p>
-					<input
-						name="title"
-						type="text"
-						value={title}
-						onChange={(e) => {
-							setTitle(e.target.value);
+			<Dialog
+				open={open}
+				onClose={() => setOpen(!open)}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle align="center" id="alert-dialog-title">
+					{loading.blurb}
+				</DialogTitle>
+				{loading.loading ||
+				loading.blurb ===
+					"Sorry, we couldn't find the song you were looking for, please try again." ? (
+					<DialogContent
+						align="center"
+						sx={{
+							my: 1,
 						}}
-					/>
-				</label>
-				<label htmlFor="artist">
-					<p>Artist</p>
-					<input
-						name="artist"
-						type="text"
-						value={artist}
-						onChange={(e) => {
-							setArtist(e.target.value);
-						}}
-					/>
-				</label>
-				<label htmlFor="url">
-					<p>Direct Url</p>
-					<input
-						name="url"
-						type="text"
-						value={url}
-						onChange={(e) => {
-							setUrl(e.target.value);
-						}}
-					/>
-				</label>
-				<label htmlFor="submit">
-					<input type="submit" value={"SUBMIT"} />
-				</label>
-			</form> */}
+					>
+						<ScaleLoader
+							loading={loading.loading}
+							color="#4b00a1"
+							height={75}
+							margin={4}
+							radius={4}
+							speedMultiplier={0.5}
+							width={6}
+						/>
+					</DialogContent>
+				) : (
+					<DialogContent align='center'>
+						<DialogContentText id="alert-dialog-description">
+							Great choice by the way
+						</DialogContentText>
+					</DialogContent>
+				)}
+
+				<DialogActions
+					sx={{
+						my: 1,
+						display: "flex",
+						flexDirection: "column",
+					}}
+				>
+					<Button
+						variant="contained"
+						sx={{ my: 1 }}
+						disabled={loading.loading}
+						component={Link}
+						to="/my-queue"
+						onClick={() => setOpen(!open)}
+						autoFocus
+					>
+						Go to my queue
+					</Button>
+				</DialogActions>
+			</Dialog>
 
 			<BottomNav />
 		</Container>
 	);
 }
-export default SignupForm
+export default SignupForm;
