@@ -12,6 +12,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const seshRouter = require('./routes/seshCode.router')
 const songQueueRouter = require('./routes/song.queue.router')
+const ytSearch = require('./routes/search.yt.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,6 +30,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/sesh', seshRouter);
 app.use('/api/songs', songQueueRouter);
+app.use('/api/yt', ytSearch )
 
 
 // Serve static files
