@@ -33,6 +33,22 @@ function MyQueuePage(){
 		dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id });
 	}, []);
 
+
+	const fetchMyQueue = () => {
+		console.log("fetch my current session songs");
+		const fetchUserQueue = () => {
+		dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id });
+		};
+
+		useEffect(() => {
+			const timer = setInterval(fetchUserQueue, 10000);
+
+			return () => clearInterval(timer);
+		}, [dispatch, user]);
+	};
+
+	fetchMyQueue(user);
+
     const deleteMySongFromQueue = (obj) =>{
         dispatch({ type: "DELETE_FROM_MY_QUEUE", payload: obj });
         console.log('obj', obj);
@@ -50,12 +66,140 @@ function MyQueuePage(){
 
     return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
-			
+			{/* <Card
+				elevation={10}
+				sx={{
+					bgcolor: "#4b00a1",
+					mt: 5,
+					borderRadius: 2,
+					display: "flex",
+				}}
+			>
+				<CardContent
+					sx={{
+						textAlign: "center",
+						color: "#F2F2F2",
+						p: 2,
+						// mx:4.6,
+						my: 2,
+						textAlign: "center",
+						width: "100%",
+					}}
+				>
+					<Typography variant="h6" fontWeight={"bolder"}>
+						wrecking ball
+					</Typography>
+
+					<Divider variant="middle" color="#F2F2F2" sx={{ my: 3 }} />
+
+					<Typography variant="h6" fontWeight={"bolder"}>
+						Bottom
+					</Typography>
+				</CardContent>
+
+				<Divider
+					orientation="vertical"
+					flexItem
+					color="#F2F2F2"
+					sx={{ my: 7 }}
+				/>
+
+				<CardContent sx={{ display: "flex", alignItems: "center" }}>
+					<IconButton
+						size="small"
+						value={song}
+						onClick={activateDialog(song)}
+					>
+						<DeleteForeverRoundedIcon sx={{ color: "#b00000" }} />
+					</IconButton>
+					<Typography variant="subtitle2">Opt out</Typography>
+					<Typography variant="h5" fontWeight={"bolder"}>
+						RIGHT
+					</Typography>
+				</CardContent>
+			</Card> */}
+
 			{mySongs.length !== 0 ? (
 				<div>
-					{" "}
 					{mySongs.map((song, i) => (
 						<>
+							<Card
+								elevation={10}
+								sx={{
+									bgcolor: "#4b00a1",
+									mt: 5,
+									borderRadius: 2,
+									display: "flex",
+									mx: "auto",
+								}}
+							>
+								<CardContent
+									sx={{
+										textAlign: "center",
+										color: "#F2F2F2",
+										p: 2,
+										mx: 2,
+										my: 2,
+										textAlign: "center",
+										width: "100%",
+									}}
+								>
+									<Typography
+										variant="h6"
+										fontWeight={"bolder"}
+									>
+										{song.title}
+									</Typography>
+
+									<Divider
+										variant="middle"
+										color="#F2F2F2"
+										sx={{ my: 3 }}
+									/>
+
+									<Typography
+										variant="h6"
+										fontWeight={"bolder"}
+									>
+										{song.artist}
+									</Typography>
+								</CardContent>
+
+								<Divider
+									orientation="vertical"
+									flexItem
+									color="#F2F2F2"
+									sx={{ my: 7 }}
+								/>
+
+								<CardContent
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "center",
+										textAlign: "center",
+										width:'40%',
+
+									}}
+								>
+									<IconButton
+										size="large"
+										value={song}
+										onClick={activateDialog(song)}
+									>
+										<DeleteForeverRoundedIcon
+											sx={{ color: "#b00000", scale:'2.5', mb:1 }}
+										/>
+									</IconButton>
+									<Typography
+										sx={{ color: "#F2F2F2" }}
+										variant="h7"
+										fontWeight={'bolder'}
+									>
+										Opt out
+									</Typography>
+								</CardContent>
+							</Card>
 							<Paper
 								sx={{
 									my: 1,
@@ -78,10 +222,10 @@ function MyQueuePage(){
 											<Grid item xs sx={{ my: 2, mx: 0 }}>
 												<Typography
 													gutterBottom
-													variant="body"
+													variant="h5"
 												>
-													id: {song.id} {song.title}{" "}
-													by {song.artist}
+													{song.title} by{" "}
+													{song.artist}
 												</Typography>
 											</Grid>
 										</Grid>
@@ -90,15 +234,6 @@ function MyQueuePage(){
 											color="text.secondary"
 											variant="body"
 										></Typography>
-										<Typography
-											noWrap
-											color="text.secondary"
-											variant="caption"
-											sx={{ fontSize: ".75rem" }}
-										>
-											https://www.youtube.com/watch?v=$
-											{song.url}
-										</Typography>
 									</Box>
 									<Divider variant="middle" />
 									<Box
@@ -168,7 +303,7 @@ function MyQueuePage(){
 									<Button
 										variant="outlined"
 										color="error"
-										sx={{my:3}}
+										sx={{ my: 3 }}
 										onClick={() =>
 											deleteMySongFromQueue(propId)
 										}
@@ -197,7 +332,7 @@ function MyQueuePage(){
 						}}
 					>
 						<Typography variant="h5" fontWeight={"bolder"}>
-							Nothing to see here
+							Your queue is empty
 						</Typography>
 					</CardContent>
 				</Card>

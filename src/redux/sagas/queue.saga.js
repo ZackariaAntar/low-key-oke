@@ -18,6 +18,11 @@ function* markSongAsCompleted(action) {
 	try {
 		yield axios.put(`/api/songs/remove/${action.payload.id}`);
 		yield put({
+			type: "FETCH_MY_CURRENT_SESSION_SONGS",
+			payload: action.payload.user_id,
+		});
+
+		yield put({
 			type: "FETCH_QUEUE",
 			payload: action.payload.host_user_id,
 		});
