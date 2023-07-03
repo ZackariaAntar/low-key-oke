@@ -20,8 +20,10 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	IconButton,
 } from "@mui/material";
 
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import BottomNav from "../BottomNav/BottomNav";
 
 function SignupForm() {
@@ -44,6 +46,8 @@ function SignupForm() {
 	const waitForSuccess = (e) => {
 		e.preventDefault();
 		if (title && artist) {
+			setTitle('')
+			setArtist('')
 			setOpen(!open);
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
@@ -53,16 +57,12 @@ function SignupForm() {
 				artist: artist,
 			};
 			dispatch({ type: "POST_TO_QUEUE", payload: queueItem });
-			if (loading.loading) {
-				setTimeout(closeDialog, 5000);
-			}
+
 		}
 	};
 	console.log(title, artist);
 
-	const closeDialog = () => {
-		setOpen(false);
-	};
+
 
 	//TODO REFACTOR GUEST VIEWS
 
@@ -172,7 +172,23 @@ function SignupForm() {
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle align="center" id="alert-dialog-title">
+				<DialogTitle align="center" id="alert-dialog-title" sx={{p:2,}}>
+					<DialogContent>
+						<IconButton
+							aria-label="close"
+							onClick={() => setOpen(!open)}
+							size='large'
+							sx={{
+								position: "absolute",
+								right: 4,
+								top: 4,
+								color: "black",
+
+							}}
+						>
+							<CloseOutlinedIcon />
+						</IconButton>
+					</DialogContent>
 					{loading.blurb}
 				</DialogTitle>
 				{loading.loading ||
@@ -201,7 +217,6 @@ function SignupForm() {
 						</DialogContentText>
 					</DialogContent>
 				)}
-
 				<DialogActions
 					sx={{
 						my: 1,
@@ -209,17 +224,21 @@ function SignupForm() {
 						flexDirection: "column",
 					}}
 				>
-					<Button
-						variant="contained"
-						sx={{ my: 1 }}
-						disabled={loading.loading}
-						component={Link}
-						to="/my-queue"
-						onClick={() => setOpen(!open)}
-						autoFocus
-					>
-						Go to my queue
-					</Button>
+					{!loading.loading ? (
+						<Button
+							variant="contained"
+							sx={{ my: 1 }}
+							disabled={loading.loading}
+							component={Link}
+							to="/my-queue"
+							onClick={() => setOpen(!open)}
+							autoFocus
+						>
+							Go to my queue
+						</Button>
+					) : (
+						<></>
+					)}
 				</DialogActions>
 			</Dialog>
 
