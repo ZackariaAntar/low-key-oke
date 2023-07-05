@@ -199,7 +199,7 @@ function MainDisplay() {
 							}}
 						>
 							<Typography variant="h3" fontWeight={"bolder"}>
-								{`${queue[1].name}'s on deck with "${queue[1].title}" by ${queue[1].artist}`}
+								{`${queue[1].name}'s on deck with "${queue[1].title}"`}
 							</Typography>
 						</CardContent>
 					</Card>

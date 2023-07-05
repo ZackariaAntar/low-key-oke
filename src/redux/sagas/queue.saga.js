@@ -31,14 +31,14 @@ function* markSongAsCompleted(action) {
 	}
 }
 
-function* postToQueue(action) {
-	console.log("IN POST TO QUEUE", action.payload);
+function* callYoutube(action) {
+	console.log("CALL YOUTUBE", action.payload);
 	try {
 		const search = yield axios.post("/api/yt", action.payload);
 		console.log('ytSearch response', search.data);
 		// if(search.status === 201){
 		yield put({ type: "SONG_FOUND", payload: {loading:false, blurb:"Here's what we found, please choose from the following options.", data:search.data} })
-		yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id})
+		// yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id})
 
 		// }
 	} catch (error) {
@@ -46,6 +46,21 @@ function* postToQueue(action) {
 		// yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id});
 		console.log("Queue POST request failed", error);
 	}
+}
+
+function* postToQueue(action){
+		console.log("IN POST TO QUEUE", action.payload);
+
+	try {
+		yield axios.post('/api/songs', action.payload)
+		yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id})
+
+
+	} catch (error) {
+		console.log('ERROR POSTING TO QUEUE', error);
+
+	}
+
 }
 
 
@@ -113,7 +128,8 @@ function* unfavoriteSong(action) {
 
 function* queueSaga() {
 	yield takeLatest("FETCH_QUEUE", fetchQueue);
-    yield takeLatest("POST_TO_QUEUE", postToQueue)
+    yield takeLatest("SEARCH_YOUTUBE", callYoutube)
+	yield takeLatest('POST_TO_QUEUE', postToQueue)
     yield takeLatest("FETCH_MY_CURRENT_SESSION_SONGS", fetchMyCurrentSongs)
     yield takeLatest("FETCH_MY_SONG_HISTORY", fetchMySongHistory)
     yield takeLatest("MARK_SONG_AS_COMPLETED", markSongAsCompleted)

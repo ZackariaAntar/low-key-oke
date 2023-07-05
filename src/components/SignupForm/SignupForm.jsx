@@ -52,21 +52,33 @@ function SignupForm() {
 
 	const waitForSuccess = (e) => {
 		e.preventDefault();
-		if (title && artist) {
-			setTitle('')
-			setArtist('')
+		if (title) {
 			setOpen(!open);
+			const queueItem = {
+				title: title,
+			};
+			dispatch({ type: "SEARCH_YOUTUBE", payload: queueItem });
+
+		}
+	};
+
+	const postToQueue = (vid) =>{
+		setTitle("");
+		setArtist("");
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
 				user_id: user.id,
 				name: user.username,
-				title: title,
-				artist: artist,
+				title: vid.title,
+				url: vid.videoId
 			};
-			dispatch({ type: "POST_TO_QUEUE", payload: queueItem });
 
-		}
-	};
+			dispatch({
+				type: "POST_TO_QUEUE",
+				payload: queueItem,
+			});
+
+	}
 	console.log(title, artist);
 
 
@@ -115,19 +127,13 @@ function SignupForm() {
 						/>
 						<TextField
 							placeholder="Enter the artist of that song"
-							required
 							name="artist"
-							error={!artist}
 							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
 							label="Artist"
 							value={artist}
-							helperText={
-								!artist &&
-								"An artist name is required to submit"
-							}
 							onChange={(e) => setArtist(e.target.value)}
 						/>
 						{/* <TextField
@@ -247,7 +253,7 @@ function SignupForm() {
 											component="img"
 											sx={{
 												objectFit: "contain",
-												height: 150,
+												height: 120,
 												width: "100%",
 											}}
 											image={item.pic}
@@ -259,17 +265,18 @@ function SignupForm() {
 										>
 											{item.title}
 										</Typography>
+										<CardActions sx={{justifyContent:'center', mt:1}}>
+											<Button component={Link} to='/my-queue' onClick={()=>postToQueue(item)} variant="contained" >
+												Add to queue
+											</Button>
+										</CardActions>
 									</CardContent>
 								</Card>
 							))}
 						</DialogContent>
-
-						<DialogContentText id="alert-dialog-description">
-							Great choice by the way!
-						</DialogContentText>
 					</DialogContent>
 				)}
-				<DialogActions
+				{/* <DialogActions
 					sx={{
 						my: 1,
 						display: "flex",
@@ -291,7 +298,7 @@ function SignupForm() {
 					) : (
 						<></>
 					)}
-				</DialogActions>
+				</DialogActions> */}
 			</Dialog>
 
 			<BottomNav />
