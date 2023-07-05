@@ -10,6 +10,7 @@ import {
 	CardHeader,
 	CardContent,
 	CardActions,
+	CardMedia,
 	Button,
 	Container,
 	Grid,
@@ -21,6 +22,12 @@ import {
 	DialogContentText,
 	DialogTitle,
 	IconButton,
+	List,
+	ListItem,
+	Divider,
+	ListItemText,
+	ListItemAvatar,
+	Avatar
 } from "@mui/material";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -75,22 +82,6 @@ function SignupForm() {
 				justifyContent: "center",
 			}}
 		>
-			<Container maxWidth={"xs"} sx={{ my: 1 }}>
-				<Card
-					elevation={3}
-					sx={{
-						mb: 2,
-						color: "#F2F2F2",
-						bgcolor: "#4b00a1",
-						borderRadius: 4,
-					}}
-				>
-					<CardHeader
-						title={`Your session: ${seshInfo.sesh_code}`}
-						align={"center"}
-					/>
-				</Card>
-			</Container>
 			<Card
 				elevation={19}
 				sx={{
@@ -172,18 +163,21 @@ function SignupForm() {
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle align="center" id="alert-dialog-title" sx={{p:2,}}>
+				<DialogTitle
+					align="center"
+					id="alert-dialog-title"
+					sx={{ p: 2 }}
+				>
 					<DialogContent>
 						<IconButton
 							aria-label="close"
 							onClick={() => setOpen(!open)}
-							size='large'
+							size="large"
 							sx={{
 								position: "absolute",
 								right: 4,
 								top: 4,
 								color: "black",
-
 							}}
 						>
 							<CloseOutlinedIcon />
@@ -212,8 +206,66 @@ function SignupForm() {
 					</DialogContent>
 				) : (
 					<DialogContent align="center">
+						<DialogContent>
+							{loading.data.map((item) => (
+								<Card
+									sx={{
+										bgcolor: "#F2F2F2",
+										my: 4,
+										borderRadius: 2,
+										display: "flex",
+									}}
+									key={item.videoId}
+								>
+									{/* <CardContent
+										ssx={{
+											textAlign: "center",
+											color: "#4b00a1",
+											mx: 0.25,
+											mt: 1,
+											width: "80%",
+										}}
+									>
+										<Typography
+											variant="subtitle1"
+											component="div"
+										>
+											{item.title}
+										</Typography>
+									</CardContent> */}
+									<CardContent
+										sx={{
+											display: "flex",
+											flexDirection: "column",
+											justifyContent: "center",
+											textAlign: "justify center",
+											fontWeight: "bolder",
+											width: "90%",
+										}}
+									>
+										<CardMedia
+											component="img"
+											sx={{
+												objectFit: "contain",
+												height: 150,
+												width: "100%",
+											}}
+											image={item.pic}
+											alt="Yotube video thumbnail"
+										/>
+										<Typography
+											variant="caption2"
+											sx={{ mt: 2 }}
+										>
+											{item.title}
+										</Typography>
+									</CardContent>
+								</Card>
+							))}
+						</DialogContent>
+
 						<DialogContentText id="alert-dialog-description">
-							Great choice by the way
+							Great choice by the way!
 						</DialogContentText>
 					</DialogContent>
 				)}
@@ -247,3 +299,22 @@ function SignupForm() {
 	);
 }
 export default SignupForm;
+
+	{
+		/* <Container maxWidth={"xs"} sx={{ my: 1 }}>
+				<Card
+					elevation={3}
+					sx={{
+						mb: 2,
+						color: "#F2F2F2",
+						bgcolor: "#4b00a1",
+						borderRadius: 4,
+					}}
+				>
+					<CardHeader
+						title={`Your session: ${seshInfo.sesh_code}`}
+						align={"center"}
+					/>
+				</Card>
+			</Container> */
+	}

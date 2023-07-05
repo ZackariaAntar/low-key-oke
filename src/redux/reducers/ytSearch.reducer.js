@@ -1,5 +1,7 @@
 const loading = (state = {loading:true, blurb:"Confirming your song selection..."}, action) => {
 	switch (action.type) {
+		case "PICK_SONG_FROM_LIST":
+			return action.payload;
 		case "SONG_FOUND":
 			return action.payload;
 		case "SONG_NOT_FOUND":

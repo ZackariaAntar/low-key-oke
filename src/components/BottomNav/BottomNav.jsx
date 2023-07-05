@@ -65,7 +65,7 @@ function BottomNav() {
 						to={"/signup"}
 					>
 						<AddBoxOutlinedIcon />
-						<div style={text}> Sign-up</div>
+						<div style={text}> New Song</div>
 					</IconButton>
 					<IconButton
 						size="small"

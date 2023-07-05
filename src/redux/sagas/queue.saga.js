@@ -35,15 +35,15 @@ function* postToQueue(action) {
 	console.log("IN POST TO QUEUE", action.payload);
 	try {
 		const search = yield axios.post("/api/yt", action.payload);
-		console.log('ytSearch response', search.status);
-		if(search.status === 201){
-			yield put({ type: "SONG_FOUND", payload: {loading:false, blurb:"You're good to go!"} })
-			yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id})
+		console.log('ytSearch response', search.data);
+		// if(search.status === 201){
+		yield put({ type: "SONG_FOUND", payload: {loading:false, blurb:"Here's what we found, please choose from the following options.", data:search.data} })
+		yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id})
 
-		}
+		// }
 	} catch (error) {
 		yield put({ type: "SONG_NOT_FOUND", payload: {loading:true, blurb:"Sorry, we couldn't find the song you were looking for, please try again."}})
-		yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id});
+		// yield put({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: action.payload.user_id});
 		console.log("Queue POST request failed", error);
 	}
 }
