@@ -23,7 +23,22 @@ function HostDash(){
     useEffect(()=>{
         dispatch({type: "FETCH_CURRENT_SESSION", payload: user.id});
         dispatch({ type: 'FETCH_QUEUE', payload: user.id });
-    }, [queue])
+    }, [])
+
+	const fetchQueue = () => {
+		console.log("fetch queue");
+		const fetchUserQueue = () => {
+			dispatch({ type: "FETCH_QUEUE", payload: user.id });
+		};
+
+		useEffect(() => {
+			const timer = setInterval(fetchUserQueue, 5000);
+
+			return () => clearInterval(timer);
+		}, [dispatch, user]);
+	};
+
+	fetchQueue(user);
 
     return (
 		<Container

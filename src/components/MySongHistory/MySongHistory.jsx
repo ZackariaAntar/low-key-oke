@@ -58,7 +58,7 @@ function MySongHistory(){
 									mt: 2,
 									borderRadius: 2,
 									display: "flex",
-									
+
 								}}
 							>
 								<CardContent
@@ -77,22 +77,6 @@ function MySongHistory(){
 										align="center"
 									>
 										{history.title}
-									</Typography>
-									<Divider
-										color="#4b00a1"
-										variant="middle"
-										textAlign="center"
-									>
-										by
-									</Divider>
-
-									<Typography
-										sx={{ my: 1.25 }}
-										variant="h6"
-										fontWeight={"bolder"}
-										align="center "
-									>
-										{history.artist}
 									</Typography>
 								</CardContent>
 

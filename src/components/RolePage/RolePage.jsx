@@ -84,6 +84,7 @@ function RolePage(){
 						fullWidth
 						variant="standard"
 						onChange={(e) => setJoinCode(e.target.value)}
+						autoComplete="off"
 					/>
 				</DialogContent>
 				<DialogActions>

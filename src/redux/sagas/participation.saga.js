@@ -35,7 +35,8 @@ function* leaveSession(action){
 		action.payload
 	);
 	try{
-		yield axios.put(`/api/sesh/leave/session/${action.payload}`)
+		yield axios.post(`/api/sesh/leave/session/`, action.payload)
+		yield put({type:'FETCH_USER'})
 
 	}catch(error){
 		console.log('ERROR IN LEAVING SESSION', error);

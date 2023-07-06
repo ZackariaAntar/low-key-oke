@@ -1,4 +1,4 @@
-const loading = (state = {loading:true, blurb:"Confirming your song selection..."}, action) => {
+const loading = (state = {loading:true, blurb:"Finding songs related to your search..."}, action) => {
 	switch (action.type) {
 		case "PICK_SONG_FROM_LIST":
 			return action.payload;

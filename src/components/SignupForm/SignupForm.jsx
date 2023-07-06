@@ -52,7 +52,7 @@ function SignupForm() {
 
 	const waitForSuccess = (e) => {
 		e.preventDefault();
-		if (title) {
+		if (title && title !== " ") {
 			setOpen(!open);
 			const queueItem = {
 				title: title,
@@ -108,24 +108,41 @@ function SignupForm() {
 					<Typography sx={{ ml: 1 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
-					<form>
+					<Box
+						component="form"
+						onSubmit={waitForSuccess}
+						sx={{ mt: 1 }}
+						autoComplete="off"
+					>
 						<TextField
-							placeholder="Enter a song title"
+							placeholder="Search for a song title or artist"
 							required
 							name="title"
-							error={!title}
+							// error={!title}
 							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
-							label="Song Title"
+							label="Search"
 							value={title}
-							helperText={
-								!title && "A song title is required to submit"
-							}
+							// helperText={
+							// 	!title && "Search by song title or artist "
+							// }
 							onChange={(e) => setTitle(e.target.value)}
 						/>
-						<TextField
+						<Button
+							type="submit"
+							sx={{ m: 2 }}
+							variant="contained"
+							size="large"
+							// component={Link}
+							// to="/my-queue"
+						>
+							search
+						</Button>
+					</Box>
+					<form>
+						{/* <TextField
 							placeholder="Enter the artist of that song"
 							name="artist"
 							sx={{ bgcolor: "white" }}
@@ -135,7 +152,7 @@ function SignupForm() {
 							label="Artist"
 							value={artist}
 							onChange={(e) => setArtist(e.target.value)}
-						/>
+						/> */}
 						{/* <TextField
 							sx={{ bgcolor: "white" }}
 							type="url"
@@ -148,18 +165,7 @@ function SignupForm() {
 								setUrl(e.target.value);
 							}}
 						/> */}
-						<CardActions onClick={waitForSuccess}>
-							<Button
-								type="submit"
-								sx={{ m: 2 }}
-								variant="contained"
-								size="large"
-								// component={Link}
-								// to="/my-queue"
-							>
-								Submit
-							</Button>
-						</CardActions>
+						{/* <CardActions onClick={waitForSuccess}></CardActions> */}
 					</form>
 				</CardContent>
 			</Card>
@@ -222,6 +228,7 @@ function SignupForm() {
 										display: "flex",
 									}}
 									key={item.videoId}
+									elevation={8}
 								>
 									{/* <CardContent
 										ssx={{
@@ -265,8 +272,20 @@ function SignupForm() {
 										>
 											{item.title}
 										</Typography>
-										<CardActions sx={{justifyContent:'center', mt:1}}>
-											<Button component={Link} to='/my-queue' onClick={()=>postToQueue(item)} variant="contained" >
+										<CardActions
+											sx={{
+												justifyContent: "center",
+												mt: 1,
+											}}
+										>
+											<Button
+												component={Link}
+												to="/my-queue"
+												onClick={() =>
+													postToQueue(item)
+												}
+												variant="contained"
+											>
 												Add to queue
 											</Button>
 										</CardActions>

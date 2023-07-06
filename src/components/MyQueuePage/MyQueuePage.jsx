@@ -63,6 +63,7 @@ function MyQueuePage() {
 
 	return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
+			
 			{mySongs.length !== 0 ? (
 				<div>
 					{mySongs.map((song, i) => (
@@ -93,23 +94,6 @@ function MyQueuePage() {
 										align="center"
 									>
 										{song.title}
-									</Typography>
-
-									<Divider
-										color="#4b00a1"
-										variant="middle"
-										textAlign="left"
-									>
-										by
-									</Divider>
-
-									<Typography
-										sx={{ my: 1.25 }}
-										variant="h6"
-										fontWeight={"bolder"}
-										align="center "
-									>
-										{song.artist}
 									</Typography>
 								</CardContent>
 
@@ -213,7 +197,6 @@ function MyQueuePage() {
 					sx={{
 						bgcolor: "#4b00a1",
 						mt: 5,
-
 						borderRadius: 4,
 					}}
 				>
