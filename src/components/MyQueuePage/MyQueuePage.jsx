@@ -63,7 +63,7 @@ function MyQueuePage() {
 
 	return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
-			
+
 			{mySongs.length !== 0 ? (
 				<div>
 					{mySongs.map((song, i) => (
@@ -77,6 +77,7 @@ function MyQueuePage() {
 									display: "flex",
 									// mx: "auto",
 								}}
+								key={song.id}
 							>
 								<CardContent
 									sx={{

@@ -10,7 +10,7 @@ router.post(`/`, rejectUnauthenticated, async (req, res) => {
 
 	try{
         const {title} = req.body;
-        const ytResponse = await axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.YT_API_KEY}&channelId=UCYi9TC1HC_U2kaRAK6I4FSQ&part=snippet&maxResults=50&q=${title}`)
+        const ytResponse = await axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.YT_API_KEY}&channelId=UCYi9TC1HC_U2kaRAK6I4FSQ&part=snippet&maxResults=20&q=${title}`)
 
         console.log('REQ BODY', req.body);
         console.log('ytrespsonse dot data', ytResponse.data);
@@ -65,6 +65,9 @@ router.post(`/`, rejectUnauthenticated, async (req, res) => {
 				let bestKaraoke2 = item.snippet.title
 					.toLowerCase()
 					.includes("best hits");
+				let bestSongs = item.snippet.title
+					.toLowerCase()
+					.includes("best songs");
 				let era = item.snippet.title
 					.toLowerCase()
 					.includes("80s");
@@ -80,7 +83,7 @@ router.post(`/`, rejectUnauthenticated, async (req, res) => {
 
 
 
-                if(!bestKaraoke && !bestKaraoke2 && !bestOf && !nonStop && !andMore && !atSR && !atSR2 && !withLead && !vol && !andMore2 && !topHits && !megaHits && !oneHour && !twoHour && !shorts && !era && !era2 && !mashup){
+                if(!bestSongs && !bestKaraoke && !bestKaraoke2 && !bestOf && !nonStop && !andMore && !atSR && !atSR2 && !withLead && !vol && !andMore2 && !topHits && !megaHits && !oneHour && !twoHour && !shorts && !era && !era2 && !mashup){
 
                         if (item.id.videoId) {
                             let betterTitle = item.snippet.title;
