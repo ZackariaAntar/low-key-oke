@@ -30,7 +30,7 @@ function Nav() {
 					</>
 				)}
 				{/* If a user is logged in, and not in a session show these links */}
-				{user.id && !user.in_session && (
+				{(user.id && !user.in_session) && (
 					<>
 						<Link className="navLink" to="/user">
 							Home
@@ -44,7 +44,7 @@ function Nav() {
 					</>
 				)}
 				{/* If a user is logged in, and not in a session show these links */}
-				{user.id && user.in_session && user.is_hosting && (
+				{(user.id) && (user.in_session && user.is_hosting) && (
 					<>
 						<Link className="navLink" to="/host-dash">
 							Host Dashboard
@@ -59,7 +59,7 @@ function Nav() {
 						</Link>
 					</>
 				)}
-				{user.id && user.in_session && !user.is_hosting && (
+				{(user.id) && (user.in_session && !user.is_hosting) && (
 					<>
 						<Link to="/user">
 							<LeaveSessionButton className="navLink" />

@@ -9,6 +9,7 @@ function* makeHost(action) {
 	try {
 		// yield axios.put(`/api/user/make/host/${action.payload}`)
 		yield put({ type: "MAKE_NEW_CODE", payload: action.payload});
+		
 
 	} catch (error) {
 		console.log("MAKE_HOST UPDATE request failed", error);
@@ -23,6 +24,7 @@ function* makeGuest(action) {
 	try {
 		yield axios.post('/api/sesh/guest', {sesh_code: action.payload.sesh_code, user_id: action.payload.user_id})
 		yield put({type: "FETCH_CURRENT_SESSION", payload: action.payload.user_id})
+		yield put({type:'FETCH_USER'})
 
 	} catch (error) {
 		console.log("MAKE_GUEST UPDATE request failed", error);
