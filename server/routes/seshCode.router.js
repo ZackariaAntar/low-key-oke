@@ -106,23 +106,31 @@ router.post("/guest", rejectUnauthenticated, (req, res) => {
 	pool.query(updateViews, [user_id])
 		.then(() => {
 			console.log("SUCCESSFULLY CHANGED GUEST VIEW IN USER TABLE");
-				let junctionQuery = `
-    			INSERT INTO sesh_junction ("sesh_code", "user_id")
-    			VALUES ($1, $2);`;
-				pool.query(junctionQuery, [sesh_code, user_id])
-					.then(() => {
-						console.log(
-							"SUCCESSFULLY ADDED guest TO THE sesh_junction TABLE"
-						);
-						res.sendStatus(201);
-					})
-					.catch((error) => {
-						console.log(
-							"PROBLEM WITH ADDING guest TO THE JUNCTION TABLE",
-							error
-						);
-						res.sendStatus(500);
-					});
+			let validateInSesh =
+				pool.query(`SELECT COUNT(user_id) FROM sesh_junction
+				WHERE user_id = $1 AND sesh_code = $2`, [user_id, sesh_code]);
+
+				if(validateInSesh > 0){
+					let junctionQuery = `
+					INSERT INTO sesh_junction ("sesh_code", "user_id")
+					VALUES ($1, $2);`;
+					pool.query(junctionQuery, [sesh_code, user_id])
+						.then(() => {
+							console.log(
+								"SUCCESSFULLY ADDED guest TO THE sesh_junction TABLE"
+							);
+							res.sendStatus(201);
+						})
+						.catch((error) => {
+							console.log(
+								"PROBLEM WITH ADDING guest TO THE JUNCTION TABLE",
+								error
+							);
+							res.sendStatus(500);
+						});
+				}else{
+					res.sendStatus(201)
+				}
 			})
 		.catch((error) => {
 			console.log("PROBLEM CHANGING GUEST VIEW IN USER TABLE", error);
