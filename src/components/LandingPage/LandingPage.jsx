@@ -34,7 +34,7 @@ function LandingPage() {
 				}}
 			>
 				<Typography component={'h1'} variant="h4" sx={{textAlign:'center'}}>
-					This is low-key-oke! The worlds best at home karaoke party
+					This is low-key-oke! The world's best at-home karaoke party
 					app.
 				</Typography>
 			</Grid>

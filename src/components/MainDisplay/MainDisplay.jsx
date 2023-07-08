@@ -170,6 +170,14 @@ function MainDisplay() {
 						</Typography>
 					</CardContent>
 				</Card>
+
+				<Typography
+					variant="h3"
+					fontWeight={"bolder"}
+					sx={{ my: 1, color: "#4b00a1" }}
+				>
+					Give it up for {queue[0]?.name}!
+				</Typography>
 				<Box>
 					<YouTube
 						key={nextSong}

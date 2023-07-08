@@ -56,7 +56,7 @@ function HostDash(){
 				<p>Instructions go here!</p>
 			</div>
 			<div>
-				<h1>Open main display in a new tab</h1>
+				<h2>Open main display in a new tab</h2>
 				<Button
 					variant={"contained"}
 					component={Link}

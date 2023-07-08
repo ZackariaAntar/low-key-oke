@@ -1,6 +1,7 @@
 import React from 'react';
 
-import {Container, Grid, Button, Box, Typography} from '@mui/material'
+import {Container, Grid, Button, Box, Typography, Chip} from '@mui/material'
+import { Padding } from '@mui/icons-material';
 
 const center = {
 	display: "flex",
@@ -9,10 +10,18 @@ const center = {
 	alignItems: "center",
 };
 
+const chipSx = {
+	fontSize: "2rem",
+	my: 1,
+	bgcolor: "#4b00a1",
+	color: "#F2F2F2",
+	height: 50,
+};
+
 function AboutPage() {
   return (
 		<Container maxWidth="lg">
-			<Typography sx={{ mb: 2 }} variant="h4">
+			<Typography sx={{ mb: 2 }} align="center" variant="h4">
 				About this project
 			</Typography>
 			<Grid container spacing={1}>
@@ -54,10 +63,38 @@ function AboutPage() {
 							sx={{
 								width: 300,
 								height: "100%",
-								backgroundColor: "purple",
 								p: 2,
+								display: "flex",
+								flexDirection: "column",
+								fontSize: "1.5rem",
 							}}
-						></Box>
+						>
+							<Chip
+								align="center"
+								label="React"
+								sx={chipSx}
+							></Chip>
+							<Chip
+								align="center"
+								label="Node"
+								sx={chipSx}
+							></Chip>
+							<Chip
+								align="center"
+								label="Express"
+								sx={chipSx}
+							></Chip>
+							<Chip
+								align="center"
+								label="Material UI"
+								sx={chipSx}
+							></Chip>
+							<Chip
+								align="center"
+								label="YouTube API"
+								sx={chipSx}
+							></Chip>
+						</Box>
 					</Container>
 				</Grid>
 				<Grid xs={12} sm={4} md={4} lg={4} xl={6} item sx={{ my: 2 }}>
@@ -69,10 +106,16 @@ function AboutPage() {
 							sx={{
 								width: 300,
 								height: "100%",
-								backgroundColor: "purple",
 								p: 2,
 							}}
-						></Box>
+						>
+							<Typography align="center" variant="h4">
+								Auto adding from favorites
+							</Typography>
+							<Typography align="center" variant="h4">
+								Mobile app
+							</Typography>
+						</Box>
 					</Container>
 				</Grid>
 
@@ -85,10 +128,17 @@ function AboutPage() {
 							sx={{
 								width: 300,
 								height: "100%",
-								backgroundColor: "purple",
 								p: 2,
 							}}
-						></Box>
+						>
+							<Typography align="center" variant="h4">
+								Diamond Cohort
+							</Typography>
+							<Typography
+								align="center"
+								variant="h4"
+							></Typography>
+						</Box>
 					</Container>
 				</Grid>
 			</Grid>

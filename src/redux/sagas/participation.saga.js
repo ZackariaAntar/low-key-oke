@@ -9,7 +9,7 @@ function* makeHost(action) {
 	try {
 		// yield axios.put(`/api/user/make/host/${action.payload}`)
 		yield put({ type: "MAKE_NEW_CODE", payload: action.payload});
-		
+
 
 	} catch (error) {
 		console.log("MAKE_HOST UPDATE request failed", error);
