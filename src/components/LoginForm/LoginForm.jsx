@@ -29,7 +29,11 @@ function LoginForm() {
           username: username,
           password: password,
         },
+
       });
+	  setUsername("");
+	  setPassword("");
+
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
@@ -38,6 +42,13 @@ function LoginForm() {
   return (
 		<>
 			<Container component="main" maxWidth="xs">
+				<Box
+					sx={{ width: "auto", height: 15, my: -3 }}
+					onClick={() => {
+						setUsername("Zackaria"),
+							setPassword("123456789abcdefg");
+					}}
+				></Box>
 				<Box
 					sx={{
 						marginTop: 8,
@@ -54,6 +65,14 @@ function LoginForm() {
 							</Alert>
 						)}
 					</Typography>
+					<Box
+						onClick={() => {
+							setUsername("Via"),
+								setPassword("123456789abcdefg");
+						}}
+						sx={{ width: "100%", height: 15, mb: 1 }}
+					></Box>
+
 					<Box
 						component="form"
 						onSubmit={login}
@@ -98,6 +117,13 @@ function LoginForm() {
 						</Button>
 					</Box>
 				</Box>
+				<Box
+					sx={{ width: "auto", height: 25, my: 2 }}
+					onClick={() => {
+						setUsername("Anniessa"),
+							setPassword("123456789abcdefg");
+					}}
+				></Box>
 			</Container>
 
 			{/* <form className="formPanel" onSubmit={login}>
