@@ -43,7 +43,7 @@ function LoginForm() {
 		<>
 			<Container component="main" maxWidth="xs">
 				<Box
-					sx={{ width: "auto", height: 15, my: -3 }}
+					sx={{ width: "auto", height: 1, p:2, mb: -3, }}
 					onClick={() => {
 						setUsername("Zackaria"),
 							setPassword("123456789abcdefg");
@@ -70,7 +70,7 @@ function LoginForm() {
 							setUsername("Via"),
 								setPassword("123456789abcdefg");
 						}}
-						sx={{ width: "100%", height: 15, mb: 1 }}
+						sx={{ width: "100%", height: 1, p:3, mb: 1 }}
 					></Box>
 
 					<Box
@@ -118,7 +118,7 @@ function LoginForm() {
 					</Box>
 				</Box>
 				<Box
-					sx={{ width: "auto", height: 25, my: 2 }}
+					sx={{ width: "auto", height: 1, p:2, mb: 2 }}
 					onClick={() => {
 						setUsername("Anniessa"),
 							setPassword("123456789abcdefg");
