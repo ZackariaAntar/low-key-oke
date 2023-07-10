@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Container, Grid, Button, Box, Typography, Chip, Card, CardMedia, CardContent} from '@mui/material'
 import headshot from '../../Assets/Headshot.png'
-import { Anchor } from '@mui/icons-material';
+
 
 const center = {
 	display: "flex",
@@ -57,8 +57,8 @@ function AboutPage() {
 					md={12}
 					lg={12}
 					xl={12}
-					item
 					sx={{ my: 2 }}
+					item
 				>
 					<Container sx={center}>
 						<Card
