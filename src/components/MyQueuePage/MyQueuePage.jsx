@@ -13,7 +13,6 @@ import {
 	Card,
 	CardContent,
 	Typography,
-	Chip,
 } from "@mui/material";
 
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
@@ -23,7 +22,6 @@ function MyQueuePage() {
 	const dispatch = useDispatch();
 	const user = useSelector((store) => store.user);
 	const mySongs = useSelector((store) => store.mySongs);
-	const errors = useSelector((store) => store.errors);
 
 	const [toggle, setToggle] = useState(false);
 	let [propId, setPropId] = useState({});
@@ -41,7 +39,7 @@ function MyQueuePage() {
 		};
 
 		useEffect(() => {
-			const timer = setInterval(fetchUserQueue, 10000);
+			const timer = setInterval(fetchUserQueue, 6000);
 
 			return () => clearInterval(timer);
 		}, [dispatch, user]);
@@ -219,153 +217,3 @@ function MyQueuePage() {
 }
 
 export default MyQueuePage;
-
-{
-	/* <Paper
-								sx={{
-									my: 1,
-									mx: "auto",
-									p: 2,
-								}}
-								key={song.id}
-								elevation={4}
-							>
-								<Box
-									sx={{
-										width: "100%",
-										maxWidth: 360,
-										bgcolor: "background.paper",
-									}}
-									elevation={5}
-								>
-									<Box sx={{ my: 0, mx: 1 }}>
-										<Grid container alignItems="center">
-											<Grid item xs sx={{ my: 2, mx: 0 }}>
-												<Typography
-													gutterBottom
-													variant="h5"
-												>
-													{song.title} by{" "}
-													{song.artist}
-												</Typography>
-											</Grid>
-										</Grid>
-										<Typography
-											gutterBottom
-											color="text.secondary"
-											variant="body"
-										></Typography>
-									</Box>
-									<Divider variant="middle" />
-									<Box
-										sx={{
-											mt: 2,
-											display: "flex",
-											flexDirection: "column",
-											justifyContent: "center",
-											textAlign: "center",
-										}}
-									>
-										<IconButton
-											size="small"
-											value={song}
-											onClick={activateDialog(song)}
-										>
-											<DeleteForeverRoundedIcon
-												sx={{ color: "#b00000" }}
-											/>
-										</IconButton>
-										<Typography variant="subtitle2">
-											Opt out
-										</Typography>
-									</Box>
-								</Box>
-							</Paper> */
-}
-
-{
-	/* <Divider
-										variant="middle"
-										color="#4b00a1"
-										textAlign="left"
-										sx={{ mb: 1 }}
-									>
-										Title
-									</Divider>
-									<Typography
-										variant="h6"
-										fontWeight={"bolder"}
-									>
-										{song.title}
-									</Typography>
-
-									<Divider
-										variant="middle"
-										color="#4b00a1"
-										textAlign="left"
-										sx={{ my: 1 }}
-									>
-										Artist
-									</Divider>
-
-									<Typography
-										variant="h6"
-										fontWeight={"bolder"}
-									>
-										{song.artist}
-									</Typography> */
-}
-{
-	/* <Card
-				elevation={10}
-				sx={{
-					bgcolor: "#4b00a1",
-					mt: 5,
-					borderRadius: 2,
-					display: "flex",
-				}}
-			>
-				<CardContent
-					sx={{
-						textAlign: "center",
-						color: "#F2F2F2",
-						p: 2,
-						// mx:4.6,
-						my: 2,
-						textAlign: "center",
-						width: "100%",
-					}}
-				>
-					<Typography variant="h6" fontWeight={"bolder"}>
-						wrecking ball
-					</Typography>
-
-					<Divider variant="middle" color="#F2F2F2" sx={{ my: 3 }} />
-
-					<Typography variant="h6" fontWeight={"bolder"}>
-						Bottom
-					</Typography>
-				</CardContent>
-
-				<Divider
-					orientation="vertical"
-					flexItem
-					color="#F2F2F2"
-					sx={{ my: 7 }}
-				/>
-
-				<CardContent sx={{ display: "flex", alignItems: "center" }}>
-					<IconButton
-						size="small"
-						value={song}
-						onClick={activateDialog(song)}
-					>
-						<DeleteForeverRoundedIcon sx={{ color: "#b00000" }} />
-					</IconButton>
-					<Typography variant="subtitle2">Opt out</Typography>
-					<Typography variant="h5" fontWeight={"bolder"}>
-						RIGHT
-					</Typography>
-				</CardContent>
-			</Card> */
-}
