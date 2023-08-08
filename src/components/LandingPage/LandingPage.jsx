@@ -4,9 +4,11 @@ import './LandingPage.css';
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
+import { Container, Box, Typography, Button, Grid } from "@mui/material";
+import {Link} from 'react-router-dom'
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState('Welcome!');
   const history = useHistory();
 
   const onLogin = (event) => {
@@ -14,55 +16,73 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
-      <h2>{heading}</h2>
+		<Container maxWidth={"lg"}>
+			<Grid container spacing={1} sx={{ mt: 2 }}>
+				<Grid
+					item
+					xs={12}
+					sm={12}
+					md={4}
+					lg={6}
+					xl={6}
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Box
+					sx={{width:'75%'}}
+					>
 
-      <div className="grid">
-        <div className="grid-col grid-col_8">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
-            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
-            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
-            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
-            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
-            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
-            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
-            luctus. Duis a sapien metus.
-          </p>
-
-          <p>
-            Praesent consectetur orci dui, id elementum eros facilisis id. Sed
-            id dolor in augue porttitor faucibus eget sit amet ante. Nunc
-            consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
-            finibus metus facilisis. Nullam eget lectus non urna rhoncus
-            accumsan quis id massa. Curabitur sit amet dolor nisl. Proin
-            euismod, augue at condimentum rhoncus, massa lorem semper lacus, sed
-            lobortis augue mi vel felis. Duis ultrices sapien at est convallis
-            congue.
-          </p>
-
-          <p>
-            Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
-            Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
-            vehicula sapien at semper ultrices. Vivamus sed feugiat libero. Sed
-            sagittis neque id diam euismod, ut egestas felis ultricies. Nullam
-            non fermentum mauris. Sed in enim ac turpis faucibus pretium in sit
-            amet nisi.
-          </p>
-        </div>
-        <div className="grid-col grid-col_4">
-          <RegisterForm />
-
-          <center>
-            <h4>Already a Member?</h4>
-            <button className="btn btn_sizeSm" onClick={onLogin}>
-              Login
-            </button>
-          </center>
-        </div>
-      </div>
-    </div>
+					<Typography
+						variant="h4"
+						sx={{ textAlign: "center" }}
+					>
+						Grab the mic, feel the groove, whenever you're ready
+						just join the queue!
+					</Typography>
+					<Typography
+						variant="h4"
+						sx={{ textAlign: "center", mt:3}}
+					>
+						From crowd favorites to hidden
+						gems, low-key-oke's more fun with friends.
+					</Typography>
+					</Box>
+				</Grid>
+				<Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+					<Container
+						maxWidth="sm"
+						sx={{ display: "flex", flexDirection: "column" }}
+					>
+						<RegisterForm />
+						<Container
+							maxWidth="xs"
+							sx={{ display: "flex", flexDirection: "column" }}
+						>
+							<Typography
+								sx={{ mt: 5, mb: 3 }}
+								align="center"
+								variant="h6"
+							>
+								Already a Member?
+							</Typography>
+							<Button
+								component={Link}
+								to="/login"
+								color="secondary"
+								variant="contained"
+								sx={{ p: 1 }}
+							>
+								Login
+							</Button>
+						</Container>
+					</Container>
+				</Grid>
+			</Grid>
+		</Container>
   );
 }
 

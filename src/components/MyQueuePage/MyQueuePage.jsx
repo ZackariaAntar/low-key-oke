@@ -2,17 +2,14 @@ import { Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    Button,
+	Button,
 	IconButton,
 	Divider,
-	Grid,
-    Box,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-	Paper,
+	Dialog,
+	DialogActions,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
 	Card,
 	CardContent,
 	Typography,
@@ -21,110 +18,123 @@ import {
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import BottomNav from "../BottomNav/BottomNav";
 
-function MyQueuePage(){
-    const dispatch = useDispatch()
-    const user = useSelector((store)=> store.user)
-    const mySongs = useSelector((store)=> store.mySongs)
-	const errors = useSelector((store) => store.errors);
+function MyQueuePage() {
+	const dispatch = useDispatch();
+	const user = useSelector((store) => store.user);
+	const mySongs = useSelector((store) => store.mySongs);
 
-    const [toggle, setToggle] = useState(false)
-    let [propId, setPropId] = useState({})
-    useEffect(() => {
+	const [toggle, setToggle] = useState(false);
+	let [propId, setPropId] = useState({});
+	useEffect(() => {
 		dispatch({ type: "FETCH_MY_CURRENT_SESSION_SONGS", payload: user.id });
 	}, []);
 
-    const deleteMySongFromQueue = (obj) =>{
-        dispatch({ type: "DELETE_FROM_MY_QUEUE", payload: obj });
-        console.log('obj', obj);
-        setToggle(!toggle);
-        setPropId(null)
+	const fetchMyQueue = () => {
+		console.log("fetch my current session songs");
+		const fetchUserQueue = () => {
+			dispatch({
+				type: "FETCH_MY_CURRENT_SESSION_SONGS",
+				payload: user.id,
+			});
+		};
 
-    }
-    const activateDialog = value => () =>{
-        setPropId(value)
-        setToggle(!toggle);
+		useEffect(() => {
+			const timer = setInterval(fetchUserQueue, 6000);
 
-    }
-    console.log(propId);
+			return () => clearInterval(timer);
+		}, [dispatch, user]);
+	};
 
+	fetchMyQueue(user);
 
-    return (
+	const deleteMySongFromQueue = (obj) => {
+		dispatch({ type: "DELETE_FROM_MY_QUEUE", payload: obj });
+		console.log("obj", obj);
+		setToggle(!toggle);
+		setPropId(null);
+	};
+	const activateDialog = (value) => () => {
+		setPropId(value);
+		setToggle(!toggle);
+	};
+	console.log(propId);
+
+	return (
 		<Container maxWidth={"xs"} sx={{ pt: 3 }}>
-			
+
 			{mySongs.length !== 0 ? (
 				<div>
-					{" "}
 					{mySongs.map((song, i) => (
 						<>
-							<Paper
+							<Card
+								elevation={10}
 								sx={{
-									my: 1,
-									mx: "auto",
-									p: 2,
+									bgcolor: "#F2F2F2",
+									mt: 2,
+									borderRadius: 2,
+									display: "flex",
+									// mx: "auto",
 								}}
 								key={song.id}
-								elevation={4}
 							>
-								<Box
+								<CardContent
 									sx={{
+										textAlign: "center",
+										color: "#4b00a1",
+										mx: .25,
+										mt: 1,
 										width: "100%",
-										maxWidth: 360,
-										bgcolor: "background.paper",
 									}}
-									elevation={5}
 								>
-									<Box sx={{ my: 0, mx: 1 }}>
-										<Grid container alignItems="center">
-											<Grid item xs sx={{ my: 2, mx: 0 }}>
-												<Typography
-													gutterBottom
-													variant="body"
-												>
-													id: {song.id} {song.title}{" "}
-													by {song.artist}
-												</Typography>
-											</Grid>
-										</Grid>
-										<Typography
-											gutterBottom
-											color="text.secondary"
-											variant="body"
-										></Typography>
-										<Typography
-											noWrap
-											color="text.secondary"
-											variant="caption"
-											sx={{ fontSize: ".75rem" }}
-										>
-											https://www.youtube.com/watch?v=$
-											{song.url}
-										</Typography>
-									</Box>
-									<Divider variant="middle" />
-									<Box
-										sx={{
-											mt: 2,
-											display: "flex",
-											flexDirection: "column",
-											justifyContent: "center",
-											textAlign: "center",
-										}}
+									<Typography
+										sx={{ my: 0.75 }}
+										variant="h6"
+										fontWeight={"bolder"}
+										align="center"
 									>
-										<IconButton
-											size="small"
-											value={song}
-											onClick={activateDialog(song)}
-										>
-											<DeleteForeverRoundedIcon
-												sx={{ color: "#b00000" }}
-											/>
-										</IconButton>
-										<Typography variant="subtitle2">
-											Opt out
-										</Typography>
-									</Box>
-								</Box>
-							</Paper>
+										{song.title}
+									</Typography>
+								</CardContent>
+
+								<Divider
+									orientation="vertical"
+									flexItem
+									color="#4b00a1"
+									sx={{ my: 7 }}
+								/>
+
+								<CardContent
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "center",
+										textAlign: "center",
+										width: "40%",
+									}}
+								>
+									<IconButton
+										size="large"
+										value={song}
+										onClick={activateDialog(song)}
+									>
+										<DeleteForeverRoundedIcon
+											sx={{
+												color: "#b00000",
+												scale: "1.75",
+												mb: 0.25,
+											}}
+										/>
+									</IconButton>
+									<Typography
+										sx={{ color: "#4b00a1" }}
+										variant="h7"
+										fontWeight={"bolder"}
+									>
+										Opt out
+									</Typography>
+								</CardContent>
+							</Card>
+
 							<Dialog
 								open={toggle}
 								onClose={() => setToggle(!toggle)}
@@ -168,7 +178,7 @@ function MyQueuePage(){
 									<Button
 										variant="outlined"
 										color="error"
-										sx={{my:3}}
+										sx={{ my: 3 }}
 										onClick={() =>
 											deleteMySongFromQueue(propId)
 										}
@@ -186,7 +196,6 @@ function MyQueuePage(){
 					sx={{
 						bgcolor: "#4b00a1",
 						mt: 5,
-
 						borderRadius: 4,
 					}}
 				>
@@ -197,7 +206,7 @@ function MyQueuePage(){
 						}}
 					>
 						<Typography variant="h5" fontWeight={"bolder"}>
-							Nothing to see here
+							Your queue is empty
 						</Typography>
 					</CardContent>
 				</Card>
@@ -207,4 +216,4 @@ function MyQueuePage(){
 	);
 }
 
-export default MyQueuePage
+export default MyQueuePage;

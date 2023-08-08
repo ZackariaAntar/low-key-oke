@@ -10,6 +10,7 @@ import {
 	CardHeader,
 	CardContent,
 	CardActions,
+	CardMedia,
 	Button,
 	Container,
 	Grid,
@@ -20,8 +21,16 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	IconButton,
+	List,
+	ListItem,
+	Divider,
+	ListItemText,
+	ListItemAvatar,
+	Avatar
 } from "@mui/material";
 
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import BottomNav from "../BottomNav/BottomNav";
 
 function SignupForm() {
@@ -43,26 +52,36 @@ function SignupForm() {
 
 	const waitForSuccess = (e) => {
 		e.preventDefault();
-		if (title && artist) {
+		if (title && title !== " ") {
 			setOpen(!open);
+			const queueItem = {
+				title: title,
+			};
+			dispatch({ type: "SEARCH_YOUTUBE", payload: queueItem });
+
+		}
+	};
+
+	const postToQueue = (vid) =>{
+		setTitle("");
+		setArtist("");
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
 				user_id: user.id,
 				name: user.username,
-				title: title,
-				artist: artist,
+				title: vid.title,
+				url: vid.videoId
 			};
-			dispatch({ type: "POST_TO_QUEUE", payload: queueItem });
-			if (loading.loading) {
-				setTimeout(closeDialog, 5000);
-			}
-		}
-	};
+
+			dispatch({
+				type: "POST_TO_QUEUE",
+				payload: queueItem,
+			});
+
+	}
 	console.log(title, artist);
 
-	const closeDialog = () => {
-		setOpen(false);
-	};
+
 
 	//TODO REFACTOR GUEST VIEWS
 
@@ -75,22 +94,6 @@ function SignupForm() {
 				justifyContent: "center",
 			}}
 		>
-			<Container maxWidth={"xs"} sx={{ my: 1 }}>
-				<Card
-					elevation={3}
-					sx={{
-						mb: 2,
-						color: "#F2F2F2",
-						bgcolor: "#4b00a1",
-						borderRadius: 4,
-					}}
-				>
-					<CardHeader
-						title={`Your session: ${seshInfo.sesh_code}`}
-						align={"center"}
-					/>
-				</Card>
-			</Container>
 			<Card
 				elevation={19}
 				sx={{
@@ -105,40 +108,51 @@ function SignupForm() {
 					<Typography sx={{ ml: 1 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
-					<form>
+					<Box
+						component="form"
+						onSubmit={waitForSuccess}
+						sx={{ mt: 1 }}
+						autoComplete="off"
+					>
 						<TextField
-							placeholder="Enter a song title"
+							placeholder="Search for a song title or artist"
 							required
 							name="title"
-							error={!title}
+							// error={!title}
 							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
-							label="Song Title"
+							label="Search"
 							value={title}
-							helperText={
-								!title && "A song title is required to submit"
-							}
+							// helperText={
+							// 	!title && "Search by song title or artist "
+							// }
 							onChange={(e) => setTitle(e.target.value)}
 						/>
-						<TextField
+						<Button
+							type="submit"
+							sx={{ m: 2 }}
+							variant="contained"
+							size="large"
+							// component={Link}
+							// to="/my-queue"
+						>
+							search
+						</Button>
+					</Box>
+					<form>
+						{/* <TextField
 							placeholder="Enter the artist of that song"
-							required
 							name="artist"
-							error={!artist}
 							sx={{ bgcolor: "white" }}
 							type="text"
 							margin="normal"
 							fullWidth
 							label="Artist"
 							value={artist}
-							helperText={
-								!artist &&
-								"An artist name is required to submit"
-							}
 							onChange={(e) => setArtist(e.target.value)}
-						/>
+						/> */}
 						{/* <TextField
 							sx={{ bgcolor: "white" }}
 							type="url"
@@ -151,18 +165,7 @@ function SignupForm() {
 								setUrl(e.target.value);
 							}}
 						/> */}
-						<CardActions onClick={waitForSuccess}>
-							<Button
-								type="submit"
-								sx={{ m: 2 }}
-								variant="contained"
-								size="large"
-								// component={Link}
-								// to="/my-queue"
-							>
-								Submit
-							</Button>
-						</CardActions>
+						{/* <CardActions onClick={waitForSuccess}></CardActions> */}
 					</form>
 				</CardContent>
 			</Card>
@@ -172,7 +175,26 @@ function SignupForm() {
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle align="center" id="alert-dialog-title">
+				<DialogTitle
+					align="center"
+					id="alert-dialog-title"
+					sx={{ p: 2 }}
+				>
+					<DialogContent>
+						<IconButton
+							aria-label="close"
+							onClick={() => setOpen(!open)}
+							size="large"
+							sx={{
+								position: "absolute",
+								right: 4,
+								top: 4,
+								color: "black",
+							}}
+						>
+							<CloseOutlinedIcon />
+						</IconButton>
+					</DialogContent>
 					{loading.blurb}
 				</DialogTitle>
 				{loading.loading ||
@@ -196,31 +218,106 @@ function SignupForm() {
 					</DialogContent>
 				) : (
 					<DialogContent align="center">
-						<DialogContentText id="alert-dialog-description">
-							Great choice by the way
-						</DialogContentText>
+						<DialogContent>
+							{loading.data.map((item) => (
+								<Card
+									sx={{
+										bgcolor: "#F2F2F2",
+										my: 4,
+										borderRadius: 2,
+										display: "flex",
+									}}
+									key={item.videoId}
+									elevation={8}
+								>
+									{/* <CardContent
+										ssx={{
+											textAlign: "center",
+											color: "#4b00a1",
+											mx: 0.25,
+											mt: 1,
+											width: "80%",
+										}}
+									>
+										<Typography
+											variant="subtitle1"
+											component="div"
+										>
+											{item.title}
+										</Typography>
+									</CardContent> */}
+									<CardContent
+										sx={{
+											display: "flex",
+											flexDirection: "column",
+											justifyContent: "center",
+											textAlign: "justify center",
+											fontWeight: "bolder",
+											width: "90%",
+										}}
+									>
+										<CardMedia
+											component="img"
+											sx={{
+												objectFit: "contain",
+												height: 120,
+												width: "100%",
+											}}
+											image={item.pic}
+											alt="Yotube video thumbnail"
+										/>
+										<Typography
+											variant="caption2"
+											sx={{ mt: 2 }}
+										>
+											{item.title}
+										</Typography>
+										<CardActions
+											sx={{
+												justifyContent: "center",
+												mt: 1,
+											}}
+										>
+											<Button
+												component={Link}
+												to="/my-queue"
+												onClick={() =>
+													postToQueue(item)
+												}
+												variant="contained"
+											>
+												Add to queue
+											</Button>
+										</CardActions>
+									</CardContent>
+								</Card>
+							))}
+						</DialogContent>
 					</DialogContent>
 				)}
-
-				<DialogActions
+				{/* <DialogActions
 					sx={{
 						my: 1,
 						display: "flex",
 						flexDirection: "column",
 					}}
 				>
-					<Button
-						variant="contained"
-						sx={{ my: 1 }}
-						disabled={loading.loading}
-						component={Link}
-						to="/my-queue"
-						onClick={() => setOpen(!open)}
-						autoFocus
-					>
-						Go to my queue
-					</Button>
-				</DialogActions>
+					{!loading.loading ? (
+						<Button
+							variant="contained"
+							sx={{ my: 1 }}
+							disabled={loading.loading}
+							component={Link}
+							to="/my-queue"
+							onClick={() => setOpen(!open)}
+							autoFocus
+						>
+							Go to my queue
+						</Button>
+					) : (
+						<></>
+					)}
+				</DialogActions> */}
 			</Dialog>
 
 			<BottomNav />
@@ -228,3 +325,22 @@ function SignupForm() {
 	);
 }
 export default SignupForm;
+
+	{
+		/* <Container maxWidth={"xs"} sx={{ my: 1 }}>
+				<Card
+					elevation={3}
+					sx={{
+						mb: 2,
+						color: "#F2F2F2",
+						bgcolor: "#4b00a1",
+						borderRadius: 4,
+					}}
+				>
+					<CardHeader
+						title={`Your session: ${seshInfo.sesh_code}`}
+						align={"center"}
+					/>
+				</Card>
+			</Container> */
+	}

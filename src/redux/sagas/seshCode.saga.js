@@ -32,6 +32,7 @@ function* createSeshCode(action) {
 
 		console.log('ARRIVED AT seshCode SAGA FROM PART. SAGA RESPONSE FROM DB', seshCode.data,'NEW CODE:', newCode);
 		yield axios.post('/api/sesh', {newCode: newCode, host_id: action.payload,})
+		yield put({type:'FETCH_USER'})
 
 
 		yield put({ type: "FETCH_CURRENT_SESSION", payload: action.payload});

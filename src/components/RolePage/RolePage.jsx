@@ -68,15 +68,15 @@ function RolePage(){
 
 			<Dialog open={toggle} onClose={() => setToggle(!toggle)}>
 				<DialogTitle>
-					Please enter the join code for your session
+					Enter code to join your party
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Look for the 5 digit alphanumeric code being broadcast
-						by your host and enter it in the field below.
+						Enter the 5 digit alphanumeric code being broadcast
+						by your host in the field below.
 					</DialogContentText>
 					<TextField
-						autoFocus
+						autoFocus={true}
 						margin="dense"
 						id="name"
 						label="Join Code:"
@@ -84,6 +84,7 @@ function RolePage(){
 						fullWidth
 						variant="standard"
 						onChange={(e) => setJoinCode(e.target.value)}
+						autoComplete="off"
 					/>
 				</DialogContent>
 				<DialogActions>

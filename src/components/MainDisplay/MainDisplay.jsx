@@ -170,6 +170,14 @@ function MainDisplay() {
 						</Typography>
 					</CardContent>
 				</Card>
+
+				<Typography
+					variant="h3"
+					fontWeight={"bolder"}
+					sx={{ my: 1, color: "#4b00a1" }}
+				>
+					Give it up for {queue[0]?.name}!
+				</Typography>
 				<Box>
 					<YouTube
 						key={nextSong}
@@ -199,7 +207,7 @@ function MainDisplay() {
 							}}
 						>
 							<Typography variant="h3" fontWeight={"bolder"}>
-								{`${queue[1].name}'s on deck with "${queue[1].title}" by ${queue[1].artist}`}
+								{`${queue[1].name}'s on deck with "${queue[1].title}"`}
 							</Typography>
 						</CardContent>
 					</Card>
