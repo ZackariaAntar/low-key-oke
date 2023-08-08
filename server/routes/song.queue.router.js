@@ -9,17 +9,17 @@ router.get("/host/view/:id", rejectUnauthenticated , (req, res) => {
 	let host_id = req.params.id;
 	let queryText = `
 		SELECT q.id, q.current_sesh_id, q.user_id, q.name, q.title, q.artist, q.url, q.in_queue, q.queue_order, q.favorited, sesh.host_user_id
-FROM "queue" q
-JOIN (
-  SELECT s.join_code, s.host_user_id
-  FROM "sesh" s
-  WHERE s.host_user_id = $1
-  ORDER BY s.created_at DESC
-  LIMIT 1
-) sesh ON q.current_sesh_id = sesh.join_code
-JOIN "sesh_junction" sj ON sj.sesh_code = q.current_sesh_id AND sj.user_id = q.user_id
-WHERE q.in_queue = true
-ORDER BY q.queue_order ASC;`;
+		FROM "queue" q
+		JOIN (
+		SELECT s.join_code, s.host_user_id
+		FROM "sesh" s
+		WHERE s.host_user_id = $1
+		ORDER BY s.created_at DESC
+		LIMIT 1
+		) sesh ON q.current_sesh_id = sesh.join_code
+		JOIN "sesh_junction" sj ON sj.sesh_code = q.current_sesh_id AND sj.user_id = q.user_id
+		WHERE q.in_queue = true
+		ORDER BY q.queue_order ASC;`;
 
 		// need to also filter based on where sesh and sesh_junction and queue current_session_id all align based on the most recent post in sesh and only that one.
 
