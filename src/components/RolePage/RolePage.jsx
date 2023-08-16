@@ -47,7 +47,6 @@ function RolePage(){
 				pt: 1,
 			}}
 		>
-			<h2>Let's get started</h2>
 			<Button
 				sx={{ p: 2, my: 3 }}
 				component={Link}

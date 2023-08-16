@@ -43,13 +43,6 @@ function LoginForm() {
 		<>
 			<Container component="main" maxWidth="xs">
 				<Box
-					sx={{ width: "auto", height: 1, p:2, mb: -3, }}
-					onClick={() => {
-						setUsername("Zackaria"),
-							setPassword("123456789abcdefg");
-					}}
-				></Box>
-				<Box
 					sx={{
 						marginTop: 8,
 						display: "flex",
@@ -66,17 +59,8 @@ function LoginForm() {
 						)}
 					</Typography>
 					<Box
-						onClick={() => {
-							setUsername("Via"),
-								setPassword("123456789abcdefg");
-						}}
-						sx={{ width: "100%", height: 1, p:3, mb: 1 }}
-					></Box>
-
-					<Box
 						component="form"
 						onSubmit={login}
-						noValidate
 						sx={{ mt: 1 }}
 						autoComplete="off"
 					>
@@ -117,59 +101,7 @@ function LoginForm() {
 						</Button>
 					</Box>
 				</Box>
-				<Box
-					sx={{ width: "auto", height: 1, p:2, mb: 2 }}
-					onClick={() => {
-						setUsername("Anniessa"),
-							setPassword("123456789abcdefg");
-					}}
-				></Box>
 			</Container>
-
-			{/* <form className="formPanel" onSubmit={login}>
-				<h2>Login</h2>
-				{errors.loginMessage && (
-					<h3 className="alert" role="alert">
-						{errors.loginMessage}
-					</h3>
-				)}
-				<div>
-					<label htmlFor="username">
-						Username:
-						<input
-							type="text"
-							name="username"
-							required
-							value={username}
-							onChange={(event) =>
-								setUsername(event.target.value)
-							}
-						/>
-					</label>
-				</div>
-				<div>
-					<label htmlFor="password">
-						Password:
-						<input
-							type="password"
-							name="password"
-							required
-							value={password}
-							onChange={(event) =>
-								setPassword(event.target.value)
-							}
-						/>
-					</label>
-				</div>
-				<div>
-					<input
-						className="btn"
-						type="submit"
-						name="submit"
-						value="Log In"
-					/>
-				</div>
-			</form> */}
 		</>
   );
 }
