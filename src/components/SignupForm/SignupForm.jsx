@@ -38,7 +38,6 @@ function SignupForm() {
 
 	const user = useSelector((store) => store.user);
 	const seshInfo = useSelector((store) => store.seshInfo);
-	const errors = useSelector((store) => store.errors);
 	const loading = useSelector((store) => store.loading);
 
 	useEffect(() => {
@@ -47,7 +46,8 @@ function SignupForm() {
 	}, [loading]);
 
 	const [title, setTitle] = useState("");
-	const [artist, setArtist] = useState("");
+	const [songInfo, setSongInfo] = useState("");
+	const [url, setUrl] = useState("");
 	const [open, setOpen] = useState(false);
 
 	const waitForSuccess = (e) => {
@@ -65,23 +65,33 @@ function SignupForm() {
 	const postToQueue = (vid) =>{
 		setTitle("");
 		setArtist("");
+		if(user.premium){
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
 				user_id: user.id,
 				name: user.username,
 				title: vid.title,
-				url: vid.videoId
+				url: vid.videoId,
 			};
-
+				dispatch({
+					type: "POST_TO_QUEUE",
+					payload: queueItem,
+				});
+		}else{
+			const queueItem = {
+				sesh_code: seshInfo.sesh_code,
+				user_id: user.id,
+				name: user.username,
+				title: songInfo,
+				url: getYouTubeID(url),
+			};
 			dispatch({
 				type: "POST_TO_QUEUE",
 				payload: queueItem,
 			});
+		}
 
 	}
-	console.log(title, artist);
-
-
 
 	//TODO REFACTOR GUEST VIEWS
 
@@ -108,65 +118,77 @@ function SignupForm() {
 					<Typography sx={{ ml: 1 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
-					<Box
-						component="form"
-						onSubmit={waitForSuccess}
-						sx={{ mt: 1 }}
-						autoComplete="off"
-					>
-						<TextField
-							placeholder="Search for a song title or artist"
-							required
-							name="title"
-							// error={!title}
-							sx={{ bgcolor: "white" }}
-							type="text"
-							margin="normal"
-							fullWidth
-							label="Search"
-							value={title}
-							// helperText={
-							// 	!title && "Search by song title or artist "
-							// }
-							onChange={(e) => setTitle(e.target.value)}
-						/>
-						<Button
-							type="submit"
-							sx={{ m: 2 }}
-							variant="contained"
-							size="large"
-							// component={Link}
-							// to="/my-queue"
+					{user.premium ? (
+						<Box
+							component="form"
+							onSubmit={waitForSuccess}
+							sx={{ mt: 1 }}
+							autoComplete="off"
 						>
-							search
-						</Button>
-					</Box>
-					<form>
-						{/* <TextField
-							placeholder="Enter the artist of that song"
-							name="artist"
-							sx={{ bgcolor: "white" }}
-							type="text"
-							margin="normal"
-							fullWidth
-							label="Artist"
-							value={artist}
-							onChange={(e) => setArtist(e.target.value)}
-						/> */}
-						{/* <TextField
-							sx={{ bgcolor: "white" }}
-							type="url"
-							margin="normal"
-							fullWidth
-							id="password"
-							label="Direct URL of song from Stingray Karaoke on YouTube"
-							value={url}
-							onChange={(e) => {
-								setUrl(e.target.value);
-							}}
-						/> */}
-						{/* <CardActions onClick={waitForSuccess}></CardActions> */}
-					</form>
+							<TextField
+								placeholder="Search for a song title or artist"
+								required
+								name="title"
+								// error={!title}
+								sx={{ bgcolor: "white" }}
+								type="text"
+								margin="normal"
+								fullWidth
+								label="Search"
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+							/>
+							<Button
+								type="submit"
+								sx={{ m: 2 }}
+								variant="contained"
+								size="large"
+							>
+								search
+							</Button>
+						</Box>
+					) : (
+						<Box
+							component="form"
+							onSubmit={submitSong}
+							sx={{ mt: 1 }}
+							autoComplete="off"
+						>
+							<TextField
+								placeholder="Enter the title and artist of your song"
+								name="song info"
+								sx={{ bgcolor: "white" }}
+								type="text"
+								margin="normal"
+								fullWidth
+								label="Title & Artist"
+								value={songInfo}
+								onChange={(e) => setSongInfo(e.target.value)}
+							/>
+							<TextField
+								sx={{ bgcolor: "white" }}
+								type="url"
+								margin="normal"
+								fullWidth
+								id="password"
+								label="Direct URL from Stingray Karaoke on YouTube"
+								value={url}
+								onChange={(e) => {
+									setUrl(e.target.value);
+								}}
+							/>
+							<Button
+								type="submit"
+								sx={{ m: 2 }}
+								variant="contained"
+								size="large"
+								component={Link}
+								to="/my-queue"
+							>
+								Add to Queue
+							</Button>
+						</Box>
+					)}
 				</CardContent>
 			</Card>
 			<Dialog
@@ -230,22 +252,6 @@ function SignupForm() {
 									key={item.videoId}
 									elevation={8}
 								>
-									{/* <CardContent
-										ssx={{
-											textAlign: "center",
-											color: "#4b00a1",
-											mx: 0.25,
-											mt: 1,
-											width: "80%",
-										}}
-									>
-										<Typography
-											variant="subtitle1"
-											component="div"
-										>
-											{item.title}
-										</Typography>
-									</CardContent> */}
 									<CardContent
 										sx={{
 											display: "flex",
@@ -295,29 +301,6 @@ function SignupForm() {
 						</DialogContent>
 					</DialogContent>
 				)}
-				{/* <DialogActions
-					sx={{
-						my: 1,
-						display: "flex",
-						flexDirection: "column",
-					}}
-				>
-					{!loading.loading ? (
-						<Button
-							variant="contained"
-							sx={{ my: 1 }}
-							disabled={loading.loading}
-							component={Link}
-							to="/my-queue"
-							onClick={() => setOpen(!open)}
-							autoFocus
-						>
-							Go to my queue
-						</Button>
-					) : (
-						<></>
-					)}
-				</DialogActions> */}
 			</Dialog>
 
 			<BottomNav />
@@ -325,22 +308,3 @@ function SignupForm() {
 	);
 }
 export default SignupForm;
-
-	{
-		/* <Container maxWidth={"xs"} sx={{ my: 1 }}>
-				<Card
-					elevation={3}
-					sx={{
-						mb: 2,
-						color: "#F2F2F2",
-						bgcolor: "#4b00a1",
-						borderRadius: 4,
-					}}
-				>
-					<CardHeader
-						title={`Your session: ${seshInfo.sesh_code}`}
-						align={"center"}
-					/>
-				</Card>
-			</Container> */
-	}

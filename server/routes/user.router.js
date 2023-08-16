@@ -31,6 +31,21 @@ router.post('/register', (req, res, next) => {
       res.sendStatus(500);
     });
 });
+router.post('/premium/register', (req, res, next) => {
+  const username = req.body.username;
+  const password = encryptLib.encryptPassword(req.body.password);
+  const premium = req.body.premium
+
+  const queryText = `INSERT INTO "user" (username, password, premium)
+    VALUES ($1, $2. $3) RETURNING id`;
+  pool
+    .query(queryText, [username, password, premium])
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+      console.log('User registration failed: ', err);
+      res.sendStatus(500);
+    });
+});
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

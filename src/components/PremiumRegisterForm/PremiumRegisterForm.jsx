@@ -22,10 +22,11 @@ function RegisterForm() {
     event.preventDefault();
 
     dispatch({
-      type: 'REGISTER',
+      type: 'REGISTE_PREMIUM',
       payload: {
         username: username,
         password: password,
+		premium: true
       },
     });
   }; // end registerUser
