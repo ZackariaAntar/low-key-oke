@@ -42,14 +42,16 @@ Additionally, you will need to get a YouTube API Key for your `.env` file.
   YT_API_KEY=REPLACETHISWITHYOURAPIKEY
   ```
 
-8. Create a new database called `low_key_oke_base` and create the `user`, `sesh`, `seash_junction`, and `queue` tables provided below:
+8. Create a new database called `low_key_oke_base` and create the `user`, `sesh`, `sesh_junction`, `queue`, and `homies` tables provided below. I added the homies table in preparation for hosting this app,it's there to allow select users to register premium accounts which gives them access to the YouTube API enabled search functionality. All you have to do is create a validation key/secret code and add it to that table. If you have questions on how to get that working, please reach out and I'd be happy to point you in the right direction!
 ```SQL
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
     "in_session" BOOLEAN DEFAULT FALSE,
-    "is_hosting" BOOLEAN DEFAULT FALSE
+    "is_hosting" BOOLEAN DEFAULT FALSE,
+    "premium" BOOLEAN DEFAULT FALSE
+
    );
 
 CREATE TABLE "sesh" (
@@ -78,6 +80,11 @@ CREATE TABLE "queue" (
 	"in_queue" BOOLEAN DEFAULT TRUE,
 	"queue_order" TIMESTAMP DEFAULT NOW(),
 	"favorited" BOOLEAN DEFAULT false
+);
+
+CREATE TABLE "homies"(
+	"id" SERIAL PRIMARY KEY,
+	"in_the_know" VARCHAR(50)
 );
 ```
 9. The queries in the database.sql file are set up to create all the necessary tables that you need.
