@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Container, Grid, Button, Box, Typography, Chip, Card, CardMedia, CardContent} from '@mui/material'
 import headshot from '../../Assets/Headshot.png'
+import {Link} from 'react-router-dom'
 
 
 const center = {
@@ -220,6 +221,8 @@ function AboutPage() {
 						</Typography>
 						<Box sx={boxSx}>
 							<Chip
+							component={Link}
+							to='/mypeople'
 								align="center"
 								label="Infinite love and gratitude to my friends and
 								family for their patience, support, and wisdom."
@@ -235,6 +238,7 @@ function AboutPage() {
 										whiteSpace: "normal",
 									},
 								}}
+
 							></Chip>
 							<Chip
 								align="center"

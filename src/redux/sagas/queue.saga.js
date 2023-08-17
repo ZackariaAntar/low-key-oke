@@ -104,6 +104,15 @@ function* fetchMySongHistory(action) {
 		console.log("mySongHistory GET request failed", error);
 	}
 }
+function* fetchMyFavorites(action) {
+	console.log('FETCH MY FAVORITES', action.payload);
+	try {
+		const seshQueue = yield axios.get(`/api/songs/guest/favorites/history/${action.payload}`)
+		yield put({ type: "SET_MY_FAVORITES", payload: seshQueue.data });
+	} catch (error) {
+		console.log("myFavorites GET request failed", error);
+	}
+}
 
 function* setSongAsFavorite(action){
     try{
@@ -132,6 +141,7 @@ function* queueSaga() {
 	yield takeLatest('POST_TO_QUEUE', postToQueue)
     yield takeLatest("FETCH_MY_CURRENT_SESSION_SONGS", fetchMyCurrentSongs)
     yield takeLatest("FETCH_MY_SONG_HISTORY", fetchMySongHistory)
+    yield takeLatest("FETCH_MY_FAVORITES", fetchMyFavorites)
     yield takeLatest("MARK_SONG_AS_COMPLETED", markSongAsCompleted)
     yield takeLatest("DELETE_FROM_MY_QUEUE", deleteFromMyQueue)
     yield takeLatest("MAKE_FAVORITE", setSongAsFavorite)

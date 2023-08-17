@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Button,
 	TextField,
@@ -13,37 +12,30 @@ import {
 	Alert,
 } from "@mui/material";
 
-function LoginForm() {
+function PremiumRegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const errors = useSelector(store => store.errors);
+  const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
-  const login = (event) => {
+  const registerUser = (event) => {
     event.preventDefault();
 
-    if (username && password) {
-      dispatch({
-        type: 'LOGIN',
-        payload: {
-          username: username,
-          password: password,
-        },
-
-      });
-	  setUsername("");
-	  setPassword("");
-
-    } else {
-      dispatch({ type: 'LOGIN_INPUT_ERROR' });
-    }
-  }; // end login
+    dispatch({
+      type: 'REGISTER_PREMIUM',
+      payload: {
+        username: username,
+        password: password,
+		premium: true
+      },
+    });
+  }; // end registerUser
 
   return (
 		<>
-			{errors.loginMessage && (
+			{errors.registrationMessage && (
 				<h3 className="alert" role="alert">
-					{errors.loginMessage}
+					{errors.registrationMessage}
 				</h3>
 			)}
 			<Container component="main" maxWidth="xs">
@@ -55,12 +47,15 @@ function LoginForm() {
 						alignItems: "center",
 					}}
 				>
-					<Typography component="h1" variant="h5">
-						Login to your account
+					<Typography align='center' variant="h5">
+						Welcome to the inner circle, register for a premium account.
+					</Typography>
+					<Typography align='center' mt variant="h6">
+						Next time we hang, just login.
 					</Typography>
 					<Box
 						component="form"
-						onSubmit={login}
+						onSubmit={registerUser}
 						sx={{ mt: 1 }}
 						autoComplete="off"
 					>
@@ -97,7 +92,7 @@ function LoginForm() {
 							variant="contained"
 							sx={{ mt: 3, mb: 2, p: 2 }}
 						>
-							Login
+							Register
 						</Button>
 					</Box>
 				</Box>
@@ -106,4 +101,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default PremiumRegisterForm;

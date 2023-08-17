@@ -25,8 +25,11 @@ function Nav() {
 					// If there's no user, show login/registration links
 					<>
 						<Link className="navLink" to="/login">
-							Login / Register
+							Login
 						</Link>
+						{/* <Link className="navLink" to="/mypeople">
+							Friends & Family
+						</Link> */}
 					</>
 				)}
 				{/* If a user is logged in, and not in a session show these links */}

@@ -5,7 +5,9 @@ import queue from './songQueue.reducer';
 import seshInfo from './currentSession.reducer'
 import mySongs from './myCurrentQueue.reducer'
 import myHistory from './mySongHistory.reducer';
-import loading from './ytSearch.reducer'
+import loading from './ytSearch.reducer';
+import verified from './verifiedHomies.reducer';
+import faves from './myFavorites.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
 	mySongs, // will have the user's current session songs in the queue.
 	myHistory, // will have all of the songs that a user has sung in the past.
 	loading, // will handle the loading dialog functionality on the SignupForm view.
+	verified,
+	faves
 });
 
 export default rootReducer;

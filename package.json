@@ -1,8 +1,9 @@
 {
-  "name": "prime-solo-project",
+  "name": "low-key-oke",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
+  "author": "Zackaria Antar",
   "engines": {
     "node": "18.x"
   },
