@@ -49,9 +49,6 @@ function SignupForm() {
 	const [songInfo, setSongInfo] = useState("");
 	const [url, setUrl] = useState("");
 	const [open, setOpen] = useState(false);
-	const [helperText, setHelperText] = useState(
-
-	);
 
 	const waitForSuccess = (e) => {
 		e.preventDefault();
@@ -85,7 +82,6 @@ function SignupForm() {
 	}
 
 	const simplePost = (info, vid) =>{
-		// e.preventDefault()
 		const vidId = getYouTubeID(vid)
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
@@ -123,7 +119,7 @@ function SignupForm() {
 				}}
 			>
 				<CardContent>
-					<CardHeader title={"Sign-up to sing!"} align={"center"} />
+					<CardHeader sx={{mt:-3}} title={"Sign-up to sing!"} align={"center"} />
 					<Typography sx={{ ml: 1 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
