@@ -159,7 +159,7 @@ function SignupForm() {
 							autoComplete="off"
 						>
 							<TextField
-								placeholder="Title by Artist"
+								placeholder="eg: Title by Artist"
 								required
 								name="song info"
 								sx={{ bgcolor: "white" }}
@@ -186,7 +186,7 @@ function SignupForm() {
 								}}
 								InputLabelProps={{ shrink: true }}
 							/>
-							<Typography paragraph variant="body">
+							<Typography ml paragraph variant="body">
 								{`1) Find your song on YouTube`} {<br />}
 								{`2) Click on the share icon`} {<br />}
 								{`3) Click copy link`} {<br />}
