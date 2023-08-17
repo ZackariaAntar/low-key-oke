@@ -12,7 +12,7 @@ import {
 	Alert,
 } from "@mui/material";
 
-function RegisterForm() {
+function PremiumRegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector((store) => store.errors);
@@ -22,7 +22,7 @@ function RegisterForm() {
     event.preventDefault();
 
     dispatch({
-      type: 'REGISTE_PREMIUM',
+      type: 'REGISTER_PREMIUM',
       payload: {
         username: username,
         password: password,
@@ -47,8 +47,11 @@ function RegisterForm() {
 						alignItems: "center",
 					}}
 				>
-					<Typography component="h1" variant="h5">
-						Register for an account
+					<Typography align='center' variant="h5">
+						Welcome to the inner circle, register for a premium account.
+					</Typography>
+					<Typography align='center' mt variant="h6">
+						Next time we hang, just login.
 					</Typography>
 					<Box
 						component="form"
@@ -98,4 +101,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default PremiumRegisterForm;

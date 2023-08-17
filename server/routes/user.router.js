@@ -35,9 +35,10 @@ router.post('/premium/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
   const premium = req.body.premium
+  console.log(req.body);
 
   const queryText = `INSERT INTO "user" (username, password, premium)
-    VALUES ($1, $2. $3) RETURNING id`;
+    VALUES ($1, $2, $3) RETURNING id`;
   pool
     .query(queryText, [username, password, premium])
     .then(() => res.sendStatus(201))
@@ -45,6 +46,30 @@ router.post('/premium/register', (req, res, next) => {
       console.log('User registration failed: ', err);
       res.sendStatus(500);
     });
+});
+
+router.post('/verify', async (req, res, next) => {
+  const homie = req.body.homie
+  console.log('homie', homie);
+  const verifyHomies = 'SELECT * FROM homies'
+  const client = await pool.connect();
+  try {
+		await client.query("BEGIN");
+		const checkStatus = await client.query(verifyHomies);
+		console.log("checkstatus", checkStatus.rows[0].in_the_know);
+    if (homie === checkStatus.rows[0].in_the_know) {
+      await client.query("COMMIT");
+      res.sendStatus(200);
+		}else{
+      res.sendStatus(500)
+    }
+  } catch (error) {
+		await client.query("ROLLBACK");
+		console.log("Not a homie", error);
+		res.sendStatus(500);
+   }finally {
+		client.release();
+   }
 });
 
 // Handles login form authenticate/login POST

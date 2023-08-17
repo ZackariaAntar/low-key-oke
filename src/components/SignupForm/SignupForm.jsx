@@ -93,8 +93,6 @@ function SignupForm() {
 
 	}
 
-	//TODO REFACTOR GUEST VIEWS
-
 	return (
 		<Container
 			maxWidth={"sm"}
@@ -150,7 +148,7 @@ function SignupForm() {
 					) : (
 						<Box
 							component="form"
-							onSubmit={submitSong}
+							onSubmit={postToQueue}
 							sx={{ mt: 1 }}
 							autoComplete="off"
 						>

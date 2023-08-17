@@ -41,6 +41,11 @@ function LoginForm() {
 
   return (
 		<>
+			{errors.loginMessage && (
+				<h3 className="alert" role="alert">
+					{errors.loginMessage}
+				</h3>
+			)}
 			<Container component="main" maxWidth="xs">
 				<Box
 					sx={{
@@ -52,11 +57,6 @@ function LoginForm() {
 				>
 					<Typography component="h1" variant="h5">
 						Login to your account
-						{errors.loginMessagee && (
-							<Alert severity="error">
-								{errors.loginMessage}
-							</Alert>
-						)}
 					</Typography>
 					<Box
 						component="form"

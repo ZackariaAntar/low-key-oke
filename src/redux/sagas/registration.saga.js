@@ -40,10 +40,23 @@ function* registerPremiumUser(action) {
     yield put({ type: 'REGISTRATION_FAILED' });
   }
 }
+function* verifyHomies(action) {
+  try {
+    yield put({ type: 'CLEAR_VERIFY_ERROR' });
+
+    yield axios.post('/api/user/verify', action.payload);
+    yield put({type:'WELCOME_HOMIES'})
+
+  } catch (error) {
+    yield put({ type: 'VERIFY_FAILED' });
+    console.log('Come on, seriously?', error);
+  }
+}
 
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
-  yield takeLatest('REGISTE_PREMIUM', registerPremiumUser);
+  yield takeLatest('REGISTER_PREMIUM', registerPremiumUser);
+  yield takeLatest('VERIFY', verifyHomies);
 }
 
 export default registrationSaga;

@@ -31,6 +31,16 @@ const registrationMessage = (state = '', action) => {
       return state;
   }
 };
+const verificationMessage = (state = "", action) => {
+	switch (action.type) {
+		case "CLEAR_VERIFY_ERROR":
+			return "";
+		case "VERIFY_FAILED":
+			return "Are you being naughty? You can still use the app, you're just not part of the inner circle 🙃.";
+		default:
+			return state;
+	}
+};
 
 
 
@@ -40,4 +50,5 @@ const registrationMessage = (state = '', action) => {
 export default combineReducers({
   loginMessage,
   registrationMessage,
+  verificationMessage,
 });

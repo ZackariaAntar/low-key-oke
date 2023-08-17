@@ -19,7 +19,7 @@ import UserPage from "../UserPage/UserPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
-
+import MyPeople from "../MyPeople/MyPeople";
 import "./App.css";
 import RolePage from "../RolePage/RolePage";
 import HostDash from "../HostDash/HostDash";
@@ -74,24 +74,23 @@ function App() {
 
 					{/* ---------------------------   DOWN  ------------------------------------- */}
 					<ProtectedRoute exact path="/host-dash">
-							<HostDash />
+						<HostDash />
 					</ProtectedRoute>
 
-          <ProtectedRoute exact path="/main-display">
+					<ProtectedRoute exact path="/main-display">
 						<MainDisplay />
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path="/signup">
-							<SignupForm />
+						<SignupForm />
 					</ProtectedRoute>
 
-          <ProtectedRoute exact path="/my-queue">
-							<MyQueuePage />
+					<ProtectedRoute exact path="/my-queue">
+						<MyQueuePage />
 					</ProtectedRoute>
 
-          <ProtectedRoute exact path="/my-history">
-            <MySongHistory />
-
+					<ProtectedRoute exact path="/my-history">
+						<MySongHistory />
 					</ProtectedRoute>
 
 					{/* ---------------------------   UP  ------------------------------------- */}
@@ -126,6 +125,16 @@ function App() {
 						) : (
 							// Otherwise, show the Landing page
 							<LandingPage />
+						)}
+					</Route>
+					<Route exact path="/mypeople">
+						{user.id ? (
+							// If the user is already logged in,
+							// redirect them to the /user page
+							<Redirect to="/user" />
+						) : (
+							// Otherwise, show the registration page
+							<MyPeople />
 						)}
 					</Route>
 
