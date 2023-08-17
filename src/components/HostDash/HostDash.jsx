@@ -219,7 +219,7 @@ function HostDash(){
 										{song.name}
 									</TableCell>
 									<TableCell align="center">
-										{song.title} by {song.artist}
+										{song.title}
 									</TableCell>
 									<TableCell align="center">
 										{song.url}

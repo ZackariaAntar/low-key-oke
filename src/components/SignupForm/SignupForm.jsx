@@ -81,8 +81,8 @@ function SignupForm() {
 		}
 	};
 
-	const postToQueue = (vid) =>{
-		if(user.premium){
+	const postToQueue = (vid, nope) =>{
+		if(user.premium && !nope){
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
 				user_id: user.id,
@@ -95,7 +95,6 @@ function SignupForm() {
 				payload: queueItem,
 			});
 			setTitle("");
-			setArtist("");
 		}else{
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
@@ -112,7 +111,7 @@ function SignupForm() {
 
 	}
 
-	const simplePost = (info, vid) =>{
+	const simplePost = (vid, info) =>{
 		const vidId = getYouTubeID(vid)
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
@@ -169,7 +168,6 @@ function SignupForm() {
 								placeholder="Search for a song title or artist"
 								required
 								name="title"
-								// error={!title}
 								sx={{ bgcolor: "white" }}
 								type="text"
 								margin="normal"
@@ -188,39 +186,58 @@ function SignupForm() {
 							</Button>
 						</Box>
 					) : (
-						<Box
-							sx={{ mt: 1 }}
-							component={"form"}
-							autoComplete="off"
-						>
-							<TextField
-								placeholder="eg: Title by Artist"
-								required
-								name="song info"
-								sx={{ bgcolor: "white" }}
-								type="text"
-								margin="normal"
-								fullWidth
-								label="Title & Artist"
-								value={songInfo}
-								onChange={(e) => setSongInfo(e.target.value)}
-								InputLabelProps={{ shrink: true }}
-							/>
-							<TextField
-								sx={{ bgcolor: "white" }}
-								type="url"
-								placeholder="eg: https://youtu.be/xxxxxxxxxxx"
-								required
-								margin="normal"
-								fullWidth
-								id="password"
-								label="Direct URL from Stingray Karaoke on YouTube"
-								value={url}
-								onChange={(e) => {
-									setUrl(e.target.value);
-								}}
-								InputLabelProps={{ shrink: true }}
-							/>
+							<Box
+								sx={{ mt: 1 }}
+								component={"form"}
+								autoComplete="off"
+							>
+								<TextField
+									placeholder="eg: Title by Artist"
+									required
+									name="song info"
+									sx={{ bgcolor: "white" }}
+									type="text"
+									margin="normal"
+									fullWidth
+									label="Title & Artist"
+									value={songInfo}
+									onChange={(e) =>
+										setSongInfo(e.target.value)
+									}
+									InputLabelProps={{ shrink: true }}
+								/>
+								<TextField
+									sx={{ bgcolor: "white" }}
+									type="url"
+									placeholder="eg: https://youtu.be/xxxxxxxxxxx"
+									required
+									margin="normal"
+									fullWidth
+									id="password"
+									label="Direct URL from Stingray Karaoke on YouTube"
+									value={url}
+									onChange={(e) => {
+										setUrl(e.target.value);
+									}}
+									InputLabelProps={{ shrink: true }}
+								/>
+								<Button
+									id="simplePost"
+									onClick={()=>simplePost(url, songInfo)}
+									sx={{
+										mt:2,
+										mb: 2,
+										width: "50%",
+										p: 1,
+									}}
+									variant="contained"
+									size="small"
+									component={Link}
+									to="/my-queue"
+								>
+									Add to Queue
+								</Button>
+
 							<CardContent
 								fullWidth
 								sx={{
@@ -278,7 +295,7 @@ function SignupForm() {
 										in={help}
 										timeout="auto"
 										unmountOnExit
-										sx={{mt:-2}}
+										sx={{ mt: -2 }}
 									>
 										<Typography
 											ml
@@ -294,22 +311,6 @@ function SignupForm() {
 										</Typography>
 									</Collapse>
 								</CardContent>
-								<Button
-									id="simplePost"
-									onClick={() => simplePost(songInfo, url)}
-									sx={{
-										ml: -1.55,
-										mb: 2,
-										width: "50%",
-										p: 1,
-									}}
-									variant="contained"
-									size="small"
-									component={Link}
-									to="/my-queue"
-								>
-									Add to Queue
-								</Button>
 							</CardContent>
 						</Box>
 					)}
@@ -373,25 +374,13 @@ function SignupForm() {
 											sx={icon}
 											component={Link}
 											to="/my-queue"
+											onClick={() =>
+												postToQueue(favSong, "nope")
+											}
 										>
 											<PlaylistAddIcon />
 											<div style={text}>Add to Queue</div>
 										</IconButton>
-
-										{/* <IconButton
-											component={Link}
-											to="/my-queue"
-											variant="contained"
-											// sx={{
-											// 	mt: 2,
-											// 	width: "50%",
-											// 	p: 0.5,
-											// }}
-											onClick={() => postToQueue(favSong)}
-										>
-											<PlaylistAddIcon />
-											Sing Again
-										</IconButton> */}
 									</CardContent>
 									<Divider variant="middle" />
 								</>
