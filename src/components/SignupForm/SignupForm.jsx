@@ -226,28 +226,16 @@ function SignupForm() {
 								sx={{
 									display: "flex",
 									flexDirection: "column",
-									alignItems:'flex-start',
-									justifyContent:'center',
-									mb:-2
+									alignItems: "flex-start",
+									justifyContent: "center",
+									mb: -2,
 								}}
 							>
-								<Button
-									id="simplePost"
-									onClick={() => simplePost(songInfo, url)}
-									sx={{ ml:-1.55, mb: 4, width:'50%', p:1}}
-									variant="contained"
-									size="small"
-									component={Link}
-									to="/my-queue"
-								>
-									Add to Queue
-								</Button>
 								<CardContent
 									sx={{
-										mt:-2,
+										mt: -2,
 										ml: -1.5,
-										p:0,
-										border: "1px solid green",
+										p: 0,
 									}}
 								>
 									<CardActionArea
@@ -258,7 +246,7 @@ function SignupForm() {
 											sx={{
 												color: "#4b00a1",
 												mt: -1,
-												mb: -4,
+												mb: 1,
 											}}
 											disableRipple
 										>
@@ -286,16 +274,43 @@ function SignupForm() {
 											/>
 										</IconButton>
 									</CardActionArea>
+									<Collapse
+										in={help}
+										timeout="auto"
+										unmountOnExit
+										sx={{mt:-2}}
+									>
+										<Typography
+											ml
+											paragraph
+											variant="caption"
+										>
+											{`1) Find your song on YouTube`}{" "}
+											{<br />}
+											{`2) Click on the share icon`}{" "}
+											{<br />}
+											{`3) Click copy link`} {<br />}
+											{`4) Paste link above`}
+										</Typography>
+									</Collapse>
 								</CardContent>
+								<Button
+									id="simplePost"
+									onClick={() => simplePost(songInfo, url)}
+									sx={{
+										ml: -1.55,
+										mb: 2,
+										width: "50%",
+										p: 1,
+									}}
+									variant="contained"
+									size="small"
+									component={Link}
+									to="/my-queue"
+								>
+									Add to Queue
+								</Button>
 							</CardContent>
-							<Collapse in={help} timeout="auto" unmountOnExit>
-								<Typography ml paragraph variant="caption">
-									{`1) Find your song on YouTube`} {<br />}
-									{`2) Click on the share icon`} {<br />}
-									{`3) Click copy link`} {<br />}
-									{`4) Paste link above`}
-								</Typography>
-							</Collapse>
 						</Box>
 					)}
 					{faves.length > 0 && (
