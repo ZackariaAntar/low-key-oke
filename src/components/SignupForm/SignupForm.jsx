@@ -49,6 +49,9 @@ function SignupForm() {
 	const [songInfo, setSongInfo] = useState("");
 	const [url, setUrl] = useState("");
 	const [open, setOpen] = useState(false);
+	const [helperText, setHelperText] = useState(
+
+	);
 
 	const waitForSuccess = (e) => {
 		e.preventDefault();
@@ -63,8 +66,6 @@ function SignupForm() {
 	};
 
 	const postToQueue = (vid) =>{
-		setTitle("");
-		setArtist("");
 		if(user.premium){
 			const queueItem = {
 				sesh_code: seshInfo.sesh_code,
@@ -73,25 +74,35 @@ function SignupForm() {
 				title: vid.title,
 				url: vid.videoId,
 			};
-				dispatch({
-					type: "POST_TO_QUEUE",
-					payload: queueItem,
-				});
-		}else{
-			const queueItem = {
-				sesh_code: seshInfo.sesh_code,
-				user_id: user.id,
-				name: user.username,
-				title: songInfo,
-				url: getYouTubeID(url),
-			};
 			dispatch({
 				type: "POST_TO_QUEUE",
 				payload: queueItem,
 			});
+			setTitle("");
+			setArtist("");
 		}
 
 	}
+
+	const simplePost = (info, vid) =>{
+		// e.preventDefault()
+		const vidId = getYouTubeID(vid)
+			const queueItem = {
+				sesh_code: seshInfo.sesh_code,
+				user_id: user.id,
+				name: user.username,
+				title: info,
+				url: vidId,
+			}
+			dispatch({
+				type: "POST_TO_QUEUE",
+				payload: queueItem
+			});
+
+			setSongInfo("");
+			setUrl("");
+		}
+
 
 	return (
 		<Container
@@ -147,13 +158,13 @@ function SignupForm() {
 						</Box>
 					) : (
 						<Box
-							component="form"
-							onSubmit={postToQueue}
 							sx={{ mt: 1 }}
+							component={"form"}
 							autoComplete="off"
 						>
 							<TextField
-								placeholder="Enter the title and artist of your song"
+								placeholder="Title by Artist"
+								required
 								name="song info"
 								sx={{ bgcolor: "white" }}
 								type="text"
@@ -162,10 +173,13 @@ function SignupForm() {
 								label="Title & Artist"
 								value={songInfo}
 								onChange={(e) => setSongInfo(e.target.value)}
+								InputLabelProps={{ shrink: true }}
 							/>
 							<TextField
 								sx={{ bgcolor: "white" }}
 								type="url"
+								placeholder="eg: https://youtu.be/xxxxxxxxxxx"
+								required
 								margin="normal"
 								fullWidth
 								id="password"
@@ -174,9 +188,17 @@ function SignupForm() {
 								onChange={(e) => {
 									setUrl(e.target.value);
 								}}
+								InputLabelProps={{ shrink: true }}
 							/>
+							<Typography paragraph variant="body">
+								{`1) Find your song on YouTube`} {<br />}
+								{`2) Click on the share icon`} {<br />}
+								{`3) Click copy link`} {<br />}
+								{`4) Paste link above`}
+							</Typography>
 							<Button
-								type="submit"
+								id="simplePost"
+								onClick={() => simplePost(songInfo, url)}
 								sx={{ m: 2 }}
 								variant="contained"
 								size="large"

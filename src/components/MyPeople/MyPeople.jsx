@@ -48,10 +48,12 @@ function MyPeople(){
 						Thanks for all of your support, now let's get this party
 						started!!
 					</Typography>
+					<Typography sx={{mt:3, color:'purple'}} align="center" variant="caption">
+						This is just for registration! Next time, just login.
+					</Typography>
 					<Box
 						component="form"
 						onSubmit={verify}
-						sx={{ mt: 4 }}
 						autoComplete="off"
 					>
 						<TextField
@@ -60,7 +62,7 @@ function MyPeople(){
 							fullWidth
 							name="verify"
 							value={proven}
-							label="Use the secret code I sent you"
+							label="Use the code I sent you here!"
 							type="password"
 							id="verification"
 							helperText="Check your texts or come find me"
