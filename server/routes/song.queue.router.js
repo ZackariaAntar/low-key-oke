@@ -72,9 +72,10 @@ router.get("/guest/all/history/:id", rejectUnauthenticated, (req, res) => {
 	let user_id = req.params.id;
 
 	let queryText = `
-		SELECT * FROM queue
+		SELECT DISTINCT ON (url) queue.id, queue.title, queue.favorited
+		FROM queue
 		WHERE user_id = $1
-		ORDER BY id ASC;`;
+		ORDER BY url ASC;`;
 	pool.query(queryText, [user_id])
 		.then((result) => {
 			console.log(
@@ -88,6 +89,33 @@ router.get("/guest/all/history/:id", rejectUnauthenticated, (req, res) => {
 			res.sendStatus(500);
 		});
 });
+
+router.get(
+	"/guest/favorites/history/:id",
+	rejectUnauthenticated,
+	(req, res) => {
+		let user_id = req.params.id;
+
+		let queryText = `
+		SELECT DISTINCT ON (url) queue.id, queue.title, queue.url
+		FROM queue
+		WHERE user_id = $1 AND favorited = true
+		ORDER BY url ASC;
+		`;
+		pool.query(queryText, [user_id])
+			.then((result) => {
+				console.log(
+					"SUCCESS IN GETTING MY USER HISTORY DATA:",
+					result.rows
+				);
+				res.send(result.rows);
+			})
+			.catch((err) => {
+				console.log("PROBLEM WITH GETTING MY USER HISTORY DATA", err);
+				res.sendStatus(500);
+			});
+	}
+);
 
 
 

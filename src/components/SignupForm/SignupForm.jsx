@@ -18,19 +18,18 @@ import {
 	Typography,
 	Dialog,
 	DialogActions,
+	CardActionArea,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 	IconButton,
-	List,
-	ListItem,
-	Divider,
-	ListItemText,
-	ListItemAvatar,
-	Avatar
+	Collapse,
+	Divider
 } from "@mui/material";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import BottomNav from "../BottomNav/BottomNav";
 
 function SignupForm() {
@@ -39,16 +38,36 @@ function SignupForm() {
 	const user = useSelector((store) => store.user);
 	const seshInfo = useSelector((store) => store.seshInfo);
 	const loading = useSelector((store) => store.loading);
+	const faves = useSelector((store) => store.faves);
 
 	useEffect(() => {
 		dispatch({ type: "FETCH_CURRENT_SESSION", payload: user.id });
 		dispatch({ type: "FETCH_QUEUE", payload: user.id });
+		dispatch({ type: "FETCH_MY_FAVORITES", payload: user.id });
 	}, [loading]);
 
 	const [title, setTitle] = useState("");
 	const [songInfo, setSongInfo] = useState("");
 	const [url, setUrl] = useState("");
 	const [open, setOpen] = useState(false);
+	const [expanded, setExpanded] = useState(false);
+	const [help, setHelp] = useState(false);
+	const flip = {
+		open: {
+			transform: "rotate(180deg)",
+		},
+		close: {
+			transform: "rotate(0)",
+		},
+	};
+	const icon = {
+		fontSize: ".8rem",
+		display: "flex",
+		flexDirection: "column",
+		color: "#4b00a1",
+	};
+
+	const text = { marginTop: .75 };
 
 	const waitForSuccess = (e) => {
 		e.preventDefault();
@@ -77,6 +96,18 @@ function SignupForm() {
 			});
 			setTitle("");
 			setArtist("");
+		}else{
+			const queueItem = {
+				sesh_code: seshInfo.sesh_code,
+				user_id: user.id,
+				name: user.username,
+				title: vid.title,
+				url: vid.url,
+			};
+			dispatch({
+				type: "POST_TO_QUEUE",
+				payload: queueItem,
+			});
 		}
 
 	}
@@ -119,8 +150,12 @@ function SignupForm() {
 				}}
 			>
 				<CardContent>
-					<CardHeader sx={{mt:-3}} title={"Sign-up to sing!"} align={"center"} />
-					<Typography sx={{ ml: 1 }} align={"center"}>
+					<CardHeader
+						sx={{ mt: -3 }}
+						title={"Sign up to sing!"}
+						align={"center"}
+					/>
+					<Typography sx={{ ml: 1, mt: -1.5 }} align={"center"}>
 						What's it going to be, {user.username}?
 					</Typography>
 					{user.premium ? (
@@ -186,27 +221,170 @@ function SignupForm() {
 								}}
 								InputLabelProps={{ shrink: true }}
 							/>
-							<Typography ml paragraph variant="body">
-								{`1) Find your song on YouTube`} {<br />}
-								{`2) Click on the share icon`} {<br />}
-								{`3) Click copy link`} {<br />}
-								{`4) Paste link above`}
-							</Typography>
-							<Button
-								id="simplePost"
-								onClick={() => simplePost(songInfo, url)}
-								sx={{ m: 2 }}
-								variant="contained"
-								size="large"
-								component={Link}
-								to="/my-queue"
+							<CardContent
+								fullWidth
+								sx={{
+									display: "flex",
+									flexDirection: "column",
+									alignItems:'flex-start',
+									justifyContent:'center',
+									mb:-2
+								}}
 							>
-								Add to Queue
-							</Button>
+								<Button
+									id="simplePost"
+									onClick={() => simplePost(songInfo, url)}
+									sx={{ ml:-1.55, mb: 4, width:'50%', p:1}}
+									variant="contained"
+									size="small"
+									component={Link}
+									to="/my-queue"
+								>
+									Add to Queue
+								</Button>
+								<CardContent
+									sx={{
+										mt:-2,
+										ml: -1.5,
+										p:0,
+										border: "1px solid green",
+									}}
+								>
+									<CardActionArea
+										disableRipple
+										onClick={() => setHelp(!help)}
+									>
+										<IconButton
+											sx={{
+												color: "#4b00a1",
+												mt: -1,
+												mb: -4,
+											}}
+											disableRipple
+										>
+											{!help ? (
+												<Typography
+													sx={{ color: "#4b00a1" }}
+													variant="caption"
+												>
+													How to find direct url
+												</Typography>
+											) : (
+												<Typography
+													sx={{ color: "#4b00a1" }}
+													variant="caption"
+												>
+													Close
+												</Typography>
+											)}
+											<ExpandMoreIcon
+												sx={
+													!help
+														? flip.close
+														: flip.open
+												}
+											/>
+										</IconButton>
+									</CardActionArea>
+								</CardContent>
+							</CardContent>
+							<Collapse in={help} timeout="auto" unmountOnExit>
+								<Typography ml paragraph variant="caption">
+									{`1) Find your song on YouTube`} {<br />}
+									{`2) Click on the share icon`} {<br />}
+									{`3) Click copy link`} {<br />}
+									{`4) Paste link above`}
+								</Typography>
+							</Collapse>
 						</Box>
 					)}
+					{faves.length > 0 && (
+						<CardActionArea
+							sx={{ mt: 0 }}
+							onClick={() => setExpanded(!expanded)}
+						>
+							<IconButton sx={{ color: "#4b00a1" }} disableRipple>
+								{!expanded ? (
+									<Typography
+										sx={{ color: "#4b00a1" }}
+										variant="h6"
+									>
+										Choose from favorites instead
+									</Typography>
+								) : (
+									<Typography
+										sx={{ color: "#4b00a1" }}
+										variant="h6"
+									>
+										Close
+									</Typography>
+								)}
+								<ExpandMoreIcon
+									sx={!expanded ? flip.close : flip.open}
+								/>
+							</IconButton>
+						</CardActionArea>
+					)}
+					<Collapse
+						in={expanded}
+						timeout="auto"
+						unmountOnExit
+						sx={{
+							maxHeight: "200px",
+							overflow: "auto",
+							border: "1px solid #4b00a1",
+							borderTop: 0,
+							borderBottom: 0,
+						}}
+					>
+						{faves &&
+							faves.map((favSong, i) => (
+								<>
+									<CardContent
+										key={favSong.id}
+										sx={{
+											display: "flex",
+											flexDirection: "row",
+											alignItems: "center",
+											justifyContent: "space-between",
+										}}
+									>
+										<Typography variant="body">
+											{favSong.title}
+										</Typography>
+
+										<IconButton
+											size="small"
+											sx={icon}
+											component={Link}
+											to="/my-queue"
+										>
+											<PlaylistAddIcon />
+											<div style={text}>Add to Queue</div>
+										</IconButton>
+
+										{/* <IconButton
+											component={Link}
+											to="/my-queue"
+											variant="contained"
+											// sx={{
+											// 	mt: 2,
+											// 	width: "50%",
+											// 	p: 0.5,
+											// }}
+											onClick={() => postToQueue(favSong)}
+										>
+											<PlaylistAddIcon />
+											Sing Again
+										</IconButton> */}
+									</CardContent>
+									<Divider variant="middle" />
+								</>
+							))}
+					</Collapse>
 				</CardContent>
 			</Card>
+
 			<Dialog
 				open={open}
 				onClose={() => setOpen(!open)}
