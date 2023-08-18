@@ -54,6 +54,7 @@ router.post('/premium/register', (req, res, next) => {
 router.post('/verify', async (req, res, next) => {
   const homie = req.body.homie
   console.log('homie', homie);
+  console.log("req body", req.body);
   const verifyHomies = 'SELECT * FROM homies'
   const client = await pool.connect();
   try {
