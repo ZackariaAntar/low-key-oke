@@ -8,6 +8,8 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
+console.log("WE HAVE ARRIVED AT THE USER ROTUER, STEVEN IS A G FOR HELPING");
+
 // Handles Axios request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
   // Send back user object from the session (previously queried from the database)
@@ -18,6 +20,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {
+  console.log('TESTING TO SEE IF WE MAKE IT HERE OK COOL THANKS!');
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
 
