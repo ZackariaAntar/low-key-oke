@@ -8,7 +8,7 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
-console.log("WE HAVE ARRIVED AT THE USER ROTUER, STEVEN IS A G FOR HELPING");
+// console.log("WE HAVE ARRIVED AT THE USER ROTUER, STEVEN IS A G FOR HELPING");
 
 // Handles Axios request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
@@ -81,6 +81,7 @@ router.post('/verify', async (req, res, next) => {
 // this middleware will run our POST if successful
 // this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
+  console.log('LOGIN POST');
   res.sendStatus(200);
 });
 
