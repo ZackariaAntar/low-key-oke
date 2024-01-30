@@ -38,34 +38,35 @@ function MyPeople(){
 			) : (
 				<Box
 					sx={{
-						marginTop: 8,
+						marginTop: 6,
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
 					}}
 				>
-					<Typography align="center" variant="h5">
-						Thanks for all of your support, now let's get this party
-						started!!
+					<Typography align="center" variant="h5" paragraph>
+						To my friends and family, thanks for your support!
+						<br /> <br />
+						If we haven't met, I hope you enjoy yourself
+						tonight.
 					</Typography>
-					<Typography sx={{mt:3, color:'purple'}} align="center" variant="caption">
-						This is just for registration! Next time, just login.
+					<Typography
+						sx={{ mt: 2, color: "purple", fontWeight:'bold' }}
+						align="center"
+						variant="caption"
+					>This is only for registration, just login next time!
 					</Typography>
-					<Box
-						component="form"
-						onSubmit={verify}
-						autoComplete="off"
-					>
+					<Box component="form" onSubmit={verify} autoComplete="off">
 						<TextField
 							margin="normal"
 							required
 							fullWidth
 							name="verify"
 							value={proven}
-							label="Use the code I sent you here!"
+							label="Use the code I shared with you here!"
 							type="password"
 							id="verification"
-							helperText="Check your texts or come find me"
+							helperText="If you need the code, try asking someone nearby first, or look for a tall bearded person and tell them you need the code."
 							onChange={(event) => setProven(event.target.value)}
 						/>
 
