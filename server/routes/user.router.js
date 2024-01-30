@@ -8,8 +8,6 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
-// console.log("WE HAVE ARRIVED AT THE USER ROTUER, STEVEN IS A G FOR HELPING");
-
 // Handles Axios request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
   // Send back user object from the session (previously queried from the database)
@@ -53,14 +51,11 @@ router.post('/premium/register', (req, res, next) => {
 
 router.post('/verify', async (req, res, next) => {
   const homie = req.body.homie
-  console.log('homie', homie);
-  console.log("req body", req.body);
   const verifyHomies = 'SELECT * FROM homies'
   const client = await pool.connect();
   try {
 		await client.query("BEGIN");
 		const checkStatus = await client.query(verifyHomies);
-		console.log("checkstatus", checkStatus.rows[0].in_the_know);
     if (homie === checkStatus.rows[0].in_the_know) {
       await client.query("COMMIT");
       res.sendStatus(200);
