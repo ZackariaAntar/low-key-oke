@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import LeaveSessionButton from '../LeaveSessionButton/LeaveSessionButton';
-import './Nav.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import LeaveSessionButton from "../LeaveSessionButton/LeaveSessionButton";
+import "./Nav.css";
+import { useSelector } from "react-redux";
 
 function Nav() {
-  const user = useSelector((store) => store.user);
+	const user = useSelector((store) => store.user);
 
-  return (
+	return (
 		<div className="nav">
 			{/* TODO IF LOGGED IN AND IN SESSION CHANGE HOME TO BE THE HOST DASH FOR HOST AND DISABLE LINK FOR GUEST  */}
 
@@ -30,10 +30,13 @@ function Nav() {
 						{/* <Link className="navLink" to="/mypeople">
 							Friends & Family
 						</Link> */}
+						<Link className="navLink" to="/mypeople">
+							The Crew
+						</Link>
 					</>
 				)}
 				{/* If a user is logged in, and not in a session show these links */}
-				{(user.id && !user.in_session) && (
+				{user.id && !user.in_session && (
 					<>
 						<Link className="navLink" to="/user">
 							Home
@@ -47,7 +50,7 @@ function Nav() {
 					</>
 				)}
 				{/* If a user is logged in, and not in a session show these links */}
-				{(user.id) && (user.in_session && user.is_hosting) && (
+				{user.id && user.in_session && user.is_hosting && (
 					<>
 						<Link className="navLink" to="/host-dash">
 							Host Dashboard
@@ -62,7 +65,7 @@ function Nav() {
 						</Link>
 					</>
 				)}
-				{(user.id) && (user.in_session && !user.is_hosting) && (
+				{user.id && user.in_session && !user.is_hosting && (
 					<>
 						<Link to="/user">
 							<LeaveSessionButton className="navLink" />
@@ -73,12 +76,9 @@ function Nav() {
 				<Link className="navLink" to="/about">
 					About
 				</Link>
-				<Link className="navLink" to="/mypeople">
-					The Crew
-				</Link>
 			</div>
 		</div>
-  );
+	);
 }
 
 export default Nav;
